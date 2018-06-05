@@ -8,7 +8,7 @@ public class ArrayStorage {
     private int count = 0;
 
     void clear() {
-        Arrays.fill(storage, 0, count - 1, null);
+        Arrays.fill(storage, 0, count, null);
         count = 0;
     }
 
@@ -17,7 +17,8 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        if (find(uuid) >= 0) {
+        int i = find(uuid);
+        if (i >= 0) {
             return storage[i];
         }
 
