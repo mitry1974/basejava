@@ -17,7 +17,7 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.save(r3);
 
         // Проверяем на переполнение массива
-        for(int i = 0; i < 10005; i++) {
+        for (int i = 0; i < 10005; i++) {
             String uuid = "uuid" + String.valueOf(i);
             Resume r = new Resume();
             r.uuid = uuid;

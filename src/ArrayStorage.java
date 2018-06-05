@@ -18,12 +18,10 @@ public class ArrayStorage {
         if (index == -1) {
             if (count <= MAX_RECORDS - 1) {
                 storage[count++] = r;
-            }
-            else {
+            } else {
                 System.out.println("Resume:save Максимальное количество резюме в базе !");
             }
-        }
-        else {
+        } else {
             System.out.println("Resume:save Резюме уже находится в базе !");
         }
     }
@@ -32,8 +30,7 @@ public class ArrayStorage {
         int i = find(uuid);
         if (i >= 0) {
             return storage[i];
-        }
-        else {
+        } else {
             System.out.println("Resume:get " + uuid + " не найдено в базе !");
         }
 
@@ -45,8 +42,7 @@ public class ArrayStorage {
         if (index >= 0) {
             System.arraycopy(storage, index + 1, storage, index, count - index - 1);
             storage[--count] = null;
-        }
-        else {
+        } else {
             System.out.println("Resume:delete " + uuid + " не найдено в базе !");
         }
     }
@@ -55,8 +51,7 @@ public class ArrayStorage {
         int index = find(resume.uuid);
         if (index >= 0) {
             storage[index] = resume;
-        }
-        else {
+        } else {
             System.out.println("Resume:update " + resume.uuid + " не найдено в базе !");
         }
     }
