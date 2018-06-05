@@ -17,13 +17,11 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        Resume result = null;
-        int i = find(uuid);
-        if (i >= 0) {
-            result = storage[i];
+        if (find(uuid) >= 0) {
+            return storage[i];
         }
 
-        return result;
+        return null;
     }
 
     void delete(String uuid) {
