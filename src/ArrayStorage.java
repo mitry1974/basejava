@@ -14,8 +14,7 @@ public class ArrayStorage {
     }
 
     void save(Resume r) {
-        int index = find(r.uuid);
-        if (index == -1) {
+        if (find(r.uuid) == -1) {
             if (count <= MAX_RECORDS - 1) {
                 storage[count++] = r;
             } else {
