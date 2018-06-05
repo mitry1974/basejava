@@ -13,16 +13,15 @@ public class ArrayStorage {
         count = 0;
     }
 
-    void save(Resume r) {
-        if (find(r.uuid) == -1) {
-            if (count <= MAX_RECORDS - 1) {
-                storage[count++] = r;
+    void save(Resume resume) {
+        if (find(resume.uuid) == -1) {
+            if (count < MAX_RECORDS) {
+                storage[count++] = resume;
             } else {
                 System.out.println("Resume:save Максимальное количество резюме в базе !");
             }
         } else {
             System.out.println("Resume:save Резюме уже находится в базе, update !");
-            update(r);
         }
     }
 
@@ -39,8 +38,9 @@ public class ArrayStorage {
     void delete(String uuid) {
         int index = find(uuid);
         if (index >= 0) {
-            System.arraycopy(storage, index + 1, storage, index, count - index - 1);
-            storage[--count] = null;
+            --count;
+            storage[index] = storage[count];
+            storage[count] = null;
         } else {
             System.out.println("Resume:delete " + uuid + " не найдено в базе !");
         }
