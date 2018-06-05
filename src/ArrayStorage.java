@@ -4,7 +4,8 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+    private static final int MAX_RECORDS = 10000;
+    private Resume[] storage = new Resume[MAX_RECORDS];
     private int count = 0;
 
     void clear() {
@@ -13,13 +14,27 @@ public class ArrayStorage {
     }
 
     void save(Resume r) {
-        storage[count++] = r;
+        int index = find(r.uuid);
+        if (index == -1) {
+            if (count <= MAX_RECORDS - 1) {
+                storage[count++] = r;
+            }
+            else {
+                System.out.println("Resume:save Максимальное количество резюме в базе !");
+            }
+        }
+        else {
+            System.out.println("Resume:save Резюме уже находится в базе !");
+        }
     }
 
     Resume get(String uuid) {
         int i = find(uuid);
         if (i >= 0) {
             return storage[i];
+        }
+        else {
+            System.out.println("Resume:get " + uuid + " не найдено в базе !");
         }
 
         return null;
@@ -28,8 +43,21 @@ public class ArrayStorage {
     void delete(String uuid) {
         int index = find(uuid);
         if (index >= 0) {
-            System.arraycopy(storage, index + 1, storage, index, count - index);
+            System.arraycopy(storage, index + 1, storage, index, count - index - 1);
             storage[--count] = null;
+        }
+        else {
+            System.out.println("Resume:delete " + uuid + " не найдено в базе !");
+        }
+    }
+
+    public void update(Resume resume) {
+        int index = find(resume.uuid);
+        if (index >= 0) {
+            storage[index] = resume;
+        }
+        else {
+            System.out.println("Resume:update " + resume.uuid + " не найдено в базе !");
         }
     }
 
