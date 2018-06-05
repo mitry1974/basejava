@@ -22,19 +22,19 @@ public class ArrayStorage {
                 System.out.println("Resume:save Максимальное количество резюме в базе !");
             }
         } else {
-            System.out.println("Resume:save Резюме уже находится в базе !");
+            System.out.println("Resume:save Резюме уже находится в базе, update !");
+            update(r);
         }
     }
 
     Resume get(String uuid) {
         int i = find(uuid);
-        if (i >= 0) {
-            return storage[i];
-        } else {
+        if (i == -1) {
             System.out.println("Resume:get " + uuid + " не найдено в базе !");
+            return null;
         }
 
-        return null;
+        return storage[i];
     }
 
     void delete(String uuid) {
