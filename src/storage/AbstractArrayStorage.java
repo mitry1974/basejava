@@ -43,5 +43,30 @@ public abstract class AbstractArrayStorage implements Storage {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
+    public void delete(String uuid) {
+        int index = getIndex(uuid);
+        if (index < 0) {
+            System.out.println("Resume:delete, uuid - " + uuid + " not found!");
+            return;
+        }
+        makeDelete(index);
+    }
+
+    public void save(Resume resume) {
+        if (size >= STORAGE_LIMIT - 1) {
+            System.out.println("Resume:save, can't insert resume. Maximum amount is reached!");
+            return;
+        }
+
+        if(getIndex(resume.getUuid()) >= 0){
+            System.out.println("Resume:save, " +resume.getUuid() +" can't insert resume. Resume already in the database!");
+            return;
+        }
+
+        makeSave(resume);
+    }
+
     protected abstract int getIndex(String uuid);
+    protected abstract void makeDelete(int index);
+    protected abstract void makeSave(Resume resume);
 }

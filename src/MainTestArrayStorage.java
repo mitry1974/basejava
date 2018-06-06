@@ -1,4 +1,5 @@
 import model.Resume;
+import storage.ArrayStorage;
 import storage.SortedArrayStorage;
 import storage.Storage;
 
@@ -6,6 +7,7 @@ import storage.Storage;
  * Test ru.javawebinar.basejava.storage.ArrayStorage
  */
 public class MainTestArrayStorage {
+    //static final Storage ARRAY_STORAGE = new ArrayStorage();
     static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
