@@ -1,3 +1,7 @@
+package storage;
+
+import model.Resume;
+
 /**
  * Array based storage for Resumes
  */

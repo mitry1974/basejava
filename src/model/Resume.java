@@ -1,3 +1,5 @@
+package model;
+
 /**
  * com.urise.webapp.model.Resume class
  */
