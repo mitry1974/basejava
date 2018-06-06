@@ -3,76 +3,54 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private static final int MAX_RECORDS = 10000;
-    private Resume[] storage = new Resume[MAX_RECORDS];
-    private int count = 0;
+public class ArrayStorage extends AbstractArrayStorage {
 
-    void clear() {
-        Arrays.fill(storage, 0, count, null);
-        count = 0;
+    public void clear() {
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
     }
 
-    void save(Resume resume) {
-        if (find(resume.uuid) == -1) {
-            if (count < MAX_RECORDS) {
-                storage[count++] = resume;
-            } else {
-                System.out.println("Resume:save Максимальное количество резюме в базе !");
-            }
+    public void update(Resume r) {
+        int index = getIndex(r.getUuid());
+        if (index == -1) {
+            System.out.println("Resume " + r.getUuid() + " not exist");
         } else {
-            System.out.println("Resume:save Резюме уже находится в базе, update !");
+            storage[index] = r;
         }
     }
 
-    Resume get(String uuid) {
-        int i = find(uuid);
-        if (i == -1) {
-            System.out.println("Resume:get " + uuid + " не найдено в базе !");
-            return null;
-        }
-
-        return storage[i];
-    }
-
-    void delete(String uuid) {
-        int index = find(uuid);
-        if (index >= 0) {
-            --count;
-            storage[index] = storage[count];
-            storage[count] = null;
+    public void save(Resume r) {
+        if (getIndex(r.getUuid()) != -1) {
+            System.out.println("Resume " + r.getUuid() + " already exist");
+        } else if (size >= STORAGE_LIMIT) {
+            System.out.println("Storage overflow");
         } else {
-            System.out.println("Resume:delete " + uuid + " не найдено в базе !");
+            storage[size] = r;
+            size++;
         }
     }
 
-    public void update(Resume resume) {
-        int index = find(resume.uuid);
-        if (index >= 0) {
-            storage[index] = resume;
+    public void delete(String uuid) {
+        int index = getIndex(uuid);
+        if (index == -1) {
+            System.out.println("Resume " + uuid + " not exist");
         } else {
-            System.out.println("Resume:update " + resume.uuid + " не найдено в базе !");
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         }
     }
 
-    private int find(String uuid) {
-        for (int i = 0; i < count; i++) {
-            if (storage[i].uuid.equals(uuid)) {
+    public Resume[] getAll() {
+        return Arrays.copyOfRange(storage, 0, size);
+    }
+
+    protected int getIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].getUuid())) {
                 return i;
             }
         }
-
         return -1;
-    }
-
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
-    Resume[] getAll() {
-        return Arrays.copyOf(storage, count);
-    }
-
-    int size() {
-        return count;
     }
 }
