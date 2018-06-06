@@ -1,6 +1,7 @@
 package storage;
 
 import model.Resume;
+
 import java.util.Arrays;
 
 /**
@@ -8,13 +9,13 @@ import java.util.Arrays;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-    public void makeDelete(int index){
+    public void makeDelete(int index) {
         storage[index] = storage[size - 1];
         storage[size - 1] = null;
         size--;
     }
 
-    public void makeSave(Resume resume){
+    public void makeSave(Resume resume) {
         storage[size] = resume;
         size++;
     }

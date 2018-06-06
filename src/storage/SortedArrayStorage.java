@@ -1,17 +1,18 @@
 package storage;
 
 import model.Resume;
+
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-    public void makeDelete(int index){
+    public void makeDelete(int index) {
         System.arraycopy(storage, index + 1, storage, index, size - index - 1);
         storage[size - 1] = null;
         size--;
     }
 
-    public void makeSave(Resume resume){
+    public void makeSave(Resume resume) {
         int indexToInsert = Arrays.binarySearch(storage, 0, size, resume);
 
         indexToInsert = Math.abs(indexToInsert + 1);

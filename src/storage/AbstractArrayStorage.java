@@ -30,6 +30,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
         return storage[index];
     }
+
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index < 0) {
@@ -58,8 +59,8 @@ public abstract class AbstractArrayStorage implements Storage {
             return;
         }
 
-        if(getIndex(resume.getUuid()) >= 0){
-            System.out.println("Resume:save, " +resume.getUuid() +" can't insert resume. Resume already in the database!");
+        if (getIndex(resume.getUuid()) >= 0) {
+            System.out.println("Resume:save, " + resume.getUuid() + " can't insert resume. Resume already in the database!");
             return;
         }
 
@@ -67,6 +68,8 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     protected abstract int getIndex(String uuid);
+
     protected abstract void makeDelete(int index);
+
     protected abstract void makeSave(Resume resume);
 }
