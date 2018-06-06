@@ -26,7 +26,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
         int indexToInsert = Arrays.binarySearch(storage, 0, size, resume);
         if (indexToInsert >= 0) {
-            System.out.println("Resume:save, uuid - always in the database!");
+            System.out.println("Resume:save, uuid - already in the database!");
             return;
         }
 
