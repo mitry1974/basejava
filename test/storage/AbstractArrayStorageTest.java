@@ -7,8 +7,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class AbstractArrayStorageTest {
     private Storage storage = null;
     private static final String UUID_2 = "uuid2";
