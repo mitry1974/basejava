@@ -9,9 +9,13 @@ import org.junit.Test;
 
 public class AbstractArrayStorageTest {
     private Storage storage = null;
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
-    private static final String UUID_1 = "uuid1";
+
+    private void initStorage() {
+        storage.clear();
+        for (int i = 0; i < 10; i++) {
+            storage.save(new Resume("uuid" + String.valueOf(i)));
+        }
+    }
 
 
     public AbstractArrayStorageTest(Storage storage) {
@@ -20,15 +24,12 @@ public class AbstractArrayStorageTest {
 
     @Before
     public void setUp() throws Exception {
-        storage.clear();
-        storage.save(new Resume(UUID_2));
-        storage.save(new Resume(UUID_3));
-        storage.save(new Resume(UUID_1));
+        initStorage();
     }
 
     @Test
     public void size() {
-        Assert.assertEquals(storage.size(), 3);
+        Assert.assertEquals(storage.size(), 10);
     }
 
     @Test
