@@ -2,9 +2,6 @@ import model.Resume;
 import storage.SortedArrayStorage;
 import storage.Storage;
 
-/**
- * Test ru.javawebinar.basejava.storage.ArrayStorage
- */
 public class MainTestArrayStorage {
     static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
