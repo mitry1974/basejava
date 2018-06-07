@@ -6,7 +6,7 @@ package model;
 public class Resume implements Comparable<Resume> {
 
     // Unique identifier
-    public String uuid;
+    private String uuid;
 
     public String getUuid() {
         return uuid;

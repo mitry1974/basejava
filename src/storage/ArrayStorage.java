@@ -11,13 +11,10 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     public void makeDelete(int index) {
         storage[index] = storage[size - 1];
-        storage[size - 1] = null;
-        size--;
     }
 
-    public void makeSave(Resume resume) {
+    public void makeSave(Resume resume, int index) {
         storage[size] = resume;
-        size++;
     }
 
     @Override

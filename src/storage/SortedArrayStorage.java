@@ -8,17 +8,12 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     public void makeDelete(int index) {
         System.arraycopy(storage, index + 1, storage, index, size - index - 1);
-        storage[size - 1] = null;
-        size--;
     }
 
-    public void makeSave(Resume resume) {
-        int indexToInsert = Arrays.binarySearch(storage, 0, size, resume);
-
-        indexToInsert = Math.abs(indexToInsert + 1);
-        System.arraycopy(storage, indexToInsert, storage, indexToInsert + 1, size - indexToInsert);
-        storage[indexToInsert] = resume;
-        size++;
+    public void makeSave(Resume resume, int index) {
+        index = Math.abs(index + 1);
+        System.arraycopy(storage, index, storage, index + 1, size - index);
+        storage[index] = resume;
     }
 
     @Override

@@ -9,6 +9,7 @@ import java.util.Arrays;
  */
 public abstract class AbstractArrayStorage implements Storage {
     protected static final int STORAGE_LIMIT = 10000;
+    protected static final int MAX_INDEX = STORAGE_LIMIT - 1;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
@@ -41,7 +42,7 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
+        return Arrays.copyOf(storage, size);
     }
 
     public void delete(String uuid) {
@@ -51,10 +52,13 @@ public abstract class AbstractArrayStorage implements Storage {
             return;
         }
         makeDelete(index);
+
+        storage[size - 1] = null;
+        size--;
     }
 
     public void save(Resume resume) {
-        if (size >= STORAGE_LIMIT - 1) {
+        if (size == MAX_INDEX) {
             System.out.println("Resume:save, can't insert resume. Maximum amount is reached!");
             return;
         }
@@ -64,12 +68,13 @@ public abstract class AbstractArrayStorage implements Storage {
             return;
         }
 
-        makeSave(resume);
+        makeSave(resume, getIndex(resume.getUuid()));
+        size++;
     }
 
     protected abstract int getIndex(String uuid);
 
     protected abstract void makeDelete(int index);
 
-    protected abstract void makeSave(Resume resume);
+    protected abstract void makeSave(Resume resume, int index);
 }
