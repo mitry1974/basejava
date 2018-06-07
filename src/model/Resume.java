@@ -1,11 +1,7 @@
 package model;
 
-/**
- * com.urise.webapp.model.Resume class
- */
 public class Resume implements Comparable<Resume> {
 
-    // Unique identifier
     private String uuid;
 
     public String getUuid() {

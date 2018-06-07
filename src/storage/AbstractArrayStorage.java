@@ -1,15 +1,10 @@
 package storage;
 
 import model.Resume;
-
 import java.util.Arrays;
 
-/**
- * Array based storage for Resumes
- */
 public abstract class AbstractArrayStorage implements Storage {
     protected static final int STORAGE_LIMIT = 10000;
-    protected static final int MAX_INDEX = STORAGE_LIMIT - 1;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
@@ -53,12 +48,11 @@ public abstract class AbstractArrayStorage implements Storage {
         }
         makeDelete(index);
 
-        storage[size - 1] = null;
-        size--;
+        storage[--size] = null;
     }
 
     public void save(Resume resume) {
-        if (size == MAX_INDEX) {
+        if (size == STORAGE_LIMIT) {
             System.out.println("Resume:save, can't insert resume. Maximum amount is reached!");
             return;
         }
