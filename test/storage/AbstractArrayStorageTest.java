@@ -16,15 +16,8 @@ public class AbstractArrayStorageTest {
     private static final String UUID_1 = "uuid1";
 
 
-    public AbstractArrayStorageTest(StorageType storageType) {
-        switch (storageType) {
-            case ARRAY_STORAGE:
-                this.storage = new ArrayStorage();
-                break;
-            case SORTEDARRAY_STORAGE:
-                this.storage = new SortedArrayStorage();
-                break;
-        }
+    public AbstractArrayStorageTest(Storage storage) {
+        this.storage = storage;
     }
 
     @Before
@@ -37,20 +30,20 @@ public class AbstractArrayStorageTest {
 
     @Test
     public void size() {
-        System.out.println("Size:" + storage.size());
-        printAll();
+        Assert.assertEquals(storage.size(), 3);
     }
 
     @Test
     public void clear() {
         storage.clear();
-        printAll();
+        Assert.assertEquals(storage.size(), 0);
     }
 
     @Test
     public void update() {
         Resume r = new Resume("uuid2");
         storage.update(r);
+        Assert.assertEquals(storage.get("uuid2"), r);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -62,14 +55,15 @@ public class AbstractArrayStorageTest {
     @Test
     public void getAll() {
         Resume[] array = storage.getAll();
-        for (Resume r : array) {
-            System.out.println(r);
-        }
+        Assert.assertEquals(array.length, storage.size());
     }
 
     @Test
     public void save() {
-        storage.save(new Resume("Another one!"));
+        Resume resume = new Resume("Another one!");
+        storage.save(resume);
+        Resume anotherResume = storage.get(resume.getUuid());
+        Assert.assertTrue(anotherResume == resume);
     }
 
     @Test(expected = StorageException.class)
@@ -82,10 +76,10 @@ public class AbstractArrayStorageTest {
         storage.save(new Resume("uuid_over!"));
     }
 
-    @Test
+    @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete("uuid1");
-        storage.delete("uuid2");
+        Assert.assertTrue(storage.get("uuid1") == null);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -96,12 +90,6 @@ public class AbstractArrayStorageTest {
 
     @Test
     public void get() {
-        System.out.println(storage.get("uuid1"));
-    }
-
-    void printAll() {
-        for (Resume r : storage.getAll()) {
-            System.out.println(r);
-        }
+        Assert.assertTrue(storage.get("uuid1") != null);
     }
 }
