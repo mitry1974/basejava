@@ -37,18 +37,14 @@ public class AbstractArrayStorageTest {
 
     @Test
     public void size() {
-        System.out.println("Testing size----------------------------");
         System.out.println("Size:" + storage.size());
         printAll();
-        System.out.println("Testing size - finished ----------------");
     }
 
     @Test
     public void clear() {
-        System.out.println("Testing clear----------------------------");
         storage.clear();
         printAll();
-        System.out.println("Testing clear- finished -----------------");
     }
 
     @Test
@@ -57,25 +53,18 @@ public class AbstractArrayStorageTest {
         storage.update(r);
     }
 
-    @Test
+    @Test(expected = NotExistStorageException.class)
     public void updateNotExisting() {
-        try {
-            Resume r = new Resume("uuid200052");
-            storage.update(r);
-        } catch (NotExistStorageException e) {
-            System.out.println("try to update not existing resume" + e);
-        }
+        Resume r = new Resume("uuid200052");
+        storage.update(r);
     }
 
     @Test
     public void getAll() {
-        System.out.println("Testing getAll - printing all items--------------------------");
         Resume[] array = storage.getAll();
         for (Resume r : array) {
             System.out.println(r);
         }
-
-        System.out.println("Testing getAll - finish--------------------------------------");
     }
 
     @Test
@@ -83,23 +72,15 @@ public class AbstractArrayStorageTest {
         storage.save(new Resume("Another one!"));
     }
 
-    @Test
+    @Test(expected = StorageException.class)
     public void saveOverSize() {
         storage.clear();
         for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
             storage.save(new Resume("uuid" + String.valueOf(i)));
         }
 
-        try {
-            storage.save(new Resume("uuid_over!"));
-
-        } catch (StorageException e) {
-            StringBuilder sb = new StringBuilder();
-
-            System.out.println(String.format("Try to save Resume over limit, exception - %s", e));
-        }
+        storage.save(new Resume("uuid_over!"));
     }
-
 
     @Test
     public void delete() {
@@ -107,14 +88,10 @@ public class AbstractArrayStorageTest {
         storage.delete("uuid2");
     }
 
-    @Test
+    @Test(expected = NotExistStorageException.class)
     public void deleteUnExisting() {
-        try {
-            storage.delete("UUID_200005");
-            storage.delete("UUID_200006");
-        } catch (NotExistStorageException e) {
-            System.out.println("Deleteting not existing uuid - " + e);
-        }
+        storage.delete("UUID_200005");
+        storage.delete("UUID_200006");
     }
 
     @Test
@@ -123,10 +100,8 @@ public class AbstractArrayStorageTest {
     }
 
     void printAll() {
-        System.out.println("\nPrint all items------------------------------");
         for (Resume r : storage.getAll()) {
             System.out.println(r);
         }
-        System.out.println("\nPrint all items-finished --------------------");
     }
 }
