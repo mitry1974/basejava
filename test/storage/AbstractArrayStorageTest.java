@@ -66,11 +66,9 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = StorageException.class)
     public void saveOverSize() {
         storage.clear();
-        for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
+        for (int i = 0; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
             storage.save(new Resume("uuid" + i));
         }
-
-        storage.save(new Resume("uuid_over!"));
     }
 
     @Test(expected = NotExistStorageException.class)
