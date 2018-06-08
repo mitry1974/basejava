@@ -3,6 +3,7 @@ package storage;
 import exception.NotExistStorageException;
 import exception.StorageException;
 import model.Resume;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,8 +16,8 @@ public abstract class AbstractArrayStorageTest {
     private static final String UUID2           = "uuid2";
     private static final String UUID3           = "uuid3";
     private static final String UUID4           = "uuid4";
-    private static final String uuidNotExisting = "UUID_200005";
-    private static final String uuidOversize    = "UUID_10000";
+    private static final String UUID_NOT_EXISTING = "UUID_200005";
+    private static final String UUID_OVERSIZE    = "UUID_10000";
 
     private static final Resume resume1         = new Resume(UUID1);
     private static final Resume resume2         = new Resume(UUID2);
@@ -75,28 +76,26 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = StorageException.class)
     public void saveOverSize() {
-        storage.clear();
         try {
-            for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
+            for (int i = 4; i < AbstractArrayStorage.STORAGE_LIMIT + 1; i++) {
                 storage.save(new Resume("uuid" + i));
             }
         }catch (ArrayIndexOutOfBoundsException e){
-            throw e;
+            fail();
         }
-
-        storage.save(new Resume(uuidOversize));
+         storage.save(new Resume(UUID_OVERSIZE));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete(UUID1);
-        assertNull(storage.get(UUID1));
         assertEquals(2, storage.size());
+        assertNull(storage.get(UUID1));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void deleteUnExisting() {
-        storage.delete(uuidNotExisting);
+        storage.delete(UUID_NOT_EXISTING);
     }
 
     @Test
