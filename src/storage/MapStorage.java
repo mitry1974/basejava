@@ -6,46 +6,41 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
-    private final Map storage;
+    private final Map storage = new HashMap<String, Resume>();
 
-    {
-        storage = new HashMap<String, Resume>();
-    }
+    @Override
+    protected void makeDelete(int index) {
 
-    public MapStorage() {
     }
 
     @Override
-    public void clear() {
-        storage.clear();
+    protected void makeInsert(Resume resume, int index) {
+
     }
 
     @Override
-    public void update(Resume resume) {
-        if (storage.containsKey(resume.getUuid())) {
-            storage.put(resume.getUuid(), resume);
-        }
+    protected void makeUpdate(Resume resume, int index) {
+
     }
 
     @Override
-    public void save(Resume resume) {
-        storage.put(resume.getUuid(), resume);
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        if (storage.containsKey(uuid)) {
-            return (Resume) storage.get(uuid);
-        }
-
+    protected Resume makeSearch(int index) {
         return null;
     }
 
     @Override
-    public void delete(String uuid) {
-        if(storage.containsKey(uuid)){
-            storage.remove(uuid);
-        }
+    protected int getIndex(String uuid) {
+        return 0;
+    }
+
+    @Override
+    protected int getIndexToInsert(String uuid) {
+        return 0;
+    }
+
+    @Override
+    public void clear() {
+
     }
 
     @Override
@@ -57,4 +52,5 @@ public class MapStorage extends AbstractStorage {
     public int size() {
         return storage.size();
     }
+
 }
