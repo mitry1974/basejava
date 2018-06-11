@@ -1,12 +1,18 @@
 package storage;
 
+import exception.NotExistStorageException;
 import model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
     @Override
     public void update(Resume resume) {
-        makeUpdate(resume, getIndex(resume.getUuid()));
+        String uuid = resume.getUuid();
+        Object key = getIndex(uuid);
+        if (key == null) {
+            throw new NotExistStorageException(uuid);
+        }
+        makeUpdate(resume, getIndex(uuid));
     }
 
     @Override
@@ -16,12 +22,20 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        return makeSearch(getIndex(uuid));
+        Object key = getIndex(uuid);
+        if (key == null) {
+            throw new NotExistStorageException(uuid);
+        }
+        return makeSearch(key);
     }
 
     @Override
     public void delete(String uuid) {
-        makeDelete(getIndex(uuid));
+        Object key = getIndex(uuid);
+        if (key == null) {
+            throw new NotExistStorageException(uuid);
+        }
+        makeDelete(key);
     }
 
     protected abstract void makeDelete(Object key);
@@ -32,6 +46,5 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Resume makeSearch(Object key);
 
-//    protected abstract Object getIndex(String uuid);
-//    protected abstract Object getIndexToInsert(String uuid);
+    protected abstract Object getIndex(String uuid);
 }

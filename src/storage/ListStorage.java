@@ -17,12 +17,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void makeDelete(Object key) {
-        int index = (Integer) key;
-        if (index < 0) {
-            throw new NotExistStorageException(String.valueOf(index));
-        }
-
-        storage.remove(index);
+        storage.remove((int)(Integer) key);
     }
 
     @Override
@@ -32,30 +27,19 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void makeUpdate(Resume resume, Object key) {
-        int index = (Integer) key;
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        }
-        storage.set(index, resume);
+        storage.set((Integer) key, resume);
     }
 
     @Override
     protected Resume makeSearch(Object key) {
-        int index = (Integer) key;
-        if (index < 0) {
-            throw new NotExistStorageException(String.valueOf(index));
-        }
-        return storage.get(index);
+        return storage.get((Integer) key);
     }
 
     @Override
     protected Object getIndex(String uuid) {
-        return (Integer) storage.indexOf(new Resume(uuid));
-    }
+        int res = (Integer) storage.indexOf(new Resume(uuid));
 
-    @Override
-    protected Object getIndexToInsert(String uuid) {
-        return (Integer) storage.size();
+        return (res >= 0) ? (Integer) res : null;
     }
 
     @Override

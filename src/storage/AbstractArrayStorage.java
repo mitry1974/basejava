@@ -23,9 +23,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     public void makeUpdate(Resume resume, Object key) {
         int index = (Integer) key;
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        }
+
         storage[index] = resume;
     }
 
@@ -33,7 +31,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    protected void makeInsert(Resume resume, Object key) {
+    protected void makeInsert(Resume resume) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", resume.getUuid());
         } else {
@@ -43,26 +41,16 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     public void makeDelete(Object key) {
-        int index = (Integer) key;
-        if (index < 0) {
-            throw new NotExistStorageException(String.valueOf(index));
-        }
-        fillDeletedElement(index);
+        fillDeletedElement((Integer) key);
         storage[size--] = null;
     }
 
     public Resume makeSearch(Object key) {
-        int index = (Integer) key;
-        if (index < 0) {
-            throw new NotExistStorageException(String.valueOf(index));
-        }
-
-        return storage[index];
+        return storage[(Integer) key];
     }
 
     protected abstract void fillDeletedElement(int index);
 
     protected abstract void insertElement(Resume r);
 
-    protected abstract int getIndex(String uuid);
 }
