@@ -1,5 +1,6 @@
 package storage;
 
+import exception.NotExistStorageException;
 import model.Resume;
 
 import java.util.ArrayList;
@@ -15,33 +16,46 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void makeDelete(int index) {
+    protected void makeDelete(Object key) {
+        int index = (Integer) key;
+        if (index < 0) {
+            throw new NotExistStorageException(String.valueOf(index));
+        }
+
         storage.remove(index);
     }
 
     @Override
-    protected void makeInsert(Resume resume, int index) {
-        storage.add(index, resume);
+    protected void makeInsert(Resume resume) {
+        storage.add(resume);
     }
 
     @Override
-    protected void makeUpdate(Resume resume, int index) {
+    protected void makeUpdate(Resume resume, Object key) {
+        int index = (Integer) key;
+        if (index < 0) {
+            throw new NotExistStorageException(resume.getUuid());
+        }
         storage.set(index, resume);
     }
 
     @Override
-    protected Resume makeSearch(int index) {
+    protected Resume makeSearch(Object key) {
+        int index = (Integer) key;
+        if (index < 0) {
+            throw new NotExistStorageException(String.valueOf(index));
+        }
         return storage.get(index);
     }
 
     @Override
-    protected int getIndex(String uuid) {
-        return storage.indexOf(new Resume(uuid));
+    protected Object getIndex(String uuid) {
+        return (Integer) storage.indexOf(new Resume(uuid));
     }
 
     @Override
-    protected int getIndexToInsert(String uuid) {
-        return storage.size();
+    protected Object getIndexToInsert(String uuid) {
+        return (Integer) storage.size();
     }
 
     @Override

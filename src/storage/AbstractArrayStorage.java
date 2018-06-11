@@ -1,5 +1,6 @@
 package storage;
 
+import exception.NotExistStorageException;
 import exception.StorageException;
 import model.Resume;
 
@@ -20,7 +21,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-    public void makeUpdate(Resume resume, int index) {
+    public void makeUpdate(Resume resume, Object key) {
+        int index = (Integer) key;
+        if (index < 0) {
+            throw new NotExistStorageException(resume.getUuid());
+        }
         storage[index] = resume;
     }
 
@@ -28,27 +33,36 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    protected void makeInsert(Resume resume, int index) {
+    protected void makeInsert(Resume resume, Object key) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", resume.getUuid());
         } else {
-            insertElement(resume, index);
+            insertElement(resume);
             size++;
         }
     }
 
-    public void makeDelete(int index) {
+    public void makeDelete(Object key) {
+        int index = (Integer) key;
+        if (index < 0) {
+            throw new NotExistStorageException(String.valueOf(index));
+        }
         fillDeletedElement(index);
         storage[size--] = null;
     }
 
-    public Resume makeSearch(int index) {
+    public Resume makeSearch(Object key) {
+        int index = (Integer) key;
+        if (index < 0) {
+            throw new NotExistStorageException(String.valueOf(index));
+        }
+
         return storage[index];
     }
 
     protected abstract void fillDeletedElement(int index);
 
-    protected abstract void insertElement(Resume r, int index);
+    protected abstract void insertElement(Resume r);
 
     protected abstract int getIndex(String uuid);
 }

@@ -9,32 +9,32 @@ public class MapStorage extends AbstractStorage {
     private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected void makeDelete(int index) {
+    protected void makeDelete(Object index) {
 
     }
 
     @Override
-    protected void makeInsert(Resume resume, int index) {
+    protected void makeInsert(Resume resume, Object index) {
 
     }
 
     @Override
-    protected void makeUpdate(Resume resume, int index) {
+    protected void makeUpdate(Resume resume, Object index) {
 
     }
 
     @Override
-    protected Resume makeSearch(int index) {
+    protected Resume makeSearch(Object index) {
         return null;
     }
 
     @Override
-    protected int getIndex(String uuid) {
+    protected Object getIndex(String uuid) {
         return 0;
     }
 
     @Override
-    protected int getIndexToInsert(String uuid) {
+    protected Object getIndexToInsert(String uuid) {
         return 0;
     }
 
