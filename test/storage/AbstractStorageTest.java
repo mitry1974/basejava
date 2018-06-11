@@ -6,23 +6,21 @@ import model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
 
-    private static final String UUID1       = "uuid1";
-    private static final String UUID2       = "uuid2";
-    private static final String UUID3       = "uuid3";
-    private static final String UUID4       = "uuid4";
+    private static final String UUID1 = "uuid1";
+    private static final String UUID2 = "uuid2";
+    private static final String UUID3 = "uuid3";
+    private static final String UUID4 = "uuid4";
 
-    private static final Resume resume1     = new Resume(UUID1);
-    private static final Resume resume2     = new Resume(UUID2);
-    private static final Resume resume2_1   = new Resume(UUID2);
-    private static final Resume resume3     = new Resume(UUID3);
-    private static final Resume resume4     = new Resume(UUID4);
+    private static final Resume resume1 = new Resume(UUID1);
+    private static final Resume resume2 = new Resume(UUID2);
+    private static final Resume resume2_1 = new Resume(UUID2);
+    private static final Resume resume3 = new Resume(UUID3);
+    private static final Resume resume4 = new Resume(UUID4);
 
 
     public AbstractStorageTest(Storage storage) {
@@ -59,9 +57,7 @@ public abstract class AbstractStorageTest {
         Resume[] array = storage.getAll();
         assertEquals(array.length, storage.size());
 
-        assertEquals(array[0],resume1);
-        assertEquals(array[1],resume2);
-        assertEquals(array[2],resume3);
+        assertArrayEquals(array, new Resume[]{resume1, resume2, resume3});
     }
 
     @Test
@@ -83,6 +79,6 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() {
-        assertEquals(storage.get(UUID1),resume1);
+        assertEquals(storage.get(UUID1), resume1);
     }
 }
