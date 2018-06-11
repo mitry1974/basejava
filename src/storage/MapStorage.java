@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
-    private final Map storage = new HashMap<String, Resume>();
+    private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
     protected void makeDelete(int index) {
@@ -45,7 +45,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public Resume[] getAll() {
-        return (Resume []) storage.values().toArray();
+        return (Resume[])storage.values().toArray();
     }
 
     @Override

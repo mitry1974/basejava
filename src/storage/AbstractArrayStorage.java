@@ -1,15 +1,10 @@
 package storage;
 
-import exception.ExistStorageException;
-import exception.NotExistStorageException;
 import exception.StorageException;
 import model.Resume;
 
 import java.util.Arrays;
 
-/**
- * Array based storage for Resumes
- */
 public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10000;
 
