@@ -1,6 +1,5 @@
 package storage;
 
-import exception.NotExistStorageException;
 import model.Resume;
 
 import java.util.ArrayList;
@@ -31,15 +30,15 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume makeSearch(Object key) {
+    protected Resume getResumeByKey(Object key) {
         return storage.get((Integer) key);
     }
 
     @Override
-    protected Object getIndex(String uuid) {
-        int res = (Integer) storage.indexOf(new Resume(uuid));
+    protected Object getKey(String uuid) {
+        Integer res = storage.indexOf(new Resume(uuid));
 
-        return (res >= 0) ? (Integer) res : null;
+        return (res >= 0) ? res : null;
     }
 
     @Override

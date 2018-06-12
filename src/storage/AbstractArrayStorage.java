@@ -1,6 +1,5 @@
 package storage;
 
-import exception.NotExistStorageException;
 import exception.StorageException;
 import model.Resume;
 
@@ -45,12 +44,19 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         storage[size--] = null;
     }
 
-    public Resume makeSearch(Object key) {
+    protected Object getKey(String uuid) {
+        Integer res = getArrayKey(uuid);
+        return (res >= 0) ?  res : null;
+    }
+
+    public Resume getResumeByKey(Object key) {
         return storage[(Integer) key];
     }
 
     protected abstract void fillDeletedElement(int index);
 
     protected abstract void insertElement(Resume r);
+
+    protected abstract Integer getArrayKey(String uuid);
 
 }
