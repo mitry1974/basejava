@@ -3,6 +3,9 @@ package storage;
 import exception.NotExistStorageException;
 import model.Resume;
 
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class AbstractStorage implements Storage {
 
     @Override
@@ -25,13 +28,21 @@ public abstract class AbstractStorage implements Storage {
         makeDelete(getKeyCheckNull(uuid));
     }
 
-    private Object getKeyCheckNull(String uuid){
+    private Object getKeyCheckNull(String uuid) {
         Object key = getKey(uuid);
         if (key == null) {
             throw new NotExistStorageException(uuid);
         }
         return key;
     }
+
+    @Override
+    public List<Resume> getAllSorted() {
+        Resume[] array = getResumeArray();
+        Arrays.sort(array);
+        return Arrays.asList(array);
+    }
+
     protected abstract void makeDelete(Object key);
 
     protected abstract void makeInsert(Resume resume);
@@ -41,4 +52,6 @@ public abstract class AbstractStorage implements Storage {
     protected abstract Resume getResumeByKey(Object key);
 
     protected abstract Object getKey(String uuid);
+
+    protected abstract Resume[] getResumeArray();
 }

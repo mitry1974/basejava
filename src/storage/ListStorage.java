@@ -3,6 +3,7 @@ package storage;
 import model.Resume;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
@@ -16,7 +17,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void makeDelete(Object key) {
-        storage.remove((int)(Integer) key);
+        storage.remove((int) (Integer) key);
     }
 
     @Override
@@ -42,8 +43,15 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
+    protected Resume[] getResumeArray() {
         return storage.toArray(new Resume[0]);
+    }
+
+    @Override
+    public List<Resume> getAllSorted() {
+        Resume[] array = storage.toArray(new Resume[0]);
+        Arrays.sort(array);
+        return Arrays.asList(array);
     }
 
     @Override

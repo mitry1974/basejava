@@ -9,10 +9,4 @@ public class MapStorageTest extends AbstractStorageTest {
     public MapStorageTest() {
         super(new MapStorage());
     }
-
-    @Test
-    public void getAll() {
-        Resume[] array = storage.getAll();
-        assertEquals(array.length, storage.size());
-    }
 }
