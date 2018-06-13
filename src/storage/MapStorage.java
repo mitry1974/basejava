@@ -2,9 +2,7 @@ package storage;
 
 import model.Resume;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
@@ -16,7 +14,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void makeInsert(Resume resume) {
+    protected void makeInsert(Resume resume, Object key) {
         storage.put(resume.getUuid(), resume);
     }
 
@@ -31,8 +29,13 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getKey(String uuid) {
+    protected Object getSearchKey(String uuid) {
         return storage.containsKey(uuid) ? uuid : null;
+    }
+
+    @Override
+    protected boolean isResumeExist(Object key){
+        return storage.containsKey(key);
     }
 
     @Override
@@ -44,7 +47,6 @@ public class MapStorage extends AbstractStorage {
     public void clear() {
         storage.clear();
     }
-
 
     @Override
     public int size() {

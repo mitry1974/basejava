@@ -5,15 +5,16 @@ import model.Resume;
 import org.junit.Test;
 
 public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
-    public AbstractArrayStorageTest(Storage storage) {
+    AbstractArrayStorageTest(Storage storage) {
         super(storage);
     }
 
     @Test(expected = StorageException.class)
     public void saveOverflow() {
-        storage.clear();
-        for (int i = 0; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
-            storage.save(new Resume("uuid" + i, "Unknow man " + i));
+        for (int i = storage.size(); i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
+            storage.save(new Resume("uuid" + (i + 1), "Unknow man " + (i + 1)));
         }
+
+        storage.save(new Resume("uuid10001", "Unknow man 10001"));
     }
 }

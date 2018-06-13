@@ -21,7 +21,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void makeInsert(Resume resume) {
+    protected void makeInsert(Resume resume, Object key) {
         storage.add(resume);
     }
 
@@ -36,22 +36,22 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getKey(String uuid) {
-        Integer res = storage.indexOf(new Resume(uuid));
+    protected Object getSearchKey(String uuid) {
+        for (int i = 0; i < storage.size(); i++) {
+            if (storage.get(i).getUuid().equals(uuid))
+                return i;
+        }
 
-        return (res >= 0) ? res : null;
+        return null;
     }
 
+    @Override
+    protected boolean isResumeExist(Object key){
+        return key != null;
+    }
     @Override
     protected Resume[] getResumeArray() {
         return storage.toArray(new Resume[0]);
-    }
-
-    @Override
-    public List<Resume> getAllSorted() {
-        Resume[] array = storage.toArray(new Resume[0]);
-        Arrays.sort(array);
-        return Arrays.asList(array);
     }
 
     @Override
