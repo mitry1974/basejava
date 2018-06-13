@@ -21,9 +21,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     public void makeUpdate(Resume resume, Object key) {
-        int index = (Integer) key;
-
-        storage[index] = resume;
+        storage[(Integer) key] = resume;
     }
 
     public Resume[] getAll() {
