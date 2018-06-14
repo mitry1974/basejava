@@ -2,14 +2,14 @@ package storage;
 
 import exception.ExistStorageException;
 import exception.NotExistStorageException;
-import exception.StorageException;
 import model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
@@ -55,6 +55,11 @@ public abstract class AbstractStorageTest {
         assertSame(resume2_1, storage.get(UUID2));
     }
 
+    @Test(expected = NotExistStorageException.class)
+    public void updateUnExisting() {
+        storage.update(resume4);
+    }
+
     @Test
     public void getAllSorted() {
         List<Resume> list = storage.getAllSorted();
@@ -64,19 +69,22 @@ public abstract class AbstractStorageTest {
         assertEquals(resume3, list.get(2));
     }
 
-    @Test(expected = ExistStorageException.class)
+    @Test
     public void save() {
         storage.save(resume4);
         assertSame(resume4, storage.get(resume4.getUuid()));
         assertEquals(4, storage.size());
-        storage.save(resume4);
     }
 
-    @Test(expected = NotExistStorageException.class)
+    @Test(expected = ExistStorageException.class)
+    public void saveExisting() {
+        storage.save(resume1);
+    }
+
+    @Test
     public void delete() {
         storage.delete(UUID1);
         assertEquals(2, storage.size());
-        storage.get(UUID1);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -84,9 +92,13 @@ public abstract class AbstractStorageTest {
         storage.delete(UUID4);
     }
 
-    @Test(expected = NotExistStorageException.class)
+    @Test
     public void get() {
         assertEquals(resume1, storage.get(UUID1));
+    }
+
+    @Test(expected = NotExistStorageException.class)
+    public void getUnExisting() {
         storage.get(UUID4);
     }
 }
