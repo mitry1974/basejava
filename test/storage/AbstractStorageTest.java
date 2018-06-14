@@ -81,11 +81,12 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void deleteUnExisting() {
-        storage.delete("UUID_200005");
+        storage.delete(UUID4);
     }
 
-    @Test
+    @Test(expected = NotExistStorageException.class)
     public void get() {
         assertEquals(resume1, storage.get(UUID1));
+        storage.get(UUID4);
     }
 }
