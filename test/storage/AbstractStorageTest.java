@@ -1,5 +1,6 @@
 package storage;
 
+import exception.ExistStorageException;
 import exception.NotExistStorageException;
 import exception.StorageException;
 import model.Resume;
@@ -63,11 +64,12 @@ public abstract class AbstractStorageTest {
         assertEquals(resume3, list.get(2));
     }
 
-    @Test
+    @Test(expected = ExistStorageException.class)
     public void save() {
         storage.save(resume4);
         assertSame(resume4, storage.get(resume4.getUuid()));
         assertEquals(4, storage.size());
+        storage.save(resume4);
     }
 
     @Test(expected = NotExistStorageException.class)
