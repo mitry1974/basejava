@@ -3,7 +3,6 @@ package storage;
 import model.Resume;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {

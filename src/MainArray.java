@@ -1,6 +1,6 @@
 import model.Resume;
-import storage.Storage;
 import storage.ArrayStorage;
+import storage.Storage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
