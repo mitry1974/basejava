@@ -1,19 +1,23 @@
 package model;
 
-import java.util.UUID;
+import sun.swing.SwingUtilities2;
 
-/**
- * com.urise.webapp.model.Resume class
- */
+import java.lang.reflect.Array;
+import java.util.*;
+
 public class Resume implements Comparable<Resume> {
-
-    // Unique identifier
     private final String uuid;
     private final String fullName;
     private static final String DEFAULT_NAME = "Unknown";
 
+    private final Map<SectionType, Section> sections = new HashMap<>();
+    private final Map<String, Contact> contacts = new HashMap<>();
 
-
+    {
+        for(SectionType t:SectionType.values()){
+            sections.put(t, AbstractSection.createSection(t));
+        }
+    }
 
     public Resume() {
         this(UUID.randomUUID().toString(), DEFAULT_NAME);
@@ -59,5 +63,30 @@ public class Resume implements Comparable<Resume> {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public List<Contact> getContacts() {
+        return Arrays.asList(contacts.values().toArray(new Contact[0]));
+    }
+
+    public void addContact(String contactUuid, ContactType type, String data) {
+        Contact c = new Contact(contactUuid, type, data);
+        contacts.put(contactUuid, c);
+    }
+
+    public String[] getSectionData(SectionType type) {
+        return getSection(type).getData();
+    }
+
+    public String getSectionTitle(SectionType type) {
+        return getSection(type).getTitle();
+    }
+
+    public void setSectionData(SectionType type, String[] data) {
+        getSection(type).setData(data);
+    }
+
+    protected Section getSection(SectionType type){
+        return sections.get(type);
     }
 }
