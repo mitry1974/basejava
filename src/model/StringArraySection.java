@@ -14,7 +14,7 @@ public class StringArraySection extends AbstractSection {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (String s :array){
+        for (String s : array) {
             sb.append(s);
             sb.append('\n');
         }
@@ -24,12 +24,12 @@ public class StringArraySection extends AbstractSection {
     @Override
     public void setData(String[] data) {
         clearData();
-        Collections.addAll(array,data);
+        Collections.addAll(array, data);
     }
 
     @Override
     public String[] getData() {
-        return array.toArray(new String [0]);
+        return array.toArray(new String[0]);
     }
 
     @Override

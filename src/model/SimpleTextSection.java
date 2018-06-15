@@ -2,6 +2,7 @@ package model;
 
 public class SimpleTextSection extends AbstractSection {
     private String data;
+
     public SimpleTextSection(SectionType type) {
         super(type);
     }

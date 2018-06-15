@@ -1,8 +1,5 @@
 package model;
 
-import sun.swing.SwingUtilities2;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Resume implements Comparable<Resume> {
@@ -14,7 +11,7 @@ public class Resume implements Comparable<Resume> {
     private final Map<String, Contact> contacts = new HashMap<>();
 
     {
-        for(SectionType t:SectionType.values()){
+        for (SectionType t : SectionType.values()) {
             sections.put(t, AbstractSection.createSection(t));
         }
     }
@@ -86,7 +83,7 @@ public class Resume implements Comparable<Resume> {
         getSection(type).setData(data);
     }
 
-    protected Section getSection(SectionType type){
+    protected Section getSection(SectionType type) {
         return sections.get(type);
     }
 }

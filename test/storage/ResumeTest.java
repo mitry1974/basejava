@@ -1,11 +1,13 @@
 package storage;
 
-import model.*;
+import model.Contact;
+import model.ContactType;
+import model.Resume;
+import model.SectionType;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.UUID;
 
 public class ResumeTest {
 
@@ -63,41 +65,41 @@ public class ResumeTest {
                 "Родной русский, английский \"upper intermediate"});
         resume1.setSectionData(SectionType.EXPERIENCE, new String[]{
                 "Java Online Projects\n" +
-                "10/2013 - Сейчас\tАвтор проекта.Создание, организация и проведение Java онлайн проектов и стажировок.\n",
+                        "10/2013 - Сейчас\tАвтор проекта.Создание, организация и проведение Java онлайн проектов и стажировок.\n",
                 "Wrike\n" +
-                "10/2014 - 01/2016\tСтарший разработчик (backend)\n" +
-                "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.\n",
+                        "10/2014 - 01/2016\tСтарший разработчик (backend)\n" +
+                        "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.\n",
                 "RIT Center\n" +
-                "04/2012 - 10/2014\tJava архитектор\n" +
-                "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python\n",
+                        "04/2012 - 10/2014\tJava архитектор\n" +
+                        "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python\n",
                 "Luxoft (Deutsche Bank)\n" +
-                "12/2010 - 04/2012\tВедущий программист\n" +
-                "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5.\n",
+                        "12/2010 - 04/2012\tВедущий программист\n" +
+                        "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5.\n",
                 "Yota\n" +
-                "06/2008 - 12/2010\tВедущий специалист\n" +
-                "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)\n",
+                        "06/2008 - 12/2010\tВедущий специалист\n" +
+                        "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)\n",
                 "Enkata\n" +
-                "03/2007 - 06/2008\tРазработчик ПО\n" +
-                "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей кластерного J2EE приложения (OLAP, Data mining).\n",
+                        "03/2007 - 06/2008\tРазработчик ПО\n" +
+                        "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей кластерного J2EE приложения (OLAP, Data mining).\n",
                 "Siemens AG\n" +
-                "01/2005 - 02/2007\tРазработчик ПО\n" +
-                "Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО на мобильной IN платформе Siemens @vantage (Java, Unix).\n",
+                        "01/2005 - 02/2007\tРазработчик ПО\n" +
+                        "Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО на мобильной IN платформе Siemens @vantage (Java, Unix).\n",
                 "Alcatel\n" +
-                "09/1997 - 01/2005\tИнженер по аппаратному и программному тестированию\n" +
-                "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM)."});
+                        "09/1997 - 01/2005\tИнженер по аппаратному и программному тестированию\n" +
+                        "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM)."});
         resume1.setSectionData(SectionType.EDUCATION, new String[]{"Coursera\n" +
                 "03/2013 - 05/2013\t\"Functional Programming Principles in Scala\" by Martin Odersky\n",
                 "Luxoft\n" +
-                "03/2011 - 04/2011\tКурс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"\n",
+                        "03/2011 - 04/2011\tКурс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"\n",
                 "Siemens AG\n" +
-                "01/2005 - 04/2005\t3 месяца обучения мобильным IN сетям (Берлин)\n",
+                        "01/2005 - 04/2005\t3 месяца обучения мобильным IN сетям (Берлин)\n",
                 "Alcatel\n" +
-                "09/1997 - 03/1998\t6 месяцев обучения цифровым телефонным сетям (Москва)\n",
+                        "09/1997 - 03/1998\t6 месяцев обучения цифровым телефонным сетям (Москва)\n",
                 "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики\n" +
-                "09/1993 - 07/1996\tАспирантура (программист С, С++)\n" +
-                "09/1987 - 07/1993\tИнженер (программист Fortran, C)\n",
+                        "09/1993 - 07/1996\tАспирантура (программист С, С++)\n" +
+                        "09/1987 - 07/1993\tИнженер (программист Fortran, C)\n",
                 "Заочная физико-техническая школа при МФТИ\n" +
-                "09/1984 - 06/1987\tЗакончил с отличием"});
+                        "09/1984 - 06/1987\tЗакончил с отличием"});
     }
 
     @Test

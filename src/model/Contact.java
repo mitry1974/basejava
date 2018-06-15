@@ -1,9 +1,9 @@
 package model;
 
 public class Contact {
-    private String      uuid;
+    private String uuid;
     private ContactType type;
-    private String      data;
+    private String data;
 
     public Contact(String uuid, ContactType type, String data) {
         this.type = type;
@@ -11,13 +11,16 @@ public class Contact {
         this.uuid = uuid;
     }
 
-    public String printContactType () {
+    public String printContactType() {
         return type.toString();
     }
 
     public String printContactData() {
         return data;
     }
-    public String getUuid(){return uuid;}
+
+    public String getUuid() {
+        return uuid;
+    }
 }
 
