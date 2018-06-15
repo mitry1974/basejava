@@ -40,7 +40,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void size() {
-        assertEquals(3, storage.size() );
+        assertEquals(3, storage.size());
     }
 
     @Test

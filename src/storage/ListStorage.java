@@ -16,7 +16,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void makeDelete(Object key) {
-        storage.remove((int) (Integer) key);
+        storage.remove((int) key);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (storage.get(i).getUuid().equals(uuid))
                 return i;
@@ -45,9 +45,10 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isResumeExist(Object key){
+    protected boolean isResumeExist(Object key) {
         return key != null;
     }
+
     @Override
     protected Resume[] getResumeArray() {
         return storage.toArray(new Resume[0]);

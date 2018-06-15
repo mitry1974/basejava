@@ -5,12 +5,12 @@ import model.Resume;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage {
     private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
     protected void makeDelete(Object key) {
-        storage.remove(key);
+        storage.remove(((Resume) key).getUuid());
     }
 
     @Override
@@ -20,22 +20,22 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void makeUpdate(Resume resume, Object key) {
-        storage.put(resume.getUuid(), resume);
+        storage.put(resume.getUuid(), (Resume) resume);
     }
 
     @Override
     protected Resume getResumeByKey(Object key) {
-        return storage.get(key);
+        return storage.get(((Resume) key).getUuid());
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
-        return storage.containsKey(uuid) ? uuid : null;
+    protected Resume getSearchKey(String uuid) {
+        return storage.get(uuid);
     }
 
     @Override
-    protected boolean isResumeExist(Object key){
-        return storage.containsKey(key);
+    protected boolean isResumeExist(Object key) {
+        return key != null;
     }
 
     @Override
@@ -52,5 +52,4 @@ public class MapStorage extends AbstractStorage {
     public int size() {
         return storage.size();
     }
-
 }
