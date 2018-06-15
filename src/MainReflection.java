@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 public class MainReflection {
 
     public static void main(String[] args) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        Resume r = new Resume();
+        Resume r = new Resume("");
         Class aClass = r.getClass();
 
         Field field = aClass.getDeclaredFields()[0];
