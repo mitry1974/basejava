@@ -5,7 +5,7 @@ import model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected abstract void fillDeletedElement(int index);
 
     protected abstract void insertElement(Resume r, int index);
@@ -27,27 +27,27 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-    public void makeUpdate(Resume resume, Object key) {
-        storage[(Integer) key] = resume;
+    public void makeUpdate(Resume resume, Integer key) {
+        storage[ key] = resume;
     }
 
-    protected void makeInsert(Resume resume, Object key) {
+    protected void makeInsert(Resume resume, Integer key) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", resume.getUuid());
         } else {
-            insertElement(resume, (Integer) key);
+            insertElement(resume,  key);
             size++;
         }
     }
 
-    public void makeDelete(Object key) {
-        fillDeletedElement((Integer) key);
+    public void makeDelete(Integer key) {
+        fillDeletedElement( key);
         storage[size--] = null;
     }
 
     @Override
-    public Resume getResumeByKey(Object key) {
-        return storage[(Integer) key];
+    public Resume getResumeByKey(Integer key) {
+        return storage[ key];
     }
 
     @Override
@@ -55,7 +55,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    protected boolean isResumeExist(Object key) {
-        return (Integer) key >= 0;
+    protected boolean isResumeExist(Integer key) {
+        return  key >= 0;
     }
 }

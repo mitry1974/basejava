@@ -8,20 +8,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<SK> implements Storage {
     private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
-    protected abstract void makeDelete(Object key);
+    protected abstract void makeDelete(SK key);
 
-    protected abstract void makeInsert(Resume resume, Object key);
+    protected abstract void makeInsert(Resume resume, SK key);
 
-    protected abstract void makeUpdate(Resume resume, Object key);
+    protected abstract void makeUpdate(Resume resume, SK key);
 
-    protected abstract Resume getResumeByKey(Object key);
+    protected abstract Resume getResumeByKey(SK key);
 
-    protected abstract Object getSearchKey(String uuid);
+    protected abstract SK getSearchKey(String uuid);
 
-    protected abstract boolean isResumeExist(Object key);
+    protected abstract boolean isResumeExist(SK key);
 
     protected abstract Resume[] getResumeArray();
 
@@ -57,8 +57,8 @@ public abstract class AbstractStorage implements Storage {
         return Arrays.asList(array);
     }
 
-    private Object getKeyCheckExist(String uuid) {
-        Object key = getSearchKey(uuid);
+    private SK getKeyCheckExist(String uuid) {
+        SK key = getSearchKey(uuid);
         if (!isResumeExist(key)) {
             LOG.warning("Resume " + uuid + " not exist!");
             throw new NotExistStorageException(uuid);
@@ -66,8 +66,8 @@ public abstract class AbstractStorage implements Storage {
         return key;
     }
 
-    private Object getKeyCheckNotExist(String uuid) {
-        Object key = getSearchKey(uuid);
+    private SK getKeyCheckNotExist(String uuid) {
+        SK key = getSearchKey(uuid);
         if (isResumeExist(key)) {
             LOG.warning("Resume " + uuid + " already exists!");
             throw new ExistStorageException(uuid);
