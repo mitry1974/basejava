@@ -1,5 +1,6 @@
 package model;
 
+import java.lang.annotation.ElementType;
 import java.util.*;
 
 public class Resume implements Comparable<Resume> {
@@ -7,12 +8,12 @@ public class Resume implements Comparable<Resume> {
     private final String fullName;
     private static final String DEFAULT_NAME = "Unknown";
 
-    private final Map<SectionType, Section> sections = new HashMap<>();
-    private final Map<String, Contact> contacts = new HashMap<>();
+    private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
+    private final Map<ContactType, String> contacts  = new EnumMap<>(ContactType.class);
 
     {
         for (SectionType t : SectionType.values()) {
-            sections.put(t, AbstractSection.createSection(t));
+            sections.put(t, Section.createSection(t));
         }
     }
 
@@ -58,13 +59,12 @@ public class Resume implements Comparable<Resume> {
         return fullName;
     }
 
-    public List<Contact> getContacts() {
-        return Arrays.asList(contacts.values().toArray(new Contact[0]));
+    public void addContact(ContactType type, String data) {
+        contacts.put(type, data);
     }
 
-    public void addContact(String contactUuid, ContactType type, String data) {
-        Contact c = new Contact(contactUuid, type, data);
-        contacts.put(contactUuid, c);
+    public String getContact(ContactType type){
+        return contacts.get(type);
     }
 
     public String[] getSectionData(SectionType type) {
@@ -72,7 +72,7 @@ public class Resume implements Comparable<Resume> {
     }
 
     public String getSectionTitle(SectionType type) {
-        return getSection(type).getTitle();
+        return type.getTitle();
     }
 
     public void setSectionData(SectionType type, String[] data) {

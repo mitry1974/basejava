@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class StringArraySection extends AbstractSection {
+public class StringArraySection implements Section {
     private List<String> array = new ArrayList<>();
 
-    protected StringArraySection(SectionType type) {
-        super(type);
+    protected StringArraySection() {
     }
 
     @Override

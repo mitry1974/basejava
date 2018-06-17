@@ -1,10 +1,9 @@
 package model;
 
-public class SimpleTextSection extends AbstractSection {
+public class SimpleTextSection implements Section {
     private String data;
 
-    public SimpleTextSection(SectionType type) {
-        super(type);
+    protected SimpleTextSection() {
     }
 
     public void setData(String[] data) {

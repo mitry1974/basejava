@@ -1,13 +1,24 @@
 package model;
 
 public interface Section {
-    public abstract String toString();
+    static Section createSection(SectionType t) {
+        Section section;
+        switch (t) {
+            case ACHIEVEMENT:
+            case QUALIFICATIONS:
+                section = new StringArraySection();
+                break;
+            default:
+                section = new SimpleTextSection();
+                break;
+        }
+        return section;
+    }
+    String toString();
 
-    public abstract void setData(String[] data);
+    void setData(String[] data);
 
-    public abstract String[] getData();
+    String[] getData();
 
-    public abstract String getTitle();
-
-    public abstract void clearData();
+    void clearData();
 }
