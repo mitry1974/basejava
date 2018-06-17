@@ -1,11 +1,14 @@
 package model;
 
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import java.lang.annotation.ElementType;
 import java.util.*;
 
 public class Resume implements Comparable<Resume> {
     private final String uuid;
-    private final String fullName;
+    private String fullName;
     private static final String DEFAULT_NAME = "Unknown";
 
     private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
@@ -47,7 +50,19 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public String toString() {
-        return uuid + " - " + fullName;
+        StringBuilder sb = new StringBuilder();
+        sb.append(fullName + '\n');
+        for(Map.Entry<ContactType, String> e : contacts.entrySet()){
+            sb.append(e.getValue() + '\n');
+        }
+
+        sb.append(sections.get(SectionType.OBJECTIVE).toString());
+        sb.append(sections.get(SectionType.PERSONAL).toString());
+        sb.append(sections.get(SectionType.ACHIEVEMENT).toString());
+        sb.append(sections.get(SectionType.QUALIFICATIONS).toString());
+        sb.append(sections.get(SectionType.EXPERIENCE).toString());
+        sb.append(sections.get(SectionType.EDUCATION).toString());
+        return sb.toString();
     }
 
     @Override
@@ -67,19 +82,77 @@ public class Resume implements Comparable<Resume> {
         return contacts.get(type);
     }
 
-    public String[] getSectionData(SectionType type) {
-        return getSection(type).getData();
-    }
-
     public String getSectionTitle(SectionType type) {
         return type.getTitle();
     }
 
-    public void setSectionData(SectionType type, String[] data) {
-        getSection(type).setData(data);
+    public Section getSection(SectionType type) {
+        return sections.get(type);
     }
 
-    protected Section getSection(SectionType type) {
-        return sections.get(type);
+    public void load(Node rootNode){
+        NodeList list = rootNode.getChildNodes();
+        for(int i = 0; i < list.getLength(); i++){
+            Node node = list.item(i);
+            SectionType sectionType = null;
+            switch(node.getNodeName()){
+                case  "title":
+                fullName = node.getTextContent();
+                break;
+                case "contacts":
+                    loadContacts(node);
+                    break;
+                case "personal":
+                    sectionType = SectionType.PERSONAL;
+                    break;
+                case "achievement":
+                    sectionType = SectionType.ACHIEVEMENT;
+                    break;
+                case "objective":
+                    sectionType = SectionType.OBJECTIVE;
+                    break;
+                case "qualifications":
+                    sectionType = SectionType.QUALIFICATIONS;
+                    break;
+                case "experience":
+                    sectionType = SectionType.EXPERIENCE;
+                    break;
+                case "education":
+                    sectionType = SectionType.EDUCATION;
+                    break;
+            }
+            if(sectionType != null){
+                Section s = Section.createSection(sectionType);
+                s.loadXml(node);
+                sections.put(sectionType, s);
+
+            }
+        }
+    }
+
+    protected void loadContacts(Node node){
+        NodeList list = node.getChildNodes();
+
+        for(int i = 0; i < list.getLength(); i++) {
+            Node n = list.item(i);
+            ContactType type = null;
+            switch(n.getNodeName()){
+                case "skype":
+                    type = ContactType.SKYPE;
+                    break;
+                case "email":
+                    type = ContactType.EMAIL;
+                    break;
+                case "phone":
+                    type = ContactType.PHONE;
+                    break;
+                case "link":
+                    type = ContactType.LINK;
+                    break;
+            }
+
+            if(type != null)
+                contacts.put(type, n.getTextContent());
+        }
     }
 }

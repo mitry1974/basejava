@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resume>
+    <title>Жугдэрдэмидийн Гуррагча</title>
+    <contacts>
+        <phone>+72326675345</phone>
+        <email>test@test.ru</email>
+        <skype>skype.contact</skype>
+    </contacts>
+    <personal>Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.</personal>
+    <achievement>
+        <string>С 2013 года: разработка проектов "Разработка Web приложения","Java Enterprise", "Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.</string>
+        <string>Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.</string>
+        <string>Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM. Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления окружением на стеке: Scala/Play/Anorm/JQuery. Разработка SSO аутентификации и авторизации различных ERP модулей, интеграция CIFS/SMB java сервера.</string>
+        <string>Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга.</string>
+        <string>Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios. Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django).</string>
+        <string>Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.</string>
+    </achievement>
+    <objective>Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям</objective>
+    <qualifications>
+        <string>JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2</string>
+        <string>Version control: Subversion, Git, Mercury, ClearCase, Perforce</string>
+        <string>DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle, MySQL, SQLite, MS SQL, HSQLDB</string>
+        <string>Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy, XML/XSD/XSLT, SQL, C/C++, Unix shell scripts</string>
+        <string>Java Frameworks: Java 8 (Time API, Streams), Guava, Java Executor, MyBatis, Spring (MVC, Security, data, Clouds, Boot), JPA (Hibernate, EclipseLink), Guice, GWT(SmartGWT, ExtGWT/GXT), Vaadin, Jasperreports, Apache Commons, Eclipse SWT, JUnit, Selenium (htmlpositions).</string>
+        <string>Python: Django.</string>
+        <string>JavaScript: jQuery, ExtJS, Bootstrap.js, underscore.js</string>
+        <string>Scala: SBT, Play2, Specs2, Anorm, Spray, Akka</string>
+        <string>Технологии: Servlet, JSP/JSTL, JAX-WS, REST, EJB, RMI, JMS, JavaMail, JAXB, StAX, SAX, DOM, XSLT, MDB, JMX, JDBC, JPA, JNDI, JAAS, SOAP, AJAX, Commet, HTML5, ESB, CMIS, BPMN2, LDAP, OAuth1, OAuth2, JWT.</string>
+        <string>Инструменты: Maven + plugin development, Gradle, настройка Ngnix,</string>
+        <string>администрирование Hudson/Jenkins, Ant + custom task, SoapUI, JPublisher, Flyway, Nagios, iReport, OpenCmis, Bonita, pgBouncer.</string>
+        <string>Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, архитектурных шаблонов, UML, функционального программирования</string>
+        <string>Родной русский, английский "upper intermediate"</string>
+    </qualifications>
+    <experience>
+        <organization>
+            <title>Java Online Projects</title>
+            <position>
+                <datestart>10-2013</datestart>
+                <datefinish>now</datefinish>
+                <title>Автор проекта</title>
+                <data>Создание, организация и проведение Java онлайн проектов и стажировок.</data>
+            </position>
+        </organization>
+        <organization>
+            <title>Wrike</title>
+            <position>
+                <datestart>10-2014</datestart>
+                <datefinish>01-2016</datefinish>
+                <title>Старший разработчик (backend)</title>
+                <data>Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.</data>
+            </position>
+        </organization>
+        <organization>
+            <title>RIT Center</title>
+            <position>
+                <datestart>04-2012</datestart>
+                <datefinish>10-2014</datefinish>
+                <title>Java архитектор</title>
+                <data>Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python</data>
+            </position>
+        </organization>
+        <organization>
+            <title>Luxoft (Deutsche Bank)</title>
+            <position>
+                <datestart>12-2010</datestart>
+                <datefinish>04-2012</datefinish>
+                <title>Ведущий программист</title>
+                <data>Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5.</data>
+            </position>
+        </organization>
+        <organization>
+            <title>Yota</title>
+            <position>
+                <datestart>06-2008</datestart>
+                <datefinish>12-2010</datefinish>
+                <title>Ведущий специалист</title>
+                <data>Дизайн и имплементация Java EE фреймворка для отдела "Платежные Системы" (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)</data>
+            </position>
+        </organization>
+        <organization>
+            <title>Enkata</title>
+            <position>
+                <datestart>03-2007</datestart>
+                <datefinish>06-2008</datefinish>
+                <title>Разработчик ПО</title>
+                <data>Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей кластерного J2EE приложения (OLAP, data mining).</data>
+            </position>
+        </organization>
+        <organization>
+            <title>Siemens AG</title>
+            <position>
+                <datestart>01-2005</datestart>
+                <datefinish>02-2007</datefinish>
+                <title>Разработчик ПО</title>
+                <data>Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО на мобильной IN платформе Siemens @vantage (Java, Unix).</data>
+            </position>
+        </organization>
+        <organization>
+            <title>Alcatel</title>
+            <position>
+                <datestart>09-1997</datestart>
+                <datefinish>01-2005</datefinish>
+                <title>Инженер по аппаратному и программному тестированию</title>
+                <data>Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).</data>
+            </position>
+        </organization>
+    </experience>
+    <education>
+        <organization>
+            <title>Coursera</title>
+            <position>
+                <datestart>03-2013</datestart>
+                <datefinish>05-2013</datefinish>
+                <title>"Functional Programming Principles in Scala" by Martin Odersky</title>
+            </position>
+        </organization>
+        <organization>
+            <title>Luxoft</title>
+            <position>
+                <datestart>03-2011</datestart>
+                <datefinish>04-2011</datefinish>
+                <title>Курс "Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML."</title>
+            </position>
+        </organization>
+        <organization>
+            <title>Siemens AG</title>
+            <position>
+                <datestart>01-2005</datestart>
+                <datefinish>04-2005</datefinish>
+                <title>3 месяца обучения мобильным IN сетям (Берлин)</title>
+            </position>
+        </organization>
+        <organization>
+            <title>Alcatel</title>
+            <position>
+                <datestart>09-1997</datestart>
+                <datefinish>03-1998</datefinish>
+                <title>6 месяцев обучения цифровым телефонным сетям (Москва)</title>
+            </position>
+        </organization>
+        <organization>
+            <title>Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики</title>
+           <position>
+               <datestart>09-1993</datestart>
+               <datefinish>07-1996</datefinish>
+                <title>Аспирантура (программист С, С++)</title>
+           </position>
+            <position>
+                <datestart>09-1987</datestart>
+                <datefinish>07-1993</datefinish>
+                <title>Инженер (программист Fortran, C)</title>
+            </position>
+        </organization>
+        <organization>
+            <title>Заочная физико-техническая школа при МФТИ</title>
+            <position>
+                <datestart>09-1984</datestart>
+                <datefinish>06-1987</datefinish>
+                <title>Закончил с отличием</title>
+            </position>
+        </organization>
+    </education>
+</resume>
