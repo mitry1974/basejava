@@ -26,12 +26,12 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     protected void makeUpdate(Resume resume, Integer key) {
-        storage.set( key, resume);
+        storage.set(key, resume);
     }
 
     @Override
     protected Resume getResumeByKey(Integer key) {
-        return storage.get( key);
+        return storage.get(key);
     }
 
     @Override

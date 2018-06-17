@@ -3,8 +3,9 @@ package model;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.lang.annotation.ElementType;
-import java.util.*;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class Resume implements Comparable<Resume> {
     private final String uuid;
@@ -12,7 +13,7 @@ public class Resume implements Comparable<Resume> {
     private static final String DEFAULT_NAME = "Unknown";
 
     private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
-    private final Map<ContactType, String> contacts  = new EnumMap<>(ContactType.class);
+    private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
     {
         for (SectionType t : SectionType.values()) {
@@ -52,7 +53,7 @@ public class Resume implements Comparable<Resume> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(fullName + '\n');
-        for(Map.Entry<ContactType, String> e : contacts.entrySet()){
+        for (Map.Entry<ContactType, String> e : contacts.entrySet()) {
             sb.append(e.getValue() + '\n');
         }
 
@@ -78,7 +79,7 @@ public class Resume implements Comparable<Resume> {
         contacts.put(type, data);
     }
 
-    public String getContact(ContactType type){
+    public String getContact(ContactType type) {
         return contacts.get(type);
     }
 
@@ -90,15 +91,15 @@ public class Resume implements Comparable<Resume> {
         return sections.get(type);
     }
 
-    public void load(Node rootNode){
+    public void load(Node rootNode) {
         NodeList list = rootNode.getChildNodes();
-        for(int i = 0; i < list.getLength(); i++){
+        for (int i = 0; i < list.getLength(); i++) {
             Node node = list.item(i);
             SectionType sectionType = null;
-            switch(node.getNodeName()){
-                case  "title":
-                fullName = node.getTextContent();
-                break;
+            switch (node.getNodeName()) {
+                case "title":
+                    fullName = node.getTextContent();
+                    break;
                 case "contacts":
                     loadContacts(node);
                     break;
@@ -121,7 +122,7 @@ public class Resume implements Comparable<Resume> {
                     sectionType = SectionType.EDUCATION;
                     break;
             }
-            if(sectionType != null){
+            if (sectionType != null) {
                 Section s = Section.createSection(sectionType);
                 s.loadXml(node);
                 sections.put(sectionType, s);
@@ -130,13 +131,13 @@ public class Resume implements Comparable<Resume> {
         }
     }
 
-    protected void loadContacts(Node node){
+    protected void loadContacts(Node node) {
         NodeList list = node.getChildNodes();
 
-        for(int i = 0; i < list.getLength(); i++) {
+        for (int i = 0; i < list.getLength(); i++) {
             Node n = list.item(i);
             ContactType type = null;
-            switch(n.getNodeName()){
+            switch (n.getNodeName()) {
                 case "skype":
                     type = ContactType.SKYPE;
                     break;
@@ -151,7 +152,7 @@ public class Resume implements Comparable<Resume> {
                     break;
             }
 
-            if(type != null)
+            if (type != null)
                 contacts.put(type, n.getTextContent());
         }
     }

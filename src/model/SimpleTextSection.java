@@ -2,7 +2,7 @@ package model;
 
 import org.w3c.dom.Node;
 
-public class SimpleTextSection implements Section{
+public class SimpleTextSection implements Section {
     private String title;
     private String data;
 

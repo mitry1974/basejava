@@ -28,26 +28,26 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     public void makeUpdate(Resume resume, Integer key) {
-        storage[ key] = resume;
+        storage[key] = resume;
     }
 
     protected void makeInsert(Resume resume, Integer key) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", resume.getUuid());
         } else {
-            insertElement(resume,  key);
+            insertElement(resume, key);
             size++;
         }
     }
 
     public void makeDelete(Integer key) {
-        fillDeletedElement( key);
+        fillDeletedElement(key);
         storage[size--] = null;
     }
 
     @Override
     public Resume getResumeByKey(Integer key) {
-        return storage[ key];
+        return storage[key];
     }
 
     @Override
@@ -56,6 +56,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     protected boolean isResumeExist(Integer key) {
-        return  key >= 0;
+        return key >= 0;
     }
 }

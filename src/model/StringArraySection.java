@@ -4,7 +4,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class StringArraySection implements Section {
@@ -18,9 +17,9 @@ public class StringArraySection implements Section {
     @Override
     public void loadXml(Node rootNode) {
         NodeList list = rootNode.getChildNodes();
-        for(int i = 0; i < list.getLength(); i++) {
+        for (int i = 0; i < list.getLength(); i++) {
             Node node = list.item(i);
-            if(node.getNodeName().equals("string")){
+            if (node.getNodeName().equals("string")) {
                 array.add(node.getTextContent());
             }
         }

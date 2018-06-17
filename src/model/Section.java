@@ -2,7 +2,7 @@ package model;
 
 import org.w3c.dom.Node;
 
-public interface Section{
+public interface Section {
     static Section createSection(SectionType t) {
         Section section;
         switch (t) {
@@ -20,6 +20,7 @@ public interface Section{
         }
         return section;
     }
+
     String toString();
 
     void clearData();
