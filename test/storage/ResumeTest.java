@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class ResumeTest {
 
-    Storage storage = new ListStorage();
+    private final Storage storage = new ListStorage();
 
     private static final String UUID1 = "uuid1";
     private static final String UUID2 = "uuid2";

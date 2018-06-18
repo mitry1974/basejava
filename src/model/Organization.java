@@ -16,7 +16,8 @@ public class Organization {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(title + '\n');
+        sb.append(title);
+        sb.append('\n');
         for (Position p : positions) {
             sb.append(p.toString());
         }
@@ -44,11 +45,20 @@ public class Organization {
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
-            sb.append(printDate(startDate) + " - " + printDate(finishDate) + '\n');
-            if (title != null)
-                sb.append(title + '\n');
-            if (data != null)
-                sb.append(data + '\n');
+            sb.append(printDate(startDate));
+            sb.append(" - ");
+            sb.append(printDate(finishDate));
+            sb.append('\n');
+            if (title != null) {
+                sb.append(title);
+                sb.append('\n');
+            }
+
+            if (data != null) {
+                sb.append(data);
+                sb.append('\n');
+            }
+
             return sb.toString();
         }
 
