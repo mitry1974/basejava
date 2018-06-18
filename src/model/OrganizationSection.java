@@ -15,7 +15,6 @@ public class OrganizationSection implements Section {
             sb.append(o.toString());
         }
 
-        sb.append('\n');
         return sb.toString();
     }
 

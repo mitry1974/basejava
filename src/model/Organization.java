@@ -53,11 +53,11 @@ public class Organization {
             sb.append('\t');
             if (title != null) {
                 sb.append(title);
-                sb.append('\n');
             }
 
             if (data != null) {
                 sb.append(data);
+                sb.append('\n');
             }
 
             return sb.toString();
