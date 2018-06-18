@@ -1,34 +1,17 @@
 package model;
 
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Organization {
-    public Organization(Node rootNode) {
-        loadXml(rootNode);
+    private String title;
+
+    public Organization(String title) {
+        this.title = title;
     }
 
     private final ArrayList<Position> positions = new ArrayList<>();
-    protected String title;
-
-    public void loadXml(Node rootNode) {
-        NodeList list = rootNode.getChildNodes();
-        for (int i = 0; i < list.getLength(); i++) {
-            Node node = list.item(i);
-            if (node.getNodeName().equals("title")) {
-                title = node.getTextContent();
-            }
-
-            if (node.getNodeName().equals("position")) {
-                positions.add(new Position(node));
-            }
-        }
-    }
-
 
     @Override
     public String toString() {
@@ -41,39 +24,22 @@ public class Organization {
         return sb.toString();
     }
 
+    public void addPosition(String startDate, String finishDate, String title, String data) {
+        positions.add(new Position(startDate, finishDate, title, data));
+    }
+
     class Position {
-        public Position(Node rootNode) {
-            if (rootNode != null)
-                loadXml(rootNode);
+        public Position(String startDate, String finishDate, String title, String data) {
+            this.startDate = parceDate(startDate);
+            this.finishDate = parceDate(finishDate);
+            this.title = title;
+            this.data = data;
         }
 
         private String title;
         private YearMonth startDate;
         private YearMonth finishDate;
         private String data;
-
-        private void loadXml(Node rootNode) {
-            NodeList elementsList = rootNode.getChildNodes();
-            for (int j = 0; j < elementsList.getLength(); j++) {
-                Node elementNode = elementsList.item(j);
-                if (elementNode.getNodeName().equals("datestart")) {
-                    startDate = loadXmlDate(elementNode);
-                }
-
-                if (elementNode.getNodeName().equals("datefinish")) {
-                    finishDate = loadXmlDate(elementNode);
-                }
-
-                if (elementNode.getNodeName().equals("title")) {
-                    title = elementNode.getTextContent();
-                }
-
-                if (elementNode.getNodeName().equals("data")) {
-                    data = elementNode.getTextContent();
-                }
-
-            }
-        }
 
         @Override
         public String toString() {
@@ -86,19 +52,51 @@ public class Organization {
             return sb.toString();
         }
 
-        private YearMonth loadXmlDate(Node node) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
-            String strdate = node.getTextContent();
-            if (strdate.equals("now")) {
-                return YearMonth.now();
-            }
-            return YearMonth.parse(strdate, formatter);
-        }
-
         private String printDate(YearMonth ym) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyy");
 
             return ym.format(formatter);
+        }
+
+        private YearMonth parceDate(String date) {
+            if (date.equals("now"))
+                return YearMonth.now();
+            else {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyy");
+                return YearMonth.parse(date, formatter);
+            }
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public YearMonth getStartDate() {
+            return startDate;
+        }
+
+        public void setStartDate(YearMonth startDate) {
+            this.startDate = startDate;
+        }
+
+        public YearMonth getFinishDate() {
+            return finishDate;
+        }
+
+        public void setFinishDate(YearMonth finishDate) {
+            this.finishDate = finishDate;
+        }
+
+        public String getData() {
+            return data;
+        }
+
+        public void setData(String data) {
+            this.data = data;
         }
     }
 }

@@ -1,13 +1,9 @@
 package model;
 
-import org.w3c.dom.Node;
-
 public class SimpleTextSection implements Section {
-    private String title;
     private String data;
 
-    protected SimpleTextSection(String title) {
-        this.title = title;
+    protected SimpleTextSection() {
     }
 
     public void setData(String data) {
@@ -20,12 +16,7 @@ public class SimpleTextSection implements Section {
     }
 
     @Override
-    public void loadXml(Node rootNode) {
-        data = rootNode.getTextContent();
-    }
-
-    @Override
     public String toString() {
-        return title + '\n' + data + '\n';
+        return data + "\n\n";
     }
 }

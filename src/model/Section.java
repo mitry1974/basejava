@@ -1,21 +1,19 @@
 package model;
 
-import org.w3c.dom.Node;
-
 public interface Section {
     static Section createSection(SectionType t) {
         Section section;
         switch (t) {
             case ACHIEVEMENT:
             case QUALIFICATIONS:
-                section = new StringArraySection(t.getTitle());
+                section = new StringArraySection();
                 break;
             case EXPERIENCE:
             case EDUCATION:
-                section = new OrganizationSection(t.getTitle());
+                section = new OrganizationSection();
                 break;
             default:
-                section = new SimpleTextSection(t.getTitle());
+                section = new SimpleTextSection();
                 break;
         }
         return section;
@@ -24,6 +22,4 @@ public interface Section {
     String toString();
 
     void clearData();
-
-    void loadXml(Node rootNode);
 }

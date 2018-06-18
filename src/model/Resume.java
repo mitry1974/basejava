@@ -1,8 +1,5 @@
 package model;
 
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.UUID;
@@ -57,11 +54,22 @@ public class Resume implements Comparable<Resume> {
             sb.append(e.getValue() + '\n');
         }
 
+        sb.append(SectionType.OBJECTIVE.getTitle() + '\n');
         sb.append(sections.get(SectionType.OBJECTIVE).toString());
+
+        sb.append(SectionType.PERSONAL.getTitle() + '\n');
         sb.append(sections.get(SectionType.PERSONAL).toString());
+
+        sb.append(SectionType.ACHIEVEMENT.getTitle() + '\n');
         sb.append(sections.get(SectionType.ACHIEVEMENT).toString());
+
+        sb.append(SectionType.QUALIFICATIONS.getTitle() + '\n');
         sb.append(sections.get(SectionType.QUALIFICATIONS).toString());
+
+        sb.append(SectionType.EXPERIENCE.getTitle() + '\n');
         sb.append(sections.get(SectionType.EXPERIENCE).toString());
+
+        sb.append(SectionType.EDUCATION.getTitle() + '\n');
         sb.append(sections.get(SectionType.EDUCATION).toString());
         return sb.toString();
     }
@@ -91,69 +99,7 @@ public class Resume implements Comparable<Resume> {
         return sections.get(type);
     }
 
-    public void load(Node rootNode) {
-        NodeList list = rootNode.getChildNodes();
-        for (int i = 0; i < list.getLength(); i++) {
-            Node node = list.item(i);
-            SectionType sectionType = null;
-            switch (node.getNodeName()) {
-                case "title":
-                    fullName = node.getTextContent();
-                    break;
-                case "contacts":
-                    loadContacts(node);
-                    break;
-                case "personal":
-                    sectionType = SectionType.PERSONAL;
-                    break;
-                case "achievement":
-                    sectionType = SectionType.ACHIEVEMENT;
-                    break;
-                case "objective":
-                    sectionType = SectionType.OBJECTIVE;
-                    break;
-                case "qualifications":
-                    sectionType = SectionType.QUALIFICATIONS;
-                    break;
-                case "experience":
-                    sectionType = SectionType.EXPERIENCE;
-                    break;
-                case "education":
-                    sectionType = SectionType.EDUCATION;
-                    break;
-            }
-            if (sectionType != null) {
-                Section s = Section.createSection(sectionType);
-                s.loadXml(node);
-                sections.put(sectionType, s);
-
-            }
-        }
-    }
-
-    protected void loadContacts(Node node) {
-        NodeList list = node.getChildNodes();
-
-        for (int i = 0; i < list.getLength(); i++) {
-            Node n = list.item(i);
-            ContactType type = null;
-            switch (n.getNodeName()) {
-                case "skype":
-                    type = ContactType.SKYPE;
-                    break;
-                case "email":
-                    type = ContactType.EMAIL;
-                    break;
-                case "phone":
-                    type = ContactType.PHONE;
-                    break;
-                case "link":
-                    type = ContactType.LINK;
-                    break;
-            }
-
-            if (type != null)
-                contacts.put(type, n.getTextContent());
-        }
+    public void setSectionData(SectionType type, Section section) {
+        sections.put(type, section);
     }
 }
