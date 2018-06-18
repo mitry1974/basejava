@@ -9,9 +9,6 @@ public class ResumeTest {
     private final Storage storage = new ListStorage();
 
     private static final String UUID1 = "uuid1";
-    private static final String UUID2 = "uuid2";
-    private static final String UUID3 = "uuid3";
-    private static final String UUID4 = "uuid4";
 
     private static final Resume resume1 = new Resume(UUID1, "Жугдэрдэмидийн Гуррагча");
 
