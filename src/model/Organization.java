@@ -22,6 +22,8 @@ public class Organization {
             sb.append(p.toString());
         }
 
+        sb.append('\n');
+
         return sb.toString();
     }
 
@@ -48,7 +50,7 @@ public class Organization {
             sb.append(printDate(startDate));
             sb.append(" - ");
             sb.append(printDate(finishDate));
-            sb.append('\n');
+            sb.append('\t');
             if (title != null) {
                 sb.append(title);
                 sb.append('\n');
@@ -56,7 +58,6 @@ public class Organization {
 
             if (data != null) {
                 sb.append(data);
-                sb.append('\n');
             }
 
             return sb.toString();
