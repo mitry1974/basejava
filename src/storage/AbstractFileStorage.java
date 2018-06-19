@@ -72,7 +72,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected Resume[] getResumeArray() {
         File[] array = directory.listFiles();
         if (array == null) {
-            throw new IllegalArgumentException(directory.getAbsolutePath() + "list files must not be null!");
+            throw new StorageException(directory.getAbsolutePath(), "list files must not be null!");
         }
 
         Resume[] resumes = new Resume[array.length];
@@ -90,7 +90,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     public void clear() {
         File[] array = directory.listFiles();
         if (array == null) {
-            throw new IllegalArgumentException(directory.getAbsolutePath() + "list files must not be null!");
+            throw new StorageException("IO error", "list files must not be null!");
         }
 
         for (File anArray : array) {
@@ -102,7 +102,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     public int size() {
         File[] array = directory.listFiles();
         if (array == null) {
-            throw new IllegalArgumentException(directory.getAbsolutePath() + "list files must not be null!");
+            throw new StorageException(directory.getAbsolutePath(), "list files must not be null!");
         }
         return array.length;
     }

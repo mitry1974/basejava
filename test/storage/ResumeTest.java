@@ -23,7 +23,6 @@ public class ResumeTest {
     @Before
     public void setUp() {
         storage.clear();
-        storage.save(resume1);
 
         resume1.addContact(ContactType.PHONE, "+72326675345");
         resume1.addContact(ContactType.EMAIL, "test@test.ru");
@@ -87,6 +86,8 @@ public class ResumeTest {
 
         OrganizationSection eduSection = new OrganizationSection(Arrays.asList(o5, o6, o7, o8));
         resume1.addSection(SectionType.EDUCATION, eduSection);
+
+        storage.save(resume1);
     }
 
     @Test
