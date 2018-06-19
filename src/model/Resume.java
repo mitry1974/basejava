@@ -2,6 +2,7 @@ package model;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Resume implements Comparable<Resume> {
@@ -10,12 +11,6 @@ public class Resume implements Comparable<Resume> {
 
     private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
     private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
-
-    {
-        for (SectionType t : SectionType.values()) {
-            sections.put(t, Section.createSection(t));
-        }
-    }
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -37,9 +32,10 @@ public class Resume implements Comparable<Resume> {
 
         Resume resume = (Resume) o;
 
-        return uuid.equals(resume.uuid);
-    }
+        if (!uuid.equals(resume.uuid)) return false;
+        return fullName.equals(resume.fullName);
 
+    }
     @Override
     public int hashCode() {
         return uuid.hashCode();
@@ -55,29 +51,16 @@ public class Resume implements Comparable<Resume> {
             sb.append('\n');
         }
 
-        sb.append(SectionType.OBJECTIVE.getTitle());
-        sb.append('\n');
-        sb.append(sections.get(SectionType.OBJECTIVE).toString());
-
-        sb.append(SectionType.PERSONAL.getTitle());
-        sb.append('\n');
-        sb.append(sections.get(SectionType.PERSONAL).toString());
-
-        sb.append(SectionType.ACHIEVEMENT.getTitle());
-        sb.append('\n');
-        sb.append(sections.get(SectionType.ACHIEVEMENT).toString());
-
-        sb.append(SectionType.QUALIFICATIONS.getTitle());
-        sb.append('\n');
-        sb.append(sections.get(SectionType.QUALIFICATIONS).toString());
-
-        sb.append(SectionType.EXPERIENCE.getTitle());
-        sb.append('\n');
-        sb.append(sections.get(SectionType.EXPERIENCE).toString());
-
-        sb.append(SectionType.EDUCATION.getTitle());
-        sb.append('\n');
-        sb.append(sections.get(SectionType.EDUCATION).toString());
+        for(SectionType t : SectionType.values()){
+            if(sections.containsKey(t)){
+                Section s = sections.get(t);
+                Objects.requireNonNull(s);
+                sb.append('\n');
+                sb.append(t.getTitle());
+                sb.append('\n');
+                sb.append(s.toString());
+            }
+        }
         return sb.toString();
     }
 
@@ -90,7 +73,7 @@ public class Resume implements Comparable<Resume> {
         contacts.put(type, data);
     }
 
-    public void setSectionData(SectionType type, Section section) {
+    public void addSection(SectionType type, Section section) {
         sections.put(type, section);
     }
 }

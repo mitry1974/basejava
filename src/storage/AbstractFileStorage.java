@@ -1,73 +1,101 @@
 package storage;
 
+import exception.StorageException;
 import model.Resume;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.util.Objects;
 
-public abstract class AbstractFileStorage extends AbstractStorage<String> {
-    private String storagePath;
-    private final List<String> storage = new ArrayList<>();
+public abstract class AbstractFileStorage extends AbstractStorage<File> {
+    private File directory;
 
-    public AbstractFileStorage(String path) {
-        if (path.charAt(path.length() - 1) != '\\')
-            path += '\\';
+    protected AbstractFileStorage(File directory) {
+        Objects.requireNonNull(directory, "directory must not be null!");
+        if (!directory.isDirectory()) {
+            throw new IllegalArgumentException(directory.getAbsolutePath() + "is not directory");
+        }
 
-        this.storagePath = path;
+        if (!directory.canRead() || !directory.canWrite()) {
+            throw new IllegalArgumentException(directory.getAbsolutePath() + "can't read or write");
+        }
+
+        this.directory = directory;
     }
 
     @Override
-    protected void makeDelete(String key) {
-        new File(key).delete();
+    protected void makeDelete(File file) {
+        file.delete();
     }
 
     @Override
-    protected void makeInsert(Resume resume, String key) {
-        writeResume(resume, storagePath + key);
-        storage.add(key);
+    protected void makeInsert(Resume resume, File file) {
+        try {
+            file.createNewFile();
+            writeResume(resume, file);
+        } catch (IOException e) {
+            throw new StorageException("IO error", file.getName(), e);
+        }
     }
 
     @Override
-    protected void makeUpdate(Resume resume, String key) {
-        writeResume(resume, storagePath + key);
+    protected void makeUpdate(Resume resume, File file) {
+        try {
+            writeResume(resume, file);
+        } catch (IOException e) {
+            throw new StorageException("IO error", file.getName(), e);
+        }
     }
 
     @Override
-    protected Resume getResumeByKey(String key) {
-        return readResume(key);
+    protected Resume getResumeByKey(File file) {
+        try {
+            return readResume(file);
+        } catch (IOException e) {
+            throw new StorageException("IO error", file.getName(), e);
+        }
     }
 
     @Override
-    protected String getSearchKey(String uuid) {
-        return uuid;
+    protected File getSearchKey(String uuid) {
+        return new File(directory, uuid);
     }
 
     @Override
-    protected boolean isResumeExist(String key) {
-        return new File(storagePath + key).exists();
+    protected boolean isResumeExist(File file) {
+        return Objects.requireNonNull(file).exists();
     }
 
     @Override
     protected Resume[] getResumeArray() {
-        Resume[] array = new Resume[storage.size()];
-        for (int i = 0; i < storage.size(); i++) {
-            array[i] = readResume(storagePath + storage.get(i));
+        File[] array = directory.listFiles();
+        Objects.requireNonNull(array);
+        Resume[] resumes = new Resume[array.length];
+        for (int i = 0; i < array.length; i++) {
+            try {
+                resumes[i] = readResume(array[i]);
+            } catch (IOException e) {
+                throw new StorageException("IO error", array[i].getName(), e);
+            }
         }
-        return array;
+        return resumes;
     }
 
     @Override
     public void clear() {
-        storage.clear();
+        File[] array = directory.listFiles();
+        Objects.requireNonNull(array);
+        for (File anArray : array) {
+            anArray.delete();
+        }
     }
 
     @Override
     public int size() {
-        return storage.size();
+        return Objects.requireNonNull(directory.listFiles()).length;
     }
 
-    public abstract Resume readResume(String filePath);
+    public abstract Resume readResume(File file) throws IOException;
 
-    public abstract void writeResume(Resume resume, String filePath);
+    public abstract void writeResume(Resume resume, File file) throws IOException;
 }

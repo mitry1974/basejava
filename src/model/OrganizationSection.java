@@ -1,11 +1,15 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
-public class OrganizationSection implements Section {
-    private final ArrayList<Organization> organizations = new ArrayList<>();
+public class OrganizationSection extends Section {
+    private final List<Organization> organizations;
 
-    public OrganizationSection() {
+    public OrganizationSection(List<Organization> organizations) {
+        Objects.requireNonNull(organizations, "organizations must be not null");
+        this.organizations = organizations;
     }
 
     @Override
@@ -18,12 +22,8 @@ public class OrganizationSection implements Section {
         return sb.toString();
     }
 
-    @Override
-    public void clearData() {
-        organizations.clear();
-    }
-
     public void addOrganization(Organization o) {
+        Objects.requireNonNull(o);
         organizations.add(o);
     }
 }
