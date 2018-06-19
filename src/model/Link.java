@@ -27,7 +27,7 @@ public class Link {
     @Override
     public String toString() {
         String res = name;
-        if(url != null) {
+        if (url != null) {
             res += " ";
             res += url;
         }

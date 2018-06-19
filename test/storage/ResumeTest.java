@@ -62,15 +62,14 @@ public class ResumeTest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
         OrganizationPosition op1 = new OrganizationPosition(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.");
         Organization o1 = new Organization("Java Online Projects", Arrays.asList(op1), "http://www.javaops.ru");
-        OrganizationPosition op2 = new OrganizationPosition(YearMonth.parse("10/2014", formatter), YearMonth.parse("01/2016", formatter),"Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO." );
+        OrganizationPosition op2 = new OrganizationPosition(YearMonth.parse("10/2014", formatter), YearMonth.parse("01/2016", formatter), "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
         Organization o2 = new Organization("Wrike", Arrays.asList(op2), "www.wrike.com");
         OrganizationPosition op3 = new OrganizationPosition(YearMonth.parse("04/2012", formatter), YearMonth.parse("10/2014", formatter), "Java архитектор", "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python");
         Organization o3 = new Organization("RIT Center", Arrays.asList(op3), null);
         OrganizationPosition op4 = new OrganizationPosition(YearMonth.parse("12/2010", formatter), YearMonth.parse("04/2012", formatter), "Ведущий программист", "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5.");
         Organization o4 = new Organization("Luxoft (Deutsche Bank)", Arrays.asList(op4), "www.luxsoft.com");
-        OrganizationSection expSection = new OrganizationSection (Arrays.asList(o1,o2,o3,o4));
+        OrganizationSection expSection = new OrganizationSection(Arrays.asList(o1, o2, o3, o4));
         resume1.addSection(SectionType.EXPERIENCE, expSection);
-
 
 
         OrganizationPosition op5 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "\"Functional Programming Principles in Scala\" by Martin Odersky", "");
@@ -86,7 +85,7 @@ public class ResumeTest {
         OrganizationPosition op9 = new OrganizationPosition(YearMonth.parse("09/1987", formatter), YearMonth.parse("07/1993", formatter), "Инженер (программист Fortran, C)", "");
         Organization o8 = new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", Arrays.asList(op8, op9), null);
 
-        OrganizationSection eduSection = new OrganizationSection(Arrays.asList(o5,o6,o7,o8));
+        OrganizationSection eduSection = new OrganizationSection(Arrays.asList(o5, o6, o7, o8));
         resume1.addSection(SectionType.EDUCATION, eduSection);
     }
 

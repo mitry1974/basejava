@@ -36,6 +36,7 @@ public class Resume implements Comparable<Resume> {
         return fullName.equals(resume.fullName);
 
     }
+
     @Override
     public int hashCode() {
         return uuid.hashCode();
@@ -51,8 +52,8 @@ public class Resume implements Comparable<Resume> {
             sb.append('\n');
         }
 
-        for(SectionType t : SectionType.values()){
-            if(sections.containsKey(t)){
+        for (SectionType t : SectionType.values()) {
+            if (sections.containsKey(t)) {
                 Section s = sections.get(t);
                 Objects.requireNonNull(s);
                 sb.append('\n');

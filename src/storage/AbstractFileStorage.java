@@ -25,14 +25,16 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void makeDelete(File file) {
-        file.delete();
+        if (!file.delete()) {
+            throw new IllegalArgumentException(file.getAbsolutePath() + "can't delete");
+        }
     }
 
     @Override
     protected void makeInsert(Resume resume, File file) {
         try {
             file.createNewFile();
-            writeResume(resume, file);
+            makeUpdate(resume, file);
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -69,7 +71,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected Resume[] getResumeArray() {
         File[] array = directory.listFiles();
-        Objects.requireNonNull(array);
+        if (array == null) {
+            throw new IllegalArgumentException(directory.getAbsolutePath() + "list files must not be null!");
+        }
+
         Resume[] resumes = new Resume[array.length];
         for (int i = 0; i < array.length; i++) {
             try {
@@ -84,15 +89,22 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     public void clear() {
         File[] array = directory.listFiles();
-        Objects.requireNonNull(array);
+        if (array == null) {
+            throw new IllegalArgumentException(directory.getAbsolutePath() + "list files must not be null!");
+        }
+
         for (File anArray : array) {
-            anArray.delete();
+            makeDelete(anArray);
         }
     }
 
     @Override
     public int size() {
-        return Objects.requireNonNull(directory.listFiles()).length;
+        File[] array = directory.listFiles();
+        if (array == null) {
+            throw new IllegalArgumentException(directory.getAbsolutePath() + "list files must not be null!");
+        }
+        return array.length;
     }
 
     public abstract Resume readResume(File file) throws IOException;

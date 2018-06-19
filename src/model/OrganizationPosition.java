@@ -1,8 +1,6 @@
 package model;
 
 import java.time.YearMonth;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 
 public class OrganizationPosition {
 
@@ -48,7 +46,7 @@ public class OrganizationPosition {
         sb.append(endDate);
         sb.append('\t');
         sb.append(title);
-        if(description != null) {
+        if (description != null) {
             sb.append(description);
         }
         return sb.toString();

@@ -18,7 +18,7 @@ public class ListSection extends Section {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (String s : items){
+        for (String s : items) {
             sb.append(s);
             sb.append('\n');
         }

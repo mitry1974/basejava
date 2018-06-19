@@ -33,4 +33,5 @@ public class TextSection extends Section {
     @Override
     public int hashCode() {
         return content.hashCode();
-    }}
+    }
+}
