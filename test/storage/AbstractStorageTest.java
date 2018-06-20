@@ -6,6 +6,7 @@ import model.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -13,8 +14,11 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("F:\\Java\\Projects\\basejava\\storage");
+
     protected Storage storage;
 
     private static final String UUID1 = "uuid1";
@@ -60,7 +64,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void update() {
         storage.update(resume2_1);
-        assertSame(resume2_1, storage.get(UUID2));
+        assertEquals(resume2_1, storage.get(UUID2));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -80,7 +84,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void save() {
         storage.save(resume4);
-        assertSame(resume4, storage.get(resume4.getUuid()));
+        assertEquals(resume4, storage.get(resume4.getUuid()));
         assertEquals(4, storage.size());
     }
 

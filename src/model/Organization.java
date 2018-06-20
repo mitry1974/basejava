@@ -2,6 +2,7 @@ package model;
 
 import util.DateUtil;
 
+import java.io.Serializable;
 import java.time.YearMonth;
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Objects;
 
 import static util.DateUtil.NOW;
 
-public class Organization {
+public class Organization implements Serializable {
     private final Link homePage;
 
     private final List<Position> positions;
@@ -53,7 +54,9 @@ public class Organization {
         return sb.toString();
     }
 
-    public static class Position {
+    public static class Position implements Serializable {
+        private static final long serialVersionUID = 1L;
+
 
         private final YearMonth startDate;
         private final YearMonth endDate;

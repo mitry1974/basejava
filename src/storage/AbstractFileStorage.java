@@ -3,8 +3,7 @@ package storage;
 import exception.StorageException;
 import model.Resume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -45,7 +44,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void makeUpdate(Resume resume, File file) {
         try {
-            writeResume(resume, file);
+            writeResume(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -54,7 +53,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected Resume getResumeByKey(File file) {
         try {
-            return readResume(file);
+            return readResume(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -80,7 +79,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         Resume[] resumes = new Resume[array.length];
         for (int i = 0; i < array.length; i++) {
             try {
-                resumes[i] = readResume(array[i]);
+                resumes[i] = readResume(new BufferedInputStream(new FileInputStream(array[i])));
             } catch (IOException e) {
                 throw new StorageException("IO error", array[i].getName(), e);
             }
@@ -122,7 +121,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         return list;
     }
 
-    public abstract Resume readResume(File file) throws IOException;
+    public abstract Resume readResume(InputStream is) throws IOException;
 
-    public abstract void writeResume(Resume resume, File file) throws IOException;
+    public abstract void writeResume(Resume resume, OutputStream os) throws IOException;
 }
