@@ -2,6 +2,8 @@ package storage;
 
 import model.Resume;
 
+import java.util.List;
+
 
 public class ArrayStorage extends AbstractArrayStorage {
 
@@ -23,5 +25,10 @@ public class ArrayStorage extends AbstractArrayStorage {
             }
         }
         return -1;
+    }
+
+    @Override
+    public List<Resume> doCopyAll() {
+        return null;
     }
 }

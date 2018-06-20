@@ -4,6 +4,7 @@ import exception.StorageException;
 import model.Resume;
 
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected abstract void fillDeletedElement(int index);
@@ -43,6 +44,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     public void makeDelete(Integer key) {
         fillDeletedElement(key);
         storage[size--] = null;
+    }
+
+    @Override
+    public List<Resume> doCopyAll() {
+        return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
     }
 
     @Override

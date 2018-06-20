@@ -2,7 +2,9 @@ package storage;
 
 import model.Resume;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MapUuidStorage extends AbstractStorage<String> {
@@ -51,6 +53,10 @@ public class MapUuidStorage extends AbstractStorage<String> {
     @Override
     public int size() {
         return storage.size();
+    }
+    @Override
+    public List<Resume> doCopyAll() {
+        return new ArrayList<>(storage.values());
     }
 
 }

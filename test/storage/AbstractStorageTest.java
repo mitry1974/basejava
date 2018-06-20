@@ -40,7 +40,7 @@ public abstract class AbstractStorageTest {
         fillResume2();
         fillResume3();
         fillResume4();
-        
+
         storage.save(resume1);
         storage.save(resume2);
         storage.save(resume3);
@@ -95,7 +95,7 @@ public abstract class AbstractStorageTest {
         assertEquals(2, storage.size());
     }
 
-    private void fillResume1(){
+    private void fillResume1() {
         resume1.addContact(ContactType.PHONE, "+72326675345");
         resume1.addContact(ContactType.EMAIL, "test@test.ru");
         resume1.addContact(ContactType.SKYPE, "skype.contact");
@@ -131,36 +131,36 @@ public abstract class AbstractStorageTest {
         resume1.addSection(SectionType.QUALIFICATIONS, qualificationsSection);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
-        OrganizationPosition op1 = new OrganizationPosition(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.");
-        Organization o1 = new Organization("Java Online Projects", Arrays.asList(op1), "http://www.javaops.ru");
-        OrganizationPosition op2 = new OrganizationPosition(YearMonth.parse("10/2014", formatter), YearMonth.parse("01/2016", formatter), "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
-        Organization o2 = new Organization("Wrike", Arrays.asList(op2), "www.wrike.com");
-        OrganizationPosition op3 = new OrganizationPosition(YearMonth.parse("04/2012", formatter), YearMonth.parse("10/2014", formatter), "Java архитектор", "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python");
-        Organization o3 = new Organization("RIT Center", Arrays.asList(op3), null);
-        OrganizationPosition op4 = new OrganizationPosition(YearMonth.parse("12/2010", formatter), YearMonth.parse("04/2012", formatter), "Ведущий программист", "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5.");
-        Organization o4 = new Organization("Luxoft (Deutsche Bank)", Arrays.asList(op4), "www.luxsoft.com");
+        Organization.Position op1 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.");
+        Organization o1 = new Organization("Java Online Projects", "http://www.javaops.ru", op1);
+        Organization.Position op2 = new Organization.Position(YearMonth.parse("10/2014", formatter), YearMonth.parse("01/2016", formatter), "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
+        Organization o2 = new Organization("Wrike", "www.wrike.com", op2);
+        Organization.Position op3 = new Organization.Position(YearMonth.parse("04/2012", formatter), YearMonth.parse("10/2014", formatter), "Java архитектор", "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python");
+        Organization o3 = new Organization("RIT Center", null, op3);
+        Organization.Position op4 = new Organization.Position(YearMonth.parse("12/2010", formatter), YearMonth.parse("04/2012", formatter), "Ведущий программист", "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5.");
+        Organization o4 = new Organization("Luxoft (Deutsche Bank)", "www.luxsoft.com", op4);
         OrganizationSection expSection = new OrganizationSection(Arrays.asList(o1, o2, o3, o4));
         resume1.addSection(SectionType.EXPERIENCE, expSection);
 
 
-        OrganizationPosition op5 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "\"Functional Programming Principles in Scala\" by Martin Odersky", "");
-        Organization o5 = new Organization("Coursera", Arrays.asList(op5), null);
+        Organization.Position op5 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "\"Functional Programming Principles in Scala\" by Martin Odersky", "");
+        Organization o5 = new Organization("Coursera", null, op5);
 
-        OrganizationPosition op6 = new OrganizationPosition(YearMonth.parse("03/2011", formatter), YearMonth.parse("04/2011", formatter), "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"", "");
-        Organization o6 = new Organization("Luxoft", Arrays.asList(op6), "www.luxsoft.com");
+        Organization.Position op6 = new Organization.Position(YearMonth.parse("03/2011", formatter), YearMonth.parse("04/2011", formatter), "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"", "");
+        Organization o6 = new Organization("Luxoft", "www.luxsoft.com", op6);
 
-        OrganizationPosition op7 = new OrganizationPosition(YearMonth.parse("01/2005", formatter), YearMonth.parse("04/2005", formatter), "3 месяца обучения мобильным IN сетям (Берлин)", "");
-        Organization o7 = new Organization("Siemens AG", Arrays.asList(op7), null);
+        Organization.Position op7 = new Organization.Position(YearMonth.parse("01/2005", formatter), YearMonth.parse("04/2005", formatter), "3 месяца обучения мобильным IN сетям (Берлин)", "");
+        Organization o7 = new Organization("Siemens AG", null, op7);
 
-        OrganizationPosition op8 = new OrganizationPosition(YearMonth.parse("09/1993", formatter), YearMonth.parse("07/1996", formatter), "Аспирантура (программист С, С++)", "");
-        OrganizationPosition op9 = new OrganizationPosition(YearMonth.parse("09/1987", formatter), YearMonth.parse("07/1993", formatter), "Инженер (программист Fortran, C)", "");
-        Organization o8 = new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", Arrays.asList(op8, op9), null);
+        Organization.Position op8 = new Organization.Position(YearMonth.parse("09/1993", formatter), YearMonth.parse("07/1996", formatter), "Аспирантура (программист С, С++)", "");
+        Organization.Position op9 = new Organization.Position(YearMonth.parse("09/1987", formatter), YearMonth.parse("07/1993", formatter), "Инженер (программист Fortran, C)", "");
+        Organization o8 = new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", null, op8, op9);
 
         OrganizationSection eduSection = new OrganizationSection(Arrays.asList(o5, o6, o7, o8));
         resume1.addSection(SectionType.EDUCATION, eduSection);
     }
-    
-    private void fillResume2(){
+
+    private void fillResume2() {
         resume2.addContact(ContactType.PHONE, "+2222222");
         resume2.addContact(ContactType.EMAIL, "test2@test.ru");
         resume2.addContact(ContactType.SKYPE, "skype2.contact");
@@ -178,35 +178,35 @@ public abstract class AbstractStorageTest {
         resume2.addSection(SectionType.QUALIFICATIONS, qualificationsSection);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
-        OrganizationPosition op1 = new OrganizationPosition(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 2, позиция 1", "Девелопер 2, Описание 1");
-        Organization o1 = new Organization("Девелопер 2, организация 1", Arrays.asList(op1), "http://www.dev2org1.ru");
-        OrganizationPosition op2 = new OrganizationPosition(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 2, позиция 2", "Девелопер 2, Описание 2");
-        Organization o2 = new Organization("Девелопер 2, организация 2", Arrays.asList(op1), "http://www.dev2org1.ru");
-        OrganizationPosition op3 = new OrganizationPosition(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 2, позиция 3", "Девелопер 2, Описание 3");
-        Organization o3 = new Organization("Девелопер 2, организация 3", Arrays.asList(op1), "http://www.dev2org1.ru");
-        OrganizationPosition op4 = new OrganizationPosition(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 2, позиция 4", "Девелопер 2, Описание 4");
-        Organization o4 = new Organization("Девелопер 2, организация 4", Arrays.asList(op1), "http://www.dev2org1.ru");
+        Organization.Position op1 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 2, позиция 1", "Девелопер 2, Описание 1");
+        Organization o1 = new Organization("Девелопер 2, организация 1", "http://www.dev2org1.ru", op1);
+        Organization.Position op2 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 2, позиция 2", "Девелопер 2, Описание 2");
+        Organization o2 = new Organization("Девелопер 2, организация 2", "http://www.dev2org1.ru", op1);
+        Organization.Position op3 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 2, позиция 3", "Девелопер 2, Описание 3");
+        Organization o3 = new Organization("Девелопер 2, организация 3", "http://www.dev2org1.ru", op1);
+        Organization.Position op4 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 2, позиция 4", "Девелопер 2, Описание 4");
+        Organization o4 = new Organization("Девелопер 2, организация 4", "http://www.dev2org1.ru", op1);
         OrganizationSection expSection = new OrganizationSection(Arrays.asList(o1, o2, o3, o4));
         resume2.addSection(SectionType.EXPERIENCE, expSection);
 
 
-        OrganizationPosition op5 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 2, курс 1", "");
-        Organization o5 = new Organization("Девелопер 2, обучение 1", Arrays.asList(op5), null);
+        Organization.Position op5 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 2, курс 1", "");
+        Organization o5 = new Organization("Девелопер 2, обучение 1", null, op5);
 
-        OrganizationPosition op6 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 2, курс 2", "");
-        Organization o6 = new Organization("Девелопер 2, обучение 2", Arrays.asList(op5), null);
-        OrganizationPosition op7 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 2, курс 3", "");
-        Organization o7 = new Organization("Девелопер 2, обучение 3", Arrays.asList(op5), null);
+        Organization.Position op6 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 2, курс 2", "");
+        Organization o6 = new Organization("Девелопер 2, обучение 2", null, op5);
+        Organization.Position op7 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 2, курс 3", "");
+        Organization o7 = new Organization("Девелопер 2, обучение 3", null, op5);
 
-        OrganizationPosition op8 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 2, курс 4", "");
-        OrganizationPosition op9 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 2, курс 5", "");
-        Organization o8 = new Organization("Девелопер 2, обучение 4", Arrays.asList(op8, op9), null);
+        Organization.Position op8 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 2, курс 4", "");
+        Organization.Position op9 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 2, курс 5", "");
+        Organization o8 = new Organization("Девелопер 2, обучение 4", null, op8, op9);
 
         OrganizationSection eduSection = new OrganizationSection(Arrays.asList(o5, o6, o7, o8));
         resume2.addSection(SectionType.EDUCATION, eduSection);
     }
-    
-    private void fillResume3(){
+
+    private void fillResume3() {
         resume3.addContact(ContactType.PHONE, "+3333333");
         resume3.addContact(ContactType.EMAIL, "test3@test.ru");
         resume3.addContact(ContactType.SKYPE, "skype3.contact");
@@ -224,35 +224,35 @@ public abstract class AbstractStorageTest {
         resume3.addSection(SectionType.QUALIFICATIONS, qualificationsSection);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
-        OrganizationPosition op1 = new OrganizationPosition(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 3, позиция 1", "Девелопер 3, Описание 1");
-        Organization o1 = new Organization("Девелопер 3, организация 1", Arrays.asList(op1), "http://www.dev2org1.ru");
-        OrganizationPosition op2 = new OrganizationPosition(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 3, позиция 2", "Девелопер 3, Описание 2");
-        Organization o2 = new Organization("Девелопер 3, организация 2", Arrays.asList(op1), "http://www.dev2org1.ru");
-        OrganizationPosition op3 = new OrganizationPosition(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 3, позиция 3", "Девелопер 3, Описание 3");
-        Organization o3 = new Organization("Девелопер 3, организация 3", Arrays.asList(op1), "http://www.dev2org1.ru");
-        OrganizationPosition op4 = new OrganizationPosition(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 3, позиция 4", "Девелопер 3, Описание 4");
-        Organization o4 = new Organization("Девелопер 3, организация 4", Arrays.asList(op1), "http://www.dev2org1.ru");
+        Organization.Position op1 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 3, позиция 1", "Девелопер 3, Описание 1");
+        Organization o1 = new Organization("Девелопер 3, организация 1", "http://www.dev2org1.ru", op1);
+        Organization.Position op2 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 3, позиция 2", "Девелопер 3, Описание 2");
+        Organization o2 = new Organization("Девелопер 3, организация 2", "http://www.dev2org1.ru", op1);
+        Organization.Position op3 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 3, позиция 3", "Девелопер 3, Описание 3");
+        Organization o3 = new Organization("Девелопер 3, организация 3", "http://www.dev2org1.ru", op1);
+        Organization.Position op4 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 3, позиция 4", "Девелопер 3, Описание 4");
+        Organization o4 = new Organization("Девелопер 3, организация 4", "http://www.dev2org1.ru", op1);
         OrganizationSection expSection = new OrganizationSection(Arrays.asList(o1, o2, o3, o4));
         resume3.addSection(SectionType.EXPERIENCE, expSection);
 
 
-        OrganizationPosition op5 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 3, курс 1", "");
-        Organization o5 = new Organization("Девелопер 3, обучение 1", Arrays.asList(op5), null);
+        Organization.Position op5 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 3, курс 1", "");
+        Organization o5 = new Organization("Девелопер 3, обучение 1", null, op5);
 
-        OrganizationPosition op6 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 3, курс 2", "");
-        Organization o6 = new Organization("Девелопер 3, обучение 2", Arrays.asList(op5), null);
-        OrganizationPosition op7 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 3, курс 3", "");
-        Organization o7 = new Organization("Девелопер 3, обучение 3", Arrays.asList(op5), null);
+        Organization.Position op6 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 3, курс 2", "");
+        Organization o6 = new Organization("Девелопер 3, обучение 2", null, op5);
+        Organization.Position op7 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 3, курс 3", "");
+        Organization o7 = new Organization("Девелопер 3, обучение 3", null, op5);
 
-        OrganizationPosition op8 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 3, курс 4", "");
-        OrganizationPosition op9 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 3, курс 5", "");
-        Organization o8 = new Organization("Девелопер 3, обучение 4", Arrays.asList(op8, op9), null);
+        Organization.Position op8 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 3, курс 4", "");
+        Organization.Position op9 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 3, курс 5", "");
+        Organization o8 = new Organization("Девелопер 3, обучение 4", null, op8, op9);
 
         OrganizationSection eduSection = new OrganizationSection(Arrays.asList(o5, o6, o7, o8));
         resume3.addSection(SectionType.EDUCATION, eduSection);
     }
 
-    private void fillResume4(){
+    private void fillResume4() {
         resume4.addContact(ContactType.PHONE, "+4444444");
         resume4.addContact(ContactType.EMAIL, "test4@test.ru");
         resume4.addContact(ContactType.SKYPE, "skype4.contact");
@@ -270,29 +270,29 @@ public abstract class AbstractStorageTest {
         resume4.addSection(SectionType.QUALIFICATIONS, qualificationsSection);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
-        OrganizationPosition op1 = new OrganizationPosition(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 4, позиция 1", "Девелопер 4, Описание 1");
-        Organization o1 = new Organization("Девелопер 4, организация 1", Arrays.asList(op1), "http://www.dev2org1.ru");
-        OrganizationPosition op2 = new OrganizationPosition(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 4, позиция 2", "Девелопер 4, Описание 2");
-        Organization o2 = new Organization("Девелопер 4, организация 2", Arrays.asList(op1), "http://www.dev2org1.ru");
-        OrganizationPosition op3 = new OrganizationPosition(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 4, позиция 3", "Девелопер 4, Описание 3");
-        Organization o3 = new Organization("Девелопер 4, организация 3", Arrays.asList(op1), "http://www.dev2org1.ru");
-        OrganizationPosition op4 = new OrganizationPosition(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 4, позиция 4", "Девелопер 4, Описание 4");
-        Organization o4 = new Organization("Девелопер 4, организация 4", Arrays.asList(op1), "http://www.dev2org1.ru");
+        Organization.Position op1 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 4, позиция 1", "Девелопер 4, Описание 1");
+        Organization o1 = new Organization("Девелопер 4, организация 1", "http://www.dev2org1.ru", op1);
+        Organization.Position op2 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 4, позиция 2", "Девелопер 4, Описание 2");
+        Organization o2 = new Organization("Девелопер 4, организация 2", "http://www.dev2org1.ru", op1);
+        Organization.Position op3 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 4, позиция 3", "Девелопер 4, Описание 3");
+        Organization o3 = new Organization("Девелопер 4, организация 3", "http://www.dev2org1.ru", op1);
+        Organization.Position op4 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 4, позиция 4", "Девелопер 4, Описание 4");
+        Organization o4 = new Organization("Девелопер 4, организация 4", "http://www.dev2org1.ru", op1);
         OrganizationSection expSection = new OrganizationSection(Arrays.asList(o1, o2, o3, o4));
         resume4.addSection(SectionType.EXPERIENCE, expSection);
 
 
-        OrganizationPosition op5 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 4, курс 1", "");
-        Organization o5 = new Organization("Девелопер 4, обучение 1", Arrays.asList(op5), null);
+        Organization.Position op5 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 4, курс 1", "");
+        Organization o5 = new Organization("Девелопер 4, обучение 1", null, op5);
 
-        OrganizationPosition op6 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 4, курс 2", "");
-        Organization o6 = new Organization("Девелопер 4, обучение 2", Arrays.asList(op5), null);
-        OrganizationPosition op7 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 4, курс 3", "");
-        Organization o7 = new Organization("Девелопер 4, обучение 3", Arrays.asList(op5), null);
+        Organization.Position op6 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 4, курс 2", "");
+        Organization o6 = new Organization("Девелопер 4, обучение 2", null, op5);
+        Organization.Position op7 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 4, курс 3", "");
+        Organization o7 = new Organization("Девелопер 4, обучение 3", null, op5);
 
-        OrganizationPosition op8 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 4, курс 4", "");
-        OrganizationPosition op9 = new OrganizationPosition(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 4, курс 5", "");
-        Organization o8 = new Organization("Девелопер 4, обучение 4", Arrays.asList(op8, op9), null);
+        Organization.Position op8 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 4, курс 4", "");
+        Organization.Position op9 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Девелопер 4, курс 5", "");
+        Organization o8 = new Organization("Девелопер 4, обучение 4", null, op8, op9);
 
         OrganizationSection eduSection = new OrganizationSection(Arrays.asList(o5, o6, o7, o8));
         resume4.addSection(SectionType.EDUCATION, eduSection);

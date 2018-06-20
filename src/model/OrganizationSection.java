@@ -11,6 +11,10 @@ public class OrganizationSection extends Section {
         this.organizations = organizations;
     }
 
+    public List<Organization> getOrganizations() {
+        return organizations;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -24,5 +28,20 @@ public class OrganizationSection extends Section {
     public void addOrganization(Organization o) {
         Objects.requireNonNull(o);
         organizations.add(o);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrganizationSection that = (OrganizationSection) o;
+
+        return organizations != null ? organizations.equals(that.organizations) : that.organizations == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return organizations != null ? organizations.hashCode() : 0;
     }
 }

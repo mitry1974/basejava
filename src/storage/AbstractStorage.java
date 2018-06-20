@@ -25,6 +25,8 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     protected abstract Resume[] getResumeArray();
 
+    protected abstract List<Resume> doCopyAll();
+
     @Override
     public void update(Resume resume) {
         LOG.info("update" + resume);

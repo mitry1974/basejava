@@ -5,6 +5,8 @@ import model.Resume;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
@@ -34,10 +36,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected void makeInsert(Resume resume, File file) {
         try {
             file.createNewFile();
-            makeUpdate(resume, file);
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
+        makeUpdate(resume, file);
     }
 
     @Override
@@ -100,11 +102,24 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        File[] array = directory.listFiles();
+        String[] array = directory.list();
         if (array == null) {
             throw new StorageException(directory.getAbsolutePath(), "list files must not be null!");
         }
         return array.length;
+    }
+
+    @Override
+    protected List<Resume> doCopyAll() {
+        File[] files = directory.listFiles();
+        if (files == null) {
+            throw new StorageException("Directory read error", null);
+        }
+        List<Resume> list = new ArrayList<>(files.length);
+        for (File file : files) {
+            list.add(getResumeByKey(file));
+        }
+        return list;
     }
 
     public abstract Resume readResume(File file) throws IOException;
