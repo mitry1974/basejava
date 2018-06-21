@@ -2,6 +2,6 @@ package storage;
 
 public class ObjectStreamStorageTest extends AbstractStorageTest {
     public ObjectStreamStorageTest() {
-        super(new ObjectStreamStorage(STORAGE_DIR));
+        super(new ObjectStreamPathStorage(STORAGE_DIR.getName()));
     }
 }

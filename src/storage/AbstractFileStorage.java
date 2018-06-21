@@ -120,7 +120,6 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         }
         return list;
     }
-
     public abstract Resume readResume(InputStream is) throws IOException;
 
     public abstract void writeResume(Resume resume, OutputStream os) throws IOException;
