@@ -11,7 +11,7 @@ public class FileStorageWrapper extends FileSerialization implements Storage {
         this.storage = storage;
     }
 
-    public void setStorage(Storage storage){
+    public void setStorage(Storage storage) {
         this.storage = storage;
     }
 

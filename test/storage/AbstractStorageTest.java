@@ -13,8 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
     protected static final File STORAGE_DIR = new File("F:\\Java\\Projects\\basejava\\storage");

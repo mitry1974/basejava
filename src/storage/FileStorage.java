@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class FileStorage extends AbstractFileStorage{
+public class FileStorage extends AbstractFileStorage {
 
     Serialization serialization;
 
@@ -16,7 +16,7 @@ public class FileStorage extends AbstractFileStorage{
         this.serialization = serialization;
     }
 
-    public void setSerialization(Serialization serialization){
+    public void setSerialization(Serialization serialization) {
         this.serialization = serialization;
     }
 

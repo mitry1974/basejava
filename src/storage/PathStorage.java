@@ -8,12 +8,13 @@ import java.io.OutputStream;
 
 public class PathStorage extends AbstractPathStorage {
     Serialization serialization;
+
     public PathStorage(String directory, Serialization serialization) {
         super(directory);
         this.serialization = serialization;
     }
 
-    public void setSerialization(Serialization serialization){
+    public void setSerialization(Serialization serialization) {
         this.serialization = serialization;
     }
 

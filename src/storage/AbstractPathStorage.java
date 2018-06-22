@@ -7,9 +7,11 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     private Path directory;
@@ -70,7 +72,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     }
 
     @Override
-    protected Resume[] getResumeArray(){
+    protected Resume[] getResumeArray() {
         ArrayList<Resume> resumeList = new ArrayList<>();
 
         Consumer<? super Path> consumer = (Consumer<Path>) path -> {
