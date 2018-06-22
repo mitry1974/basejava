@@ -1,7 +1,11 @@
 package model;
 
 import util.DateUtil;
+import util.YearMonthAdapter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.YearMonth;
 import java.util.Arrays;
@@ -10,10 +14,11 @@ import java.util.Objects;
 
 import static util.DateUtil.NOW;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
-    private final Link homePage;
+    private Link homePage;
 
-    private final List<Position> positions;
+    private List<Position> positions;
 
     public Organization(String name, String url, Position... positions) {
         this(new Link(name, url), Arrays.asList(positions));
@@ -23,6 +28,9 @@ public class Organization implements Serializable {
         Objects.requireNonNull(positions, "title must not be null");
         this.homePage = homePage;
         this.positions = positions;
+    }
+
+    public Organization() {
     }
 
     @Override
@@ -54,14 +62,19 @@ public class Organization implements Serializable {
         return sb.toString();
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
         private static final long serialVersionUID = 1L;
 
+        public Position() {
+        }
 
-        private final YearMonth startDate;
-        private final YearMonth endDate;
-        private final String title;
-        private final String description;
+        @XmlJavaTypeAdapter(YearMonthAdapter.class)
+        private YearMonth startDate;
+        @XmlJavaTypeAdapter(YearMonthAdapter.class)
+        private YearMonth endDate;
+        private String title;
+        private String description;
 
         public Position(int startYear, int startMonth, String title, String description) {
             this(DateUtil.of(startYear, startMonth), NOW, title, description);

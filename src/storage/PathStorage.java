@@ -2,23 +2,20 @@ package storage;
 
 import exception.StorageException;
 import model.Resume;
+import serializer.StreamSerializer;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 public class PathStorage extends AbstractStorage<Path> {
-    Serialization serialization;
+    StreamSerializer serialization;
 
     private Path directory;
 
-    protected PathStorage(String directory, Serialization serialization) {
+    public PathStorage(String directory, StreamSerializer serialization) {
         this.directory = Paths.get(directory);
         Objects.requireNonNull(directory, "directory must not be null!");
         Objects.requireNonNull(serialization, "serialization must not be null");
@@ -50,7 +47,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected void makeUpdate(Resume resume, Path path) {
         try {
-            serialization.writeResume(resume, new BufferedOutputStream(new FileOutputStream(path.toString())));
+            serialization.doWrite(resume, new BufferedOutputStream(new FileOutputStream(path.toString())));
         } catch (IOException e) {
             throw new StorageException("IO error", path.toString(), e);
         }
@@ -59,7 +56,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume getResumeByKey(Path path) {
         try {
-            return serialization.readResume(new BufferedInputStream(Files.newInputStream(path)));
+            return serialization.doRead(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
             throw new StorageException("IO error", path.toString(), e);
         }

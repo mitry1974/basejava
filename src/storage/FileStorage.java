@@ -2,17 +2,16 @@ package storage;
 
 import exception.StorageException;
 import model.Resume;
+import serializer.StreamSerializer;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class FileStorage extends AbstractStorage<File> {
-    Serialization serialization;
+    StreamSerializer serialization;
     private File directory;
 
-    protected FileStorage(File directory, Serialization serialization) {
+    protected FileStorage(File directory, StreamSerializer serialization) {
         Objects.requireNonNull(directory, "directory must not be null!");
         Objects.requireNonNull(serialization, "serialization must not be null");
         this.serialization = serialization;
@@ -47,7 +46,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected void makeUpdate(Resume resume, File file) {
         try {
-            serialization.writeResume(resume, new BufferedOutputStream(new FileOutputStream(file)));
+            serialization.doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -56,7 +55,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected Resume getResumeByKey(File file) {
         try {
-            return serialization.readResume(new BufferedInputStream(new FileInputStream(file)));
+            return serialization.doRead(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
