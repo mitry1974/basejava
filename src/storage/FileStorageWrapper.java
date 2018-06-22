@@ -4,7 +4,7 @@ import model.Resume;
 
 import java.util.List;
 
-public class FileStorageWrapper extends FileSerialization implements Storage {
+public class FileStorageWrapper implements Storage {
     private Storage storage;
 
     public FileStorageWrapper(Storage storage) {
