@@ -81,12 +81,9 @@ public class FileStorage extends AbstractStorage<File> {
 
         Resume[] resumes = new Resume[array.length];
         for (int i = 0; i < array.length; i++) {
-            try {
-                resumes[i] = serialization.readResume(new BufferedInputStream(new FileInputStream(array[i])));
-            } catch (IOException e) {
-                throw new StorageException("IO error", array[i].getName(), e);
-            }
+            resumes[i] = getResumeByKey(array[i]);
         }
+
         return resumes;
     }
 
@@ -109,18 +106,5 @@ public class FileStorage extends AbstractStorage<File> {
             throw new StorageException(directory.getAbsolutePath(), "list files must not be null!");
         }
         return array.length;
-    }
-
-    @Override
-    protected List<Resume> doCopyAll() {
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new StorageException("Directory read error", null);
-        }
-        List<Resume> list = new ArrayList<>(files.length);
-        for (File file : files) {
-            list.add(getResumeByKey(file));
-        }
-        return list;
     }
 }

@@ -1,7 +1,7 @@
 package storage;
 
 public class ArrayStorageTest extends AbstractArrayStorageTest {
-    public ArrayStorageTest(FileStorageWrapper fileStorageWrapper) {
+    public ArrayStorageTest() {
         super(new ArrayStorage());
     }
 }

@@ -45,11 +45,6 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    public List<Resume> doCopyAll() {
-        return new ArrayList<>(storage);
-    }
-
-    @Override
     protected boolean isResumeExist(Integer key) {
         return key != null;
     }

@@ -59,7 +59,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume getResumeByKey(Path path) {
         try {
-            return serialization.readResume(new BufferedInputStream(new FileInputStream(path.toString())));
+            return serialization.readResume(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
             throw new StorageException("IO error", path.toString(), e);
         }
@@ -67,7 +67,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected Path getSearchKey(String uuid) {
-        return Paths.get(directory.toString(), uuid);
+        return directory.resolve(uuid);
     }
 
     @Override
@@ -77,21 +77,12 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected Resume[] getResumeArray() {
-        ArrayList<Resume> resumeList = new ArrayList<>();
 
-        Consumer<? super Path> consumer = (Consumer<Path>) path -> {
-            try {
-                resumeList.add(serialization.readResume(new BufferedInputStream(new FileInputStream(path.toFile()))));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        };
         try {
-            Files.list(directory).forEach(consumer);
+            return Files.list(directory).map(this::getResumeByKey).toArray(Resume[]::new);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new StorageException("Error in getResumeArray", null, e);
         }
-        return resumeList.toArray(new Resume[0]);
     }
 
     @Override
@@ -110,10 +101,5 @@ public class PathStorage extends AbstractStorage<Path> {
         } catch (IOException e) {
             throw new StorageException("Error in Files.list", null, e);
         }
-    }
-
-    @Override
-    protected List<Resume> doCopyAll() {
-        return Arrays.asList(getResumeArray());
     }
 }
