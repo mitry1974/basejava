@@ -69,7 +69,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected boolean isResumeExist(Path path) {
-        return Files.exists(path);
+        return Files.isRegularFile(path);
     }
 
     @Override
