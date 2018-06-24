@@ -2,6 +2,7 @@ package storage;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import util.JsonParser;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -13,7 +14,8 @@ import org.junit.runners.Suite;
         FileStorageTest.class,
         FileStorageTest.class,
         PathStorageTest.class,
-        XmlPathStorageTest.class
+        XmlPathStorageTest.class,
+        JsonPathStorageTest.class
 })
 public class AllStorageTest {
 }
