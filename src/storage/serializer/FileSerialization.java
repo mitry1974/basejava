@@ -1,4 +1,4 @@
-package serializer;
+package storage.serializer;
 
 import exception.StorageException;
 import model.Resume;

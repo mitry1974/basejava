@@ -28,6 +28,10 @@ public class ListSection extends Section {
         return items;
     }
 
+    public void setItems(List<String> items) {
+        this.items = items;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

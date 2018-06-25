@@ -1,7 +1,6 @@
 package storage;
 
-import serializer.JsonStreamSerializer;
-import serializer.XmlStreamSerializer;
+import storage.serializer.JsonStreamSerializer;
 
 public class JsonPathStorageTest extends AbstractStorageTest {
     public JsonPathStorageTest() {

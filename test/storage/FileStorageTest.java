@@ -1,6 +1,6 @@
 package storage;
 
-import serializer.FileSerialization;
+import storage.serializer.FileSerialization;
 
 public class FileStorageTest extends AbstractStorageTest {
     public FileStorageTest() {

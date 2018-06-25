@@ -1,4 +1,4 @@
-package serializer;
+package storage.serializer;
 
 import model.Resume;
 import util.JsonParser;

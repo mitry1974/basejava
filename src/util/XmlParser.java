@@ -34,7 +34,7 @@ public class XmlParser {
         }
     }
 
-    public void marshall(Object instance, Writer writer){
+    public void marshall(Object instance, Writer writer) {
         try {
             marshaller.marshal(instance, writer);
         } catch (JAXBException e) {

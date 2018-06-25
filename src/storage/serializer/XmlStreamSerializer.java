@@ -1,4 +1,4 @@
-package serializer;
+package storage.serializer;
 
 import model.*;
 import util.XmlParser;
@@ -15,7 +15,7 @@ public class XmlStreamSerializer implements StreamSerializer {
 
     @Override
     public Resume doRead(InputStream is) throws IOException {
-        try(Reader r = new InputStreamReader(is,StandardCharsets.UTF_8)){
+        try (Reader r = new InputStreamReader(is, StandardCharsets.UTF_8)) {
             return xmlParser.unmarshall(r);
         }
     }

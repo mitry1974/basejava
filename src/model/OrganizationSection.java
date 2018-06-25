@@ -22,6 +22,10 @@ public class OrganizationSection extends Section {
         return organizations;
     }
 
+    public void setOrganizations(List<Organization> organizations) {
+        this.organizations = organizations;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

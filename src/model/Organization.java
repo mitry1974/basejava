@@ -62,6 +62,22 @@ public class Organization implements Serializable {
         return sb.toString();
     }
 
+    public Link getHomePage() {
+        return homePage;
+    }
+
+    public void setHomePage(Link homePage) {
+        this.homePage = homePage;
+    }
+
+    public List<Position> getPositions() {
+        return positions;
+    }
+
+    public void setPositions(List<Position> positions) {
+        this.positions = positions;
+    }
+
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
         private static final long serialVersionUID = 1L;
@@ -125,6 +141,38 @@ public class Organization implements Serializable {
                 sb.append(description);
             }
             return sb.toString();
+        }
+
+        public YearMonth getStartDate() {
+            return startDate;
+        }
+
+        public void setStartDate(YearMonth startDate) {
+            this.startDate = startDate;
+        }
+
+        public YearMonth getEndDate() {
+            return endDate;
+        }
+
+        public void setEndDate(YearMonth endDate) {
+            this.endDate = endDate;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
         }
     }
 }

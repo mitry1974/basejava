@@ -4,7 +4,6 @@ import exception.StorageException;
 import model.Resume;
 
 import java.util.Arrays;
-import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected abstract void fillDeletedElement(int index);

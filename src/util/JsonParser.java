@@ -2,7 +2,6 @@ package util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import model.OrganizationSection;
 import model.Section;
 
 import java.io.Reader;

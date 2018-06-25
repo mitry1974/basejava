@@ -15,6 +15,14 @@ public class Link implements Serializable {
     public Link() {
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public Link(String name, String url) {
         Objects.requireNonNull(name, "name must not be null");
         this.name = name;
