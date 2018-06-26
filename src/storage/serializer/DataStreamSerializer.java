@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public class DataStreamSerializer implements StreamSerializer {
-    static final String NULL_VOL = "NULL";
 
     public Resume doRead(InputStream is) throws IOException {
         try (DataInputStream dis = new DataInputStream(is)) {
@@ -28,17 +27,17 @@ public class DataStreamSerializer implements StreamSerializer {
                     case OBJECTIVE:
                     case PERSONAL:
                         section = new TextSection();
-                        readSection((TextSection) section, dis);
+                        readTextSection((TextSection) section, dis);
                         break;
                     case QUALIFICATIONS:
                     case ACHIEVEMENT:
                         section = new ListSection();
-                        readSection((ListSection) section, dis);
+                        readListSection((ListSection) section, dis);
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
                         section = new OrganizationSection();
-                        readSection((OrganizationSection) section, dis);
+                        readOrganizationSection((OrganizationSection) section, dis);
                         break;
                 }
                 resume.addSection(sType, section);
@@ -69,25 +68,24 @@ public class DataStreamSerializer implements StreamSerializer {
                     case OBJECTIVE:
                     case PERSONAL:
                         TextSection tSection = (TextSection) e.getValue();
-                        writeSection(tSection, dos);
+                        writeTextSection(tSection, dos);
                         break;
                     case QUALIFICATIONS:
                     case ACHIEVEMENT:
                         ListSection lSection = (ListSection) e.getValue();
-                        writeSection(lSection, dos);
+                        writeListSection(lSection, dos);
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
                         OrganizationSection oSection = (OrganizationSection) e.getValue();
-                        writeSection(oSection, dos);
+                        writeOrganizationSection(oSection, dos);
                         break;
                 }
             }
         }
-        os.flush();
     }
 
-    private void writeSection(ListSection ls, DataOutputStream dos) throws IOException {
+    private void writeListSection(ListSection ls, DataOutputStream dos) throws IOException {
         List<String> items = ls.getItems();
         dos.writeInt(items.size());
         for (String s : items) {
@@ -95,7 +93,7 @@ public class DataStreamSerializer implements StreamSerializer {
         }
     }
 
-    private void readSection(ListSection ls, DataInputStream dis) throws IOException {
+    private void readListSection(ListSection ls, DataInputStream dis) throws IOException {
         int size = dis.readInt();
         ArrayList<String> list = new ArrayList<>();
         for (int i = 0; i < size; i++) {
@@ -105,23 +103,23 @@ public class DataStreamSerializer implements StreamSerializer {
         ls.setItems(list);
     }
 
-    private void writeSection(TextSection ts, DataOutputStream dos) throws IOException {
+    private void writeTextSection(TextSection ts, DataOutputStream dos) throws IOException {
         dos.writeUTF(ts.getContent());
     }
 
-    private void readSection(TextSection ts, DataInputStream dis) throws IOException {
+    private void readTextSection(TextSection ts, DataInputStream dis) throws IOException {
         ts.setContent(dis.readUTF());
     }
 
 
-    private void writeSection(OrganizationSection os, DataOutputStream dos) throws IOException {
+    private void writeOrganizationSection(OrganizationSection os, DataOutputStream dos) throws IOException {
         List<Organization> list = os.getOrganizations();
         dos.writeInt(list.size());
         for (Organization o : list) {
             Link link = o.getHomePage();
             dos.writeUTF(link.getName());
             if (link.getUrl() == null)
-                dos.writeUTF(NULL_VOL);
+                dos.writeUTF("");
             else
                 dos.writeUTF(link.getUrl());
 
@@ -131,17 +129,12 @@ public class DataStreamSerializer implements StreamSerializer {
                 dos.writeUTF(DateUtil.printYearMonth(p.getStartDate()));
                 dos.writeUTF(DateUtil.printYearMonth(p.getEndDate()));
                 dos.writeUTF(p.getTitle());
-                String descr = p.getDescription();
-                if (descr == null) {
-                    dos.writeUTF(NULL_VOL);
-                } else {
-                    dos.writeUTF(descr);
-                }
+                dos.writeUTF(p.getDescription());
             }
         }
     }
 
-    private void readSection(OrganizationSection os, DataInputStream dis) throws IOException {
+    private void readOrganizationSection(OrganizationSection os, DataInputStream dis) throws IOException {
         int oSize = dis.readInt();
         ArrayList<Organization> organizations = new ArrayList<>();
         for (int i = 0; i < oSize; i++) {
@@ -150,12 +143,11 @@ public class DataStreamSerializer implements StreamSerializer {
             Link link = new Link();
             link.setName(dis.readUTF());
             String url = dis.readUTF();
-            if (url.equals(NULL_VOL)) {
+            if (url.equals("")) {
                 link.setUrl(null);
             } else {
                 link.setUrl(url);
             }
-
 
             o.setHomePage(link);
 
@@ -166,12 +158,7 @@ public class DataStreamSerializer implements StreamSerializer {
                 p.setStartDate(DateUtil.parseYearMonth(dis.readUTF()));
                 p.setEndDate(DateUtil.parseYearMonth(dis.readUTF()));
                 p.setTitle(dis.readUTF());
-                String descr = dis.readUTF();
-                if (descr.equals(NULL_VOL)) {
-                    p.setDescription(null);
-                } else {
-                    p.setDescription(descr);
-                }
+                p.setDescription(dis.readUTF());
                 positions.add(p);
                 o.setPositions(positions);
             }
