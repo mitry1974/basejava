@@ -4,31 +4,9 @@ public class Main11 {
         Object lock1 = new Object();
         Object lock2 = new Object();
 
-        Thread thread1 = new Thread(() -> {
-            synchronized (lock1) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                synchronized (lock2) {
-                    System.out.println("thread 1, lock 2");
-                }
-            }
-        });
+        Thread thread1 = new Thread(() -> lock(lock2, lock1));
 
-        Thread thread2 = new Thread(() -> {
-            synchronized (lock2) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                synchronized (lock1) {
-                    System.out.println("Thread2, lock 1");
-                }
-            }
-        });
+        Thread thread2 = new Thread(() -> lock(lock1, lock2));
 
         thread1.start();
         thread2.start();
@@ -42,4 +20,15 @@ public class Main11 {
         }
 */
     }
+    private static void lock(Object lock1, Object lock2){
+        synchronized (lock2) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            synchronized (lock1) {
+                System.out.println("Thread2, lock 1");
+            }
+        }    }
 }
