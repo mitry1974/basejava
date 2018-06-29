@@ -27,31 +27,31 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     @Override
     public void update(Resume resume) {
-        LOG.info("update" + resume);
+//        LOG.info("update" + resume);
         makeUpdate(resume, getKeyCheckExist(resume.getUuid()));
     }
 
     @Override
     public void save(Resume resume) {
-        LOG.info("save" + resume);
+//        LOG.info("save" + resume);
         makeInsert(resume, getKeyCheckNotExist(resume.getUuid()));
     }
 
     @Override
     public Resume get(String uuid) {
-        LOG.info("get" + uuid);
+//        LOG.info("get" + uuid);
         return getResumeByKey(getKeyCheckExist(uuid));
     }
 
     @Override
     public void delete(String uuid) {
-        LOG.info("delete" + uuid);
+//        LOG.info("delete" + uuid);
         makeDelete(getKeyCheckExist(uuid));
     }
 
     @Override
     public List<Resume> getAllSorted() {
-        LOG.info("getAllSorted");
+//        LOG.info("getAllSorted");
         Resume[] array = getResumeArray();
         Arrays.sort(array);
         return Arrays.asList(array);
@@ -69,7 +69,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     private SK getKeyCheckNotExist(String uuid) {
         SK key = getSearchKey(uuid);
         if (isResumeExist(key)) {
-            LOG.warning("Resume " + uuid + " already exists!");
+//            LOG.warning("Resume " + uuid + " already exists!");
             throw new ExistStorageException(uuid);
         }
         return key;

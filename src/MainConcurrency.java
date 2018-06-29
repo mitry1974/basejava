@@ -1,12 +1,25 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class MainConcurrency {
-    private static final Object LOCK = new Object();
+//    private static final Object LOCK = new Object();
     public static final int THREAD_NUMBER = 10000;
     private static int counter;
+    private static AtomicInteger atomicCounter = new AtomicInteger();
+    private static final Lock lock = new ReentrantLock();
+
+    private static final ThreadLocal<SimpleDateFormat> tl = new ThreadLocal<SimpleDateFormat>(){
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat();
+        }
+    };
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println(Thread.currentThread().getName());
@@ -23,39 +36,43 @@ public class MainConcurrency {
         System.out.println(thread0.getName() + ", " + thread0.getState());
 
         final MainConcurrency mc = new MainConcurrency();
-        List<Thread> threads = new ArrayList<>(THREAD_NUMBER);
+        CountDownLatch latch = new CountDownLatch(THREAD_NUMBER);
+
+
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        CompletionService completionService = new ExecutorCompletionService(executorService);
+
+        for (int i = 0; i < THREAD_NUMBER; i++) {
+            Future<Integer> future = executorService.submit(()->{
+                for (int j = 0; j < 100; j++) {
+                    mc.inc();
+                    System.out.println(tl.get().format(new Date()));
+                }
+                latch.countDown();
+                return 5;
+            });
+        }
+
+/*
 
         for (int i = 0; i < THREAD_NUMBER; i++) {
             Thread thread = new Thread(() -> {
                 for (int j = 0; j < 100; j++) {
                     mc.inc();
                 }
+                latch.countDown();
             });
-            threads.add(thread);
             thread.start();
         }
 
-        threads.forEach(t -> {
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        for (Thread th : threads) {
-            th.join();
-        }
+*/
+        latch.await(10, TimeUnit.SECONDS);
+        executorService.shutdown();
+        System.out.println(atomicCounter.get());
 
-        System.out.println(counter);
     }
 
     private void inc() {
-        counter++;
-
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.submit(() -> {
-            String threadName = Thread.currentThread().getName();
-            System.out.println("Hello " + threadName);
-        });
+            atomicCounter.incrementAndGet();
     }
 }
