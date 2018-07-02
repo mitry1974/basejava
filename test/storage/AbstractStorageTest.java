@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = new File("F:\\Java\\Projects\\basejava\\storage");
+    protected static final File STORAGE_DIR = util.Config.get().getStorageDir();
 
     protected Storage storage;
 
@@ -26,7 +26,7 @@ public abstract class AbstractStorageTest {
 
     private static final Resume resume1 = new Resume(UUID1, "Девелопер 1");
     private static final Resume resume2 = new Resume(UUID2, "Девелопер 2");
-    private static final Resume resume2_1 = new Resume(UUID2, "");
+    private static final Resume resume2_1 = new Resume(UUID2, "Девелопер 2_1");
     private static final Resume resume3 = new Resume(UUID3, "Девелопер 3");
     private static final Resume resume4 = new Resume(UUID4, "Девелопер 4");
 
@@ -91,23 +91,17 @@ public abstract class AbstractStorageTest {
         storage.save(resume1);
     }
 
-    @Test
-    public void delete() {
-        storage.delete(UUID1);
-        assertEquals(2, storage.size());
-    }
-
     private void fillResume1() {
         resume1.addContact(ContactType.PHONE, "+72326675345");
         resume1.addContact(ContactType.EMAIL, "test@test.ru");
         resume1.addContact(ContactType.SKYPE, "skype.contact");
 
+/*
         TextSection personalSection = new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
         resume1.addSection(SectionType.PERSONAL, personalSection);
 
         TextSection objectiveSection = new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
         resume1.addSection(SectionType.OBJECTIVE, objectiveSection);
-
         ListSection achievmentSection = new ListSection(Arrays.asList("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.",
                 "Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.",
                 "Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM. Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления окружением на стеке: Scala/Play/Anorm/JQuery. Разработка SSO аутентификации и авторизации различных ERP модулей, интеграция CIFS/SMB java сервера.",
@@ -160,6 +154,14 @@ public abstract class AbstractStorageTest {
 
         OrganizationSection eduSection = new OrganizationSection(Arrays.asList(o5, o6, o7, o8));
         resume1.addSection(SectionType.EDUCATION, eduSection);
+*/
+
+    }
+
+    @Test
+    public void delete() {
+        storage.delete(UUID1);
+        assertEquals(2, storage.size());
     }
 
     private void fillResume2() {
@@ -167,6 +169,7 @@ public abstract class AbstractStorageTest {
         resume2.addContact(ContactType.EMAIL, "test2@test.ru");
         resume2.addContact(ContactType.SKYPE, "skype2.contact");
 
+/*
         TextSection personalSection = new TextSection("Очень умный и креативный Девелопер 2");
         resume2.addSection(SectionType.PERSONAL, personalSection);
 
@@ -206,6 +209,7 @@ public abstract class AbstractStorageTest {
 
         OrganizationSection eduSection = new OrganizationSection(Arrays.asList(o5, o6, o7, o8));
         resume2.addSection(SectionType.EDUCATION, eduSection);
+*/
     }
 
     private void fillResume3() {
@@ -213,6 +217,7 @@ public abstract class AbstractStorageTest {
         resume3.addContact(ContactType.EMAIL, "test3@test.ru");
         resume3.addContact(ContactType.SKYPE, "skype3.contact");
 
+/*
         TextSection personalSection = new TextSection("Очень умный и креативный Девелопер 3");
         resume3.addSection(SectionType.PERSONAL, personalSection);
 
@@ -252,6 +257,7 @@ public abstract class AbstractStorageTest {
 
         OrganizationSection eduSection = new OrganizationSection(Arrays.asList(o5, o6, o7, o8));
         resume3.addSection(SectionType.EDUCATION, eduSection);
+*/
     }
 
     private void fillResume4() {
@@ -259,6 +265,7 @@ public abstract class AbstractStorageTest {
         resume4.addContact(ContactType.EMAIL, "test4@test.ru");
         resume4.addContact(ContactType.SKYPE, "skype4.contact");
 
+/*
         TextSection personalSection = new TextSection("Очень умный и креативный Девелопер 4");
         resume4.addSection(SectionType.PERSONAL, personalSection);
 
@@ -298,6 +305,8 @@ public abstract class AbstractStorageTest {
 
         OrganizationSection eduSection = new OrganizationSection(Arrays.asList(o5, o6, o7, o8));
         resume4.addSection(SectionType.EDUCATION, eduSection);
+*/
+
     }
 
     @Test(expected = NotExistStorageException.class)
