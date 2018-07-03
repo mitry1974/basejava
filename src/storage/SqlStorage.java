@@ -1,89 +1,95 @@
 package storage;
 
 import exception.NotExistStorageException;
-import model.ContactType;
 import model.Resume;
-import sql.ConnectionFactory;
-import util.SqlHelper;
+import sql.SqlHelper;
 
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SqlStorage implements Storage {
-    private final ConnectionFactory connectionFactory;
+
+    private SqlHelper sqlHelper;
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
-        connectionFactory = () -> DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+        sqlHelper = new SqlHelper(dbUrl, dbUser, dbPassword);
     }
 
     @Override
     public void clear() {
-        SqlHelper.runSqlNoResults(connectionFactory, "DELETE FROM resume");
+        sqlHelper.runSql("DELETE FROM resume", PreparedStatement::executeUpdate);
     }
 
     @Override
     public void update(Resume resume) {
-        if (!SqlHelper.runSqlNoResults(connectionFactory, "UPDATE resume SET full_name=? WHERE uuid=?", ps -> {
+        sqlHelper.runSql("UPDATE resume SET full_name=? WHERE uuid=?", ps -> {
             ps.setString(1, resume.getFullName());
             ps.setString(2, resume.getUuid());
-        })) {
-            throw new NotExistStorageException(resume.getUuid());
-        }
+            if (ps.executeUpdate() == 0) {
+                throw new NotExistStorageException(resume.getUuid());
+            }
+        });
 
-
-        deleteContacts(connectionFactory, resume);
-
-        saveContacts(connectionFactory, resume);
+/*
+        deleteContacts(resume);
+        saveContacts(resume);
+*/
     }
 
     @Override
     public void save(Resume resume) {
-        SqlHelper.runSqlNoResults(connectionFactory, "INSERT INTO resume (uuid, full_name) VALUES(?,?)", ps -> {
+        sqlHelper.runSql("INSERT INTO resume (uuid, full_name) VALUES(?,?)", ps -> {
             ps.setString(1, resume.getUuid());
             ps.setString(2, resume.getFullName());
+            ps.executeUpdate();
         });
 
-        saveContacts(connectionFactory, resume);
+        //saveContacts(resume);
     }
 
     @Override
     public void delete(String uuid) {
-        if (!SqlHelper.runSqlNoResults(connectionFactory, "DELETE FROM resume r WHERE r.uuid=?", ps -> ps.setString(1, uuid))) {
-            throw new NotExistStorageException(uuid);
-        }
+        sqlHelper.runSql("DELETE FROM resume r WHERE r.uuid=?", ps -> {
+            ps.setString(1, uuid);
+            if (ps.executeUpdate() == 0) {
+                throw new NotExistStorageException(uuid);
+            }
+        });
     }
 
     @Override
     public Resume get(String uuid) {
+        final Resume[] resume = {null};
+        sqlHelper.runSql("SELECT * FROM resume r WHERE r.uuid=?", ps -> {
+            ps.setString(1, uuid);
+            ResultSet rs = ps.executeQuery();
 
-        final String[] fullName = new String[1];
-        SqlHelper.runSql(connectionFactory, "SELECT * FROM resume r WHERE r.uuid=?", ps -> ps.setString(1, uuid), rs -> {
-            fullName[0] = rs.getString("full_Name");
+            if (rs.next()) {
+                resume[0] = new Resume(uuid, rs.getString("full_Name"));
+                //resume[0].setContacts(readContacts(resume[0]));
+
+            } else {
+                throw new NotExistStorageException(uuid);
+            }
         });
 
-        if(fullName[0] == null) {
-            throw new NotExistStorageException(uuid);
-        }
 
-        Resume resume = new Resume(uuid, fullName[0]);
-
-        resume.setContacts(readContacts(connectionFactory, resume));
-
-        return resume;
+        return resume[0];
     }
 
     @Override
     public List<Resume> getAllSorted() {
         ArrayList<Resume> list = new ArrayList<>();
 
-        SqlHelper.runSql(connectionFactory, "SELECT * FROM resume", rs -> {
-            Resume resume = new Resume(rs.getString("uuid"), rs.getString("full_Name"));
-            list.add(resume);
-
-            resume.setContacts(readContacts(connectionFactory, resume));
+        sqlHelper.runSql("SELECT * FROM resume", ps -> {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Resume resume = new Resume(rs.getString("uuid"), rs.getString("full_Name"));
+                list.add(resume);
+                //resume.setContacts(readContacts(resume));
+            }
         });
 
         return list;
@@ -92,17 +98,21 @@ public class SqlStorage implements Storage {
     @Override
     public int size() {
         final int[] size = new int[1];
-        SqlHelper.runSql(connectionFactory, "SELECT COUNT (*) FROM resume", rs -> {
-            size[0] = rs.getInt(1);
+        sqlHelper.runSql("SELECT COUNT (*) FROM resume", ps -> {
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                size[0] = rs.getInt(1);
+            }
         });
 
         return size[0];
     }
 
-    private Map<ContactType, String> readContacts(ConnectionFactory cf, Resume r) {
+/*
+
+    private Map<ContactType, String> readContacts(Resume r) {
         Map<ContactType, String> map = new HashMap<>();
-        SqlHelper.runSql(cf,
-                "SELECT * FROM contact WHERE resume_uuid=?",
+        sqlHelper.runSql("SELECT * FROM contact WHERE resume_uuid=?",
                 ps -> ps.setString(1, r.getUuid()),
                 rs -> map.put(ContactType.valueOf(rs.getString("type")), rs.getString("value")));
         return map;
@@ -110,16 +120,16 @@ public class SqlStorage implements Storage {
 
     ;
 
-    private void deleteContacts(ConnectionFactory cf, Resume r) {
-        SqlHelper.runSqlNoResults(cf,
+    private void deleteContacts(Resume r) {
+        sqlHelper.runSqlNoResults(
                 "DELETE FROM contact WHERE resume_uuid=?",
                 ps -> ps.setString(1, r.getUuid()));
     }
 
-    private void saveContacts(ConnectionFactory cf, Resume r) {
+    private void saveContacts(Resume r) {
         Map<ContactType, String> contacts = r.getContacts();
         for (Map.Entry<ContactType, String> e : contacts.entrySet()) {
-            SqlHelper.runSqlNoResults(connectionFactory, "INSERT INTO contact (resume_uuid, type, value) VALUES(?,?,?)", ps -> {
+            sqlHelper.runSqlNoResults("INSERT INTO contact (resume_uuid, type, value) VALUES(?,?,?)", ps -> {
                 ps.setString(1, r.getUuid());
                 ps.setString(2, e.getKey().name());
                 ps.setString(3, e.getValue());
@@ -127,4 +137,5 @@ public class SqlStorage implements Storage {
         }
 
     }
+*/
 }
