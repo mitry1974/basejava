@@ -6,11 +6,11 @@ public class LazySingleton {
     private LazySingleton() {
     }
 
-    private static class LazySingletonHolder{
-        private static final LazySingleton INSTANCE = new LazySingleton ();
+    private static class LazySingletonHolder {
+        private static final LazySingleton INSTANCE = new LazySingleton();
     }
 
-    LazySingleton getInstance(){
+    LazySingleton getInstance() {
         return LazySingletonHolder.INSTANCE;
     }
 /*    public static synchronized LazySingleton getInstance() {

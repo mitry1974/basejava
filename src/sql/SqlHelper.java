@@ -1,38 +1,27 @@
 package sql;
 
-import exception.ExistStorageException;
-import exception.StorageException;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 
 public class SqlHelper {
     private ConnectionFactory connectionFactory;
 
-    public SqlHelper(String dbUrl, String dbUser, String dbPassword) {
-        connectionFactory = () -> DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+    public SqlHelper(ConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
     }
 
-    public interface PrepareStatement {
-        void prepare(PreparedStatement ps) throws SQLException;
+    public void execute(String sql) {
+        execute(sql, PreparedStatement::execute);
     }
 
-    public interface ProceedResults {
-        void proceed(ResultSet resultSet) throws SQLException;
-    }
-
-    public void runSql(String sql, PrepareStatement prepareStatement) {
+    public <T> T execute(String sql, SqlExecutor<T> execute) {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            prepareStatement.prepare(ps);
-
+            return execute.execute(ps);
         } catch (SQLException e) {
-            if (e.getSQLState().equals("23505")) {
-                throw new ExistStorageException("Resume exists");
-            } else {
-                throw new StorageException(e);
-            }
+            throw ExceptionUtil.convertException(e);
         }
     }
 }

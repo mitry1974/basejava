@@ -7,7 +7,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 public class DataStreamSerializer implements StreamSerializer {
 
@@ -16,9 +15,9 @@ public class DataStreamSerializer implements StreamSerializer {
             Resume resume = new Resume(dis.readUTF(), dis.readUTF());
 
             readItems(dis, () -> resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
-            readItems(dis, ()->{
+            readItems(dis, () -> {
                 SectionType type = SectionType.valueOf(dis.readUTF());
-                switch (type){
+                switch (type) {
                     case PERSONAL:
                     case OBJECTIVE:
                         resume.addSection(type, new TextSection(dis.readUTF()));
@@ -29,16 +28,16 @@ public class DataStreamSerializer implements StreamSerializer {
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        resume.addSection(type, new OrganizationSection(readList(dis, ()-> new Organization(
+                        resume.addSection(type, new OrganizationSection(readList(dis, () -> new Organization(
                                 new Link(dis.readUTF(), dis.readUTF()),
-                                readList(dis, ()->new Organization.Position(
-                                DateUtil.parseYearMonth(dis.readUTF()),
-                                DateUtil.parseYearMonth(dis.readUTF()),
-                                dis.readUTF(),
-                                dis.readUTF()))))));
+                                readList(dis, () -> new Organization.Position(
+                                        DateUtil.parseYearMonth(dis.readUTF()),
+                                        DateUtil.parseYearMonth(dis.readUTF()),
+                                        dis.readUTF(),
+                                        dis.readUTF()))))));
                         break;
-                        default:
-                            throw new IllegalStateException();
+                    default:
+                        throw new IllegalStateException();
                 }
             });
             return resume;
@@ -94,9 +93,10 @@ public class DataStreamSerializer implements StreamSerializer {
         void write(T t) throws IOException;
     }
 
-    private interface ElementReader<T>{
+    private interface ElementReader<T> {
         T read() throws IOException;
     }
+
     public interface ElementProcessor {
         void process() throws IOException;
     }
@@ -119,7 +119,7 @@ public class DataStreamSerializer implements StreamSerializer {
     private <T> List<T> readList(DataInputStream dis, ElementReader<T> reader) throws IOException {
         int size = dis.readInt();
         ArrayList<T> list = new ArrayList<>(size);
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             list.add(reader.read());
         }
 

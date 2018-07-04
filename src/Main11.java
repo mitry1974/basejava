@@ -20,7 +20,8 @@ public class Main11 {
         }
 */
     }
-    private static void lock(Object lock1, Object lock2){
+
+    private static void lock(Object lock1, Object lock2) {
         synchronized (lock2) {
             try {
                 Thread.sleep(500);
@@ -30,5 +31,6 @@ public class Main11 {
             synchronized (lock1) {
                 System.out.println("Thread2, lock 1");
             }
-        }    }
+        }
+    }
 }

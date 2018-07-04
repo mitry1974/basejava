@@ -1,30 +1,41 @@
 package util;
 
-import java.io.*;
+import storage.SqlStorage;
+import storage.Storage;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class Config {
     private static final File PROPS = new File(".\\config\\resumes.properties");
     private static final Config INSTANCE = new Config();
-    private Properties props = new Properties();
     private File storageDir;
 
     public static Config get() {
         return INSTANCE;
     }
 
-    public File getStorageDir() {
+    public final File getStorageDir() {
         return storageDir;
     }
-    public String getDbUrl (){return props.getProperty("db.url");}
-    public String getDbUser(){return props.getProperty("db.user");}
-    public String getDbPassword(){return props.getProperty("db.password");}
+
+    public final Storage getStorage() {
+        return storage;
+    }
+
+    public final Storage storage;
 
     private Config() {
-        try(InputStream is = new FileInputStream(PROPS)){
+        try (InputStream is = new FileInputStream(PROPS)) {
+            Properties props = new Properties();
             props.load(is);
 
             storageDir = new File(props.getProperty("storage.dir"));
+            storage = new SqlStorage(props.getProperty("db.url"), props.getProperty("db.user"), props.getProperty("db.password"));
+
         } catch (IOException e) {
             throw new IllegalStateException("invalid config file name" + PROPS.getAbsolutePath());
         }

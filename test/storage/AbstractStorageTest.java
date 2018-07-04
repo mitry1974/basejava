@@ -2,27 +2,26 @@ package storage;
 
 import exception.ExistStorageException;
 import exception.NotExistStorageException;
-import model.*;
+import model.Resume;
 import org.junit.Before;
 import org.junit.Test;
+import util.Config;
 
 import java.io.File;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = util.Config.get().getStorageDir();
+    protected static final File STORAGE_DIR = Config.get().getStorageDir();
 
     protected Storage storage;
 
-    private static final String UUID1 = "uuid1";
-    private static final String UUID2 = "uuid2";
-    private static final String UUID3 = "uuid3";
-    private static final String UUID4 = "uuid4";
+    private static final String UUID1 = UUID.randomUUID().toString();
+    private static final String UUID2 = UUID.randomUUID().toString();
+    private static final String UUID3 = UUID.randomUUID().toString();
+    private static final String UUID4 = UUID.randomUUID().toString();
 
     private static final Resume resume1 = new Resume(UUID1, "Девелопер 1");
     private static final Resume resume2 = new Resume(UUID2, "Девелопер 2");

@@ -1,20 +1,18 @@
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class MainConcurrency {
-//    private static final Object LOCK = new Object();
+    //    private static final Object LOCK = new Object();
     public static final int THREAD_NUMBER = 10000;
     private static int counter;
     private static AtomicInteger atomicCounter = new AtomicInteger();
     private static final Lock lock = new ReentrantLock();
 
-    private static final ThreadLocal<SimpleDateFormat> tl = new ThreadLocal<SimpleDateFormat>(){
+    private static final ThreadLocal<SimpleDateFormat> tl = new ThreadLocal<SimpleDateFormat>() {
         @Override
         protected SimpleDateFormat initialValue() {
             return new SimpleDateFormat();
@@ -43,7 +41,7 @@ public class MainConcurrency {
         CompletionService completionService = new ExecutorCompletionService(executorService);
 
         for (int i = 0; i < THREAD_NUMBER; i++) {
-            Future<Integer> future = executorService.submit(()->{
+            Future<Integer> future = executorService.submit(() -> {
                 for (int j = 0; j < 100; j++) {
                     mc.inc();
                     System.out.println(tl.get().format(new Date()));
@@ -73,6 +71,6 @@ public class MainConcurrency {
     }
 
     private void inc() {
-            atomicCounter.incrementAndGet();
+        atomicCounter.incrementAndGet();
     }
 }
