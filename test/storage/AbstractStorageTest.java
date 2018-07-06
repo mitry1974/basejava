@@ -2,6 +2,7 @@ package storage;
 
 import exception.ExistStorageException;
 import exception.NotExistStorageException;
+import model.ContactType;
 import model.Resume;
 import org.junit.Before;
 import org.junit.Test;
@@ -91,10 +92,10 @@ public abstract class AbstractStorageTest {
     }
 
     private void fillResume1() {
-/*        resume1.addContact(ContactType.PHONE, "+72326675345");
+        resume1.addContact(ContactType.PHONE, "+72326675345");
         resume1.addContact(ContactType.EMAIL, "test@test.ru");
         resume1.addContact(ContactType.SKYPE, "skype.contact");
-
+/*
 
         TextSection personalSection = new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
         resume1.addSection(SectionType.PERSONAL, personalSection);
@@ -164,11 +165,11 @@ public abstract class AbstractStorageTest {
     }
 
     private void fillResume2() {
-/*        resume2.addContact(ContactType.PHONE, "+2222222");
+        resume2.addContact(ContactType.PHONE, "+2222222");
         resume2.addContact(ContactType.EMAIL, "test2@test.ru");
         resume2.addContact(ContactType.SKYPE, "skype2.contact");
 
-
+/*
         TextSection personalSection = new TextSection("Очень умный и креативный Девелопер 2");
         resume2.addSection(SectionType.PERSONAL, personalSection);
 
@@ -212,11 +213,11 @@ public abstract class AbstractStorageTest {
     }
 
     private void fillResume3() {
-/*        resume3.addContact(ContactType.PHONE, "+3333333");
+        resume3.addContact(ContactType.PHONE, "+3333333");
         resume3.addContact(ContactType.EMAIL, "test3@test.ru");
         resume3.addContact(ContactType.SKYPE, "skype3.contact");
 
-
+/*
         TextSection personalSection = new TextSection("Очень умный и креативный Девелопер 3");
         resume3.addSection(SectionType.PERSONAL, personalSection);
 
