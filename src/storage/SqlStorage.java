@@ -5,10 +5,7 @@ import model.ContactType;
 import model.Resume;
 import sql.SqlHelper;
 
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,28 +26,31 @@ public class SqlStorage implements Storage {
 
     @Override
     public void update(Resume resume) {
-        sqlHelper.execute("UPDATE resume SET full_name=? WHERE uuid=?", ps -> {
-            ps.setString(1, resume.getFullName());
-            ps.setString(2, resume.getUuid());
-            if (ps.executeUpdate() == 0) {
-                throw new NotExistStorageException(resume.getUuid());
+        sqlHelper.transactionalExecute(conn -> {
+            try (PreparedStatement ps = conn.prepareStatement("UPDATE resume SET full_name=? WHERE uuid=?")) {
+                ps.setString(1, resume.getFullName());
+                ps.setString(2, resume.getUuid());
+                if (ps.executeUpdate() == 0) {
+                    throw new NotExistStorageException(resume.getUuid());
+                }
+                deleteContacts(conn, resume.getUuid());
+                saveContacts(conn, resume.getUuid(), resume.getContacts());
             }
-
-            deleteContacts(resume.getUuid());
-            saveContacts(resume.getUuid(), resume.getContacts());
             return null;
         });
     }
 
     @Override
-    public void save(Resume resume) {
-        sqlHelper.execute("INSERT INTO resume (uuid, full_name) VALUES(?,?)", ps-> {
-                ps.setString(1, resume.getUuid());
-                ps.setString(2, resume.getFullName());
+    public void save(Resume r) {
+        sqlHelper.transactionalExecute(conn -> {
+            try (PreparedStatement ps = conn.prepareStatement("INSERT INTO resume (uuid, full_name) VALUES (?,?)")) {
+                ps.setString(1, r.getUuid());
+                ps.setString(2, r.getFullName());
                 ps.execute();
+            }
+            saveContacts(conn, r.getUuid(), r.getContacts());
             return null;
-            });
-        saveContacts(resume.getUuid(), resume.getContacts());
+        });
     }
 
     @Override
@@ -93,16 +93,26 @@ public class SqlStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return sqlHelper.execute("SELECT * FROM resume ORDER BY full_name, uuid", ps -> {
-            ArrayList<Resume> list = new ArrayList<>();
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Resume r = new Resume(rs.getString("uuid"), rs.getString("full_Name"));
-                r.setContacts(loadContacts(r.getUuid()));
-                list.add(r);
-            }
-            return list;
-        });
+        return sqlHelper.execute("" +
+                        " SELECT * FROM resume r" +
+                        "   LEFT JOIN contact c" +
+                        "     ON r.uuid = c.resume_uuid " +
+                        "       ORDER BY full_name, uuid",
+                ps -> {
+                    ResultSet rs = ps.executeQuery();
+                    ArrayList<Resume> list = new ArrayList<>();
+                    String uuid = "";
+                    Resume r = null;
+                    while (rs.next()) {
+                        if(!rs.getString("uuid").equals(uuid)){
+                            uuid = rs.getString("uuid");
+                            r = new Resume(uuid, rs.getString("full_Name"));
+                            list.add(r);
+                        }
+                        r.addContact(ContactType.valueOf(rs.getString("type")), rs.getString("value"));
+                    }
+                    return list;
+                });
     }
 
     @Override
@@ -113,36 +123,32 @@ public class SqlStorage implements Storage {
         });
     }
 
-    private void deleteContacts(String uuid){
-        sqlHelper.execute("DELETE FROM contact WHERE resume_uuid=?", se->{
-            se.setString(1, uuid);
-            se.execute();
-            return null;
-        });
+    private void deleteContacts(Connection conn, String uuid) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement("DELETE FROM contact WHERE resume_uuid=?")) {
+            ps.setString(1, uuid);
+            ps.execute();
+        }
     }
 
-    private void saveContacts(String uuid, Map<ContactType, String> contacts){
-        sqlHelper.transactionalExecute(st->{
-            try(PreparedStatement ps = st.prepareStatement("INSERT INTO contact (resume_uuid, type, value) VALUES (?,?,?)")){
-                ps.setString(1, uuid);
-                for(Map.Entry<ContactType, String> e: contacts.entrySet()){
-                    ps.setString(2, e.getKey().name());
-                    ps.setString(3, e.getValue());
-                    ps.addBatch();
-                }
-
-                ps.executeBatch();
+    private void saveContacts(Connection conn, String uuid, Map<ContactType, String> contacts) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement("INSERT INTO contact (resume_uuid, type, value) VALUES (?,?,?)")) {
+            ps.setString(1, uuid);
+            for (Map.Entry<ContactType, String> e : contacts.entrySet()) {
+                ps.setString(2, e.getKey().name());
+                ps.setString(3, e.getValue());
+                ps.addBatch();
             }
-            return null;
-        });
+
+            ps.executeBatch();
+        }
     }
 
-    private Map<ContactType, String> loadContacts(String uuid){
+    private Map<ContactType, String> loadContacts(String uuid) {
         Map<ContactType, String> map = new HashMap<>();
-        return sqlHelper.execute("SELECT * FROM contact WHERE resume_uuid=?", se->{
+        return sqlHelper.execute("SELECT * FROM contact WHERE resume_uuid=?", se -> {
             se.setString(1, uuid);
             ResultSet rs = se.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 map.put(ContactType.valueOf(rs.getString("type")), rs.getString("value"));
             }
             return map;
