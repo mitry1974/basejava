@@ -7,7 +7,6 @@ import sql.SqlHelper;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -80,11 +79,7 @@ public class SqlStorage implements Storage {
                     }
                     Resume r = new Resume(rs.getString("uuid"), rs.getString("full_Name"));
                     do {
-                        String type = rs.getString("type");
-                        String value = rs.getString("value");
-                        if (type != null && value != null) {
-                            r.addContact(ContactType.valueOf(type), value);
-                        }
+                        addContactToResume(rs, r);
                     } while (rs.next());
 
                     return r;
@@ -104,12 +99,12 @@ public class SqlStorage implements Storage {
                     String uuid = "";
                     Resume r = null;
                     while (rs.next()) {
-                        if(!rs.getString("uuid").equals(uuid)){
+                        if (!rs.getString("uuid").equals(uuid)) {
                             uuid = rs.getString("uuid");
                             r = new Resume(uuid, rs.getString("full_Name"));
                             list.add(r);
                         }
-                        r.addContact(ContactType.valueOf(rs.getString("type")), rs.getString("value"));
+                        addContactToResume(rs, r);
                     }
                     return list;
                 });
@@ -143,15 +138,12 @@ public class SqlStorage implements Storage {
         }
     }
 
-    private Map<ContactType, String> loadContacts(String uuid) {
-        Map<ContactType, String> map = new HashMap<>();
-        return sqlHelper.execute("SELECT * FROM contact WHERE resume_uuid=?", se -> {
-            se.setString(1, uuid);
-            ResultSet rs = se.executeQuery();
-            while (rs.next()) {
-                map.put(ContactType.valueOf(rs.getString("type")), rs.getString("value"));
-            }
-            return map;
-        });
+    private void addContactToResume(ResultSet rs, Resume r) throws SQLException {
+        String type = rs.getString("type");
+        String value = rs.getString("value");
+        if (type != null && value != null) {
+            r.addContact(ContactType.valueOf(type), value);
+        }
     }
+
 }
