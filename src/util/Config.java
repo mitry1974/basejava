@@ -29,7 +29,8 @@ public class Config {
     public final Storage storage;
 
     private Config() {
-        try (InputStream is = new FileInputStream(PROPS)) {
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("resumes.properties")) {
+
             Properties props = new Properties();
             props.load(is);
 

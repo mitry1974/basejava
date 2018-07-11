@@ -2,8 +2,7 @@ package storage;
 
 import exception.ExistStorageException;
 import exception.NotExistStorageException;
-import model.ContactType;
-import model.Resume;
+import model.*;
 import org.junit.Before;
 import org.junit.Test;
 import util.Config;
@@ -101,7 +100,7 @@ public abstract class AbstractStorageTest {
         R1.addContact(ContactType.PHONE, "+72326675345");
         R1.addContact(ContactType.EMAIL, "test@test.ru");
         R1.addContact(ContactType.SKYPE, "skype.contact");
-/*
+
 
         TextSection personalSection = new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
         R1.addSection(SectionType.PERSONAL, personalSection);
@@ -131,7 +130,7 @@ public abstract class AbstractStorageTest {
                 "Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, архитектурных шаблонов, UML, функционального программирования",
                 "Родной русский, английский \"upper intermediate"));
         R1.addSection(SectionType.QUALIFICATIONS, qualificationsSection);
-
+/*
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
         Organization.Position op1 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.");
         Organization o1 = new Organization("Java Online Projects", "http://www.javaops.ru", op1);
@@ -175,7 +174,7 @@ public abstract class AbstractStorageTest {
         R2.addContact(ContactType.EMAIL, "test2@test.ru");
         R2.addContact(ContactType.SKYPE, "skype2.contact");
 
-/*
+
         TextSection personalSection = new TextSection("Очень умный и креативный Девелопер 2");
         R2.addSection(SectionType.PERSONAL, personalSection);
 
@@ -187,7 +186,7 @@ public abstract class AbstractStorageTest {
 
         ListSection qualificationsSection = new ListSection(Arrays.asList("Квалификация девелопера 2 номер 1", "Квалификация девелопера 2 номер 2", "Квалификация девелопера 2 номер 3", "Квалификация девелопера 2 номер 4"));
         R2.addSection(SectionType.QUALIFICATIONS, qualificationsSection);
-
+/*
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
         Organization.Position op1 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 2, позиция 1", "Девелопер 2, Описание 1");
         Organization o1 = new Organization("Девелопер 2, организация 1", "http://www.dev2org1.ru", op1);
@@ -223,7 +222,7 @@ public abstract class AbstractStorageTest {
         R3.addContact(ContactType.EMAIL, "test3@test.ru");
         R3.addContact(ContactType.SKYPE, "skype3.contact");
 
-/*
+
         TextSection personalSection = new TextSection("Очень умный и креативный Девелопер 3");
         R3.addSection(SectionType.PERSONAL, personalSection);
 
@@ -235,7 +234,7 @@ public abstract class AbstractStorageTest {
 
         ListSection qualificationsSection = new ListSection(Arrays.asList("Квалификация девелопера 3 номер 1", "Квалификация девелопера 3 номер 2", "Квалификация девелопера 3 номер 3", "Квалификация девелопера 3 номер 4"));
         R3.addSection(SectionType.QUALIFICATIONS, qualificationsSection);
-
+/*
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
         Organization.Position op1 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 3, позиция 1", "Девелопер 3, Описание 1");
         Organization o1 = new Organization("Девелопер 3, организация 1", "http://www.dev2org1.ru", op1);
@@ -267,7 +266,7 @@ public abstract class AbstractStorageTest {
     }
 
     private void fillResume4() {
-/*        R4.addContact(ContactType.PHONE, "+4444444");
+        R4.addContact(ContactType.PHONE, "+4444444");
         R4.addContact(ContactType.EMAIL, "test4@test.ru");
         R4.addContact(ContactType.SKYPE, "skype4.contact");
 
@@ -283,7 +282,7 @@ public abstract class AbstractStorageTest {
 
         ListSection qualificationsSection = new ListSection(Arrays.asList("Квалификация девелопера 4 номер 1", "Квалификация девелопера 4 номер 2", "Квалификация девелопера 4 номер 3", "Квалификация девелопера 4 номер 4"));
         R4.addSection(SectionType.QUALIFICATIONS, qualificationsSection);
-
+/*
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
         Organization.Position op1 = new Organization.Position(YearMonth.parse("10/2013", formatter), YearMonth.now(), "Девелопер 4, позиция 1", "Девелопер 4, Описание 1");
         Organization o1 = new Organization("Девелопер 4, организация 1", "http://www.dev2org1.ru", op1);
