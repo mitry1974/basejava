@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 public class ResumeServlet extends HttpServlet {
@@ -33,7 +32,7 @@ public class ResumeServlet extends HttpServlet {
             try {
                 Resume r = sqlStorage.get(uuid);
                 writeResume(sb, r);
-            }catch (NotExistStorageException e){
+            } catch (NotExistStorageException e) {
                 response.getWriter().write("Нет! такого имени");
             }
         } else {

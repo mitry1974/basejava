@@ -84,27 +84,8 @@ public class SqlStorage implements Storage {
                     }
                     return new Resume(rs.getString("uuid"), rs.getString("full_Name"));
                 });
-
-        sqlHelper.execute("SELECT * from contact c where c.resume_uuid = ?",
-                ps -> {
-                    ps.setString(1, uuid);
-                    ResultSet rs = ps.executeQuery();
-                    while (rs.next()) {
-                        addContact(rs, r);
-                    }
-                    return null;
-                });
-
-        sqlHelper.execute("SELECT * from section s WHERE s.resume_uuid=?",
-                ps -> {
-                    ps.setString(1, uuid);
-                    ResultSet rs = ps.executeQuery();
-                    while (rs.next()) {
-                        addSection(rs, r);
-                    }
-                    return null;
-
-                });
+        loadContacts(r);
+        loadSections(r);
         return r;
     }
 
@@ -137,7 +118,7 @@ public class SqlStorage implements Storage {
         });
     }
 
-    private void loadContacts(Resume r){
+    private void loadContacts(Resume r) {
         sqlHelper.execute("select * from contact c where c.resume_uuid = ?", ps -> {
             ps.setString(1, r.getUuid());
             ResultSet crs = ps.executeQuery();
@@ -176,12 +157,12 @@ public class SqlStorage implements Storage {
         }
     }
 
-    private void loadSections(Resume r){
+    private void loadSections(Resume r) {
         sqlHelper.execute("select * from section s where s.resume_uuid = ?", ps -> {
             ps.setString(1, r.getUuid());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                addSection(rs,r);
+                addSection(rs, r);
             }
             return null;
         });
