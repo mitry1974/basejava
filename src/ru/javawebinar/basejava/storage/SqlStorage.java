@@ -153,14 +153,6 @@ public class SqlStorage implements Storage {
         }
     }
 
-    private void addContact(ResultSet rs, Resume r) throws SQLException {
-        String type = rs.getString("type");
-        String value = rs.getString("value");
-        if (type != null && value != null) {
-            r.addContact(ContactType.valueOf(type), value);
-        }
-    }
-
     private void loadSections(Connection conn, Resume r) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement("select * from section s where s.resume_uuid = ?")) {
             ps.setString(1, r.getUuid());
@@ -211,13 +203,7 @@ public class SqlStorage implements Storage {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        ListSection ls = (ListSection) section;
-                        StringBuilder sb = new StringBuilder();
-                        for (String s : ls.getItems()) {
-                            sb.append(s);
-                            sb.append('\n');
-                        }
-                        data = sb.toString();
+                        data = String.join("\n",((ListSection) section).getItems());
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
