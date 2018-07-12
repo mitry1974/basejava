@@ -30,6 +30,9 @@ create table section
   primary key (id)
 );
 
+create unique index section_uuid_type_index
+  on section (resume_uuid, type);
+
 /*
 select
     r.full_name as fullname,
