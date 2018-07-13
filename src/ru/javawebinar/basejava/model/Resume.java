@@ -93,6 +93,11 @@ public class Resume implements Comparable<Resume>, Serializable {
         return contacts;
     }
 
+    public void setSections(Map<SectionType, Section> newSection){
+        this.sections.clear();
+        this.sections.putAll(newSection);
+    }
+
     public void setContacts(Map<ContactType, String> contacts) {
         this.contacts.clear();
         this.contacts.putAll(contacts);

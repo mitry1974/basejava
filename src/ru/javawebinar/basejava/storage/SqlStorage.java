@@ -6,6 +6,7 @@ import ru.javawebinar.basejava.sql.SqlHelper;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,12 +37,13 @@ public class SqlStorage implements Storage {
                 if (ps.executeUpdate() == 0) {
                     throw new NotExistStorageException(resume.getUuid());
                 }
-                deleteContacts(conn, resume);
-                deleteSections(conn, resume);
-
-                insertContacts(conn, resume);
-                insertSections(conn, resume);
             }
+
+            deleteContacts(conn, resume);
+            deleteSections(conn, resume);
+
+            insertContacts(conn, resume);
+            insertSections(conn, resume);
             return null;
         });
     }
@@ -74,6 +76,7 @@ public class SqlStorage implements Storage {
     @Override
     public Resume get(String uuid) {
         return sqlHelper.transactionalExecute(conn -> {
+            Resume r;
             try (PreparedStatement ps = conn.prepareStatement("" +
                     "SELECT * FROM resume r " +
                     "  WHERE r.uuid=?")) {
@@ -82,36 +85,78 @@ public class SqlStorage implements Storage {
                 if (!rs.next()) {
                     throw new NotExistStorageException(uuid);
                 }
-                Resume r = new Resume(rs.getString("uuid"), rs.getString("full_Name"));
-                loadContacts(conn, r);
-                loadSections(conn, r);
-
-                return r;
+                r = new Resume(rs.getString("uuid"), rs.getString("full_Name"));
             }
+            loadContacts(conn, r);
+            loadSections(conn, r);
+
+            return r;
         });
     }
 
     @Override
     public List<Resume> getAllSorted() {
 
-        return sqlHelper.transactionalExecute(conn -> {
+        HashMap<String, HashMap<ContactType, String>> mapResumeContacts = new HashMap<>();
+        sqlHelper.transactionalExecute(conn -> {
+            try (PreparedStatement ps = conn.prepareStatement("" +
+                    " SELECT * FROM contact c" +
+                    "   ORDER BY resume_uuid")) {
+                ResultSet rsContacts = ps.executeQuery();
+                String uuid = "";
+                HashMap<ContactType, String> currentMap = null;
+                while (rsContacts.next()){
+                    if(!uuid.equals(rsContacts.getString("resume_uuid"))){
+                        uuid = rsContacts.getString("resume_uuid");
+                        currentMap = new HashMap<>();
+                        mapResumeContacts.put(uuid, currentMap);
+                    }
+                    currentMap.put(ContactType.valueOf(rsContacts.getString("type")), rsContacts.getString("value"));
+                }
+            }
+            return null;
+        });
+
+        HashMap<String, HashMap<SectionType, Section>> mapResumeSections = new HashMap<>();
+        sqlHelper.transactionalExecute(conn -> {
+            try (PreparedStatement ps = conn.prepareStatement("" +
+                    " SELECT * FROM section s" +
+                    "   ORDER BY resume_uuid")) {
+                ResultSet rsSections = ps.executeQuery();
+                HashMap<SectionType, Section> sectionsMap = null;
+                String uuid = "";
+                while(rsSections.next()){
+                    if(!uuid.equals(rsSections.getString("resume_uuid"))){
+                        uuid = rsSections.getString("resume_uuid");
+                        sectionsMap = new HashMap<>();
+                        mapResumeSections.put(uuid, sectionsMap);
+                    }
+                    addSection(rsSections, sectionsMap);
+                }
+            }
+            return null;
+        });
+
+        ArrayList<Resume> list = new ArrayList<>();
+        sqlHelper.transactionalExecute(conn -> {
             try (PreparedStatement ps = conn.prepareStatement("" +
                     " SELECT * FROM resume r" +
                     "   ORDER BY full_name, uuid")) {
-                ResultSet rs = ps.executeQuery();
-                ArrayList<Resume> list = new ArrayList<>();
-                Resume r = null;
-                while (rs.next()) {
-                    String uuid = rs.getString("uuid");
-                    r = new Resume(uuid, rs.getString("full_Name"));
+                ResultSet rsResumes = ps.executeQuery();
+                Resume r;
+                String uuid;
+                while (rsResumes.next()) {
+                    uuid = rsResumes.getString("uuid");
+                    r = new Resume(uuid, rsResumes.getString("full_Name"));
                     list.add(r);
-                    loadContacts(conn, r);
-                    loadSections(conn, r);
+                    r.setContacts(mapResumeContacts.get(uuid));
+                    r.setSections(mapResumeSections.get(uuid));
                 }
-                return list;
-
             }
+            return null;
         });
+
+        return list;
     }
 
     @Override
@@ -158,12 +203,12 @@ public class SqlStorage implements Storage {
             ps.setString(1, r.getUuid());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                addSection(rs, r);
+                addSection(rs, r.getSections());
             }
         }
     }
 
-    private void addSection(ResultSet rs, Resume r) throws SQLException {
+    private void addSection(ResultSet rs, Map<SectionType, Section> map) throws SQLException {
         SectionType st = SectionType.valueOf(rs.getString("type"));
         String value = rs.getString("value");
         Section section = null;
@@ -180,7 +225,7 @@ public class SqlStorage implements Storage {
             case EDUCATION:
                 break;
         }
-        r.addSection(st, section);
+        map.put(st, section);
     }
 
     private void deleteSections(Connection conn, Resume r) throws SQLException {
@@ -203,7 +248,7 @@ public class SqlStorage implements Storage {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        data = String.join("\n",((ListSection) section).getItems());
+                        data = String.join("\n", ((ListSection) section).getItems());
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
