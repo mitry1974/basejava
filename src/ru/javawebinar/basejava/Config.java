@@ -40,10 +40,10 @@ public class Config {
         }
     }
 
-    private static File getHomeDir(){
+    private static File getHomeDir() {
         String prop = System.getProperty("homeDir");
-        File homeDir = new File (prop == null?".":prop);
-        if(!homeDir.isDirectory()){
+        File homeDir = new File(prop == null ? "." : prop);
+        if (!homeDir.isDirectory()) {
             throw new IllegalStateException(homeDir + "is not directory");
         }
         return homeDir;

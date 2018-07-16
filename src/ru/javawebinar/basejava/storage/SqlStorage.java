@@ -1,12 +1,18 @@
 package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.model.*;
+import ru.javawebinar.basejava.model.ContactType;
+import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.model.Section;
+import ru.javawebinar.basejava.model.SectionType;
 import ru.javawebinar.basejava.sql.SqlHelper;
 import ru.javawebinar.basejava.util.JsonParser;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SqlStorage implements Storage {
 
@@ -100,7 +106,7 @@ public class SqlStorage implements Storage {
             try (PreparedStatement ps = conn.prepareStatement("" +
                     " SELECT * FROM resume r" +
                     "   ORDER BY full_name, uuid")) {
-                ResultSet rs= ps.executeQuery();
+                ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     String uuid = rs.getString("uuid");
                     resumes.put(uuid, new Resume(uuid, rs.getString("full_Name")));
@@ -111,7 +117,7 @@ public class SqlStorage implements Storage {
                     " SELECT * FROM contact c" +
                     "   ORDER BY resume_uuid")) {
                 ResultSet rs = ps.executeQuery();
-                while (rs.next()){
+                while (rs.next()) {
                     Resume r = resumes.get(rs.getString("resume_uuid"));
                     r.addContact(ContactType.valueOf(rs.getString("type")), rs.getString("value"));
                 }
@@ -122,7 +128,7 @@ public class SqlStorage implements Storage {
                     "   ORDER BY resume_uuid")) {
                 ResultSet rs = ps.executeQuery();
                 String uuid = "";
-                while(rs.next()){
+                while (rs.next()) {
                     Resume r = resumes.get(rs.getString("resume_uuid"));
                     addSection(rs, r);
                 }

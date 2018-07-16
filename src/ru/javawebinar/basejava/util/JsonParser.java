@@ -21,12 +21,13 @@ public class JsonParser {
     }
 
     public static <T> T read(String content, Class<T> clazz) {
-        return GSON.fromJson(content,clazz);
+        return GSON.fromJson(content, clazz);
     }
 
     public static <T> String write(T object) {
         return GSON.toJson(object);
     }
+
     public static <T> String write(T object, Class<T> clazz) {
 
         return GSON.toJson(object, clazz);
