@@ -5,6 +5,7 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.Storage;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,12 +14,18 @@ import java.io.IOException;
 import java.util.List;
 
 public class ResumeServlet extends HttpServlet {
+    private Storage storage = Config.get().getStorage();
 
     private Storage sqlStorage = Config.get().getStorage();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.getWriter().write("doPost!!!!!");
+    }
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
     }
 
     @Override
