@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
+import java.time.Month;
 import java.time.YearMonth;
 import java.util.Arrays;
 import java.util.List;
@@ -92,11 +93,11 @@ public class Organization implements Serializable {
         private String title;
         private String description;
 
-        public Position(int startYear, int startMonth, String title, String description) {
+        public Position(int startYear, Month startMonth, String title, String description) {
             this(DateUtil.of(startYear, startMonth), NOW, title, description);
         }
 
-        public Position(int startYear, int startMonth, int endYear, int endMonth, String title, String description) {
+        public Position(int startYear, Month startMonth, int endYear, Month endMonth, String title, String description) {
             this(DateUtil.of(startYear, startMonth), DateUtil.of(endYear, endMonth), title, description);
         }
 
