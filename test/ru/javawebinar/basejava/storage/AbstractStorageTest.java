@@ -12,25 +12,14 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
+import static ru.javawebinar.basejava.storage.TestData.*;
 
 public abstract class AbstractStorageTest {
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
 
     protected Storage storage;
-
-    private static final String UUID1 = UUID.randomUUID().toString();
-    private static final String UUID2 = UUID.randomUUID().toString();
-    private static final String UUID3 = UUID.randomUUID().toString();
-    private static final String UUID4 = UUID.randomUUID().toString();
-
-    private static final Resume R1 = new Resume(UUID1, "Девелопер 1");
-    private static final Resume R2 = new Resume(UUID2, "Девелопер 2");
-    private static final Resume R3 = new Resume(UUID3, "Девелопер 3");
-    private static final Resume R4 = new Resume(UUID4, "Девелопер 4");
-
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -58,13 +47,13 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = new Resume(UUID2, "New Name");
+        Resume newResume = new Resume(UUID_2, "New Name");
         newResume.addContact(ContactType.EMAIL, "newmail@google.com");
         newResume.addContact(ContactType.SKYPE, "newSkype");
         newResume.addContact(ContactType.LINK, "new link.ru");
 
         storage.update(newResume);
-        assertEquals(newResume, storage.get(UUID2));
+        assertEquals(newResume, storage.get(UUID_2));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -95,23 +84,23 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void delete() {
-        storage.delete(UUID1);
+        storage.delete(UUID_1);
         assertEquals(2, storage.size());
     }
 
     @Test(expected = NotExistStorageException.class)
     public void deleteUnExisting() {
-        storage.delete(UUID4);
+        storage.delete(UUID_4);
     }
 
     @Test
     public void get() {
-        assertEquals(R1, storage.get(UUID1));
+        assertEquals(R1, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void getUnExisting() {
-        storage.get(UUID4);
+        storage.get(UUID_4);
     }
 
 }
