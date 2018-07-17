@@ -146,7 +146,7 @@ public class TestData {
 
     private static void fillResume3() {
         R3.addContact(ContactType.PHONE, "+3333333");
-        R3.addContact(ContactType.EMAIL, "test3@test.ru");
+//        R3.addContact(ContactType.EMAIL, "test3@test.ru");
         R3.addContact(ContactType.SKYPE, "skype3.contact");
 
 
