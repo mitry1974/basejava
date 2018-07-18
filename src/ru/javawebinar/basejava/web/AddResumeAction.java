@@ -11,10 +11,6 @@ public class AddResumeAction implements ResumeAction {
     public void execute(HttpServletRequest request, HttpServletResponse response, Storage storage) throws Exception {
         request.setAttribute("resume", new Resume());
         request.setAttribute("resumeAction", "saveResume");
-        String pInfo = request.getPathInfo();
-        String sPath = request.getServletPath();
-        String cPath = request.getContextPath();
-
         request.getRequestDispatcher("/WEB-INF/jsp/edit.jsp").forward(request, response);
     }
 }
