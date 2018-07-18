@@ -12,7 +12,7 @@
 <jsp:include page="fragments/header.jsp"/>
 <section>
     <h2>${resume.fullName}&nbsp;<a href="resume?uuid=${resume.uuid}&action=edit"><img src="img/pencil.png"></a></h2>
-    <c:forEach var="contactEntry" items="${resume.contacts}" >
+    <c:forEach var="contactEntry" items="${resume.contacts}">
         <jsp:useBean id="contactEntry"
                      type="java.util.Map.Entry<ru.javawebinar.basejava.model.ContactType, java.lang.String>"/>
         <%=contactEntry.getKey().toHtml(contactEntry.getValue())%><br/>

@@ -16,7 +16,7 @@ public class ResumeActionFactory {
 
     public static ResumeAction getAction(HttpServletRequest request) {
         String path = request.getPathInfo();
-        String req = request.getMethod() + (path==null?"":path);
+        String req = request.getMethod() + (path == null ? "" : path);
         return actions.get(req);
 
     }

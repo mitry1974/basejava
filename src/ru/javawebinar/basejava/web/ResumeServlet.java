@@ -4,9 +4,7 @@ import ru.javawebinar.basejava.Config;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.Storage;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +20,7 @@ public class ResumeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
-        if(action == null){
+        if (action == null) {
             req.setAttribute("resumes", storage.getAllSorted());
             req.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(req, resp);
             return;

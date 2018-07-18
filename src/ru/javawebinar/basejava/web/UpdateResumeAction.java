@@ -1,6 +1,5 @@
 package ru.javawebinar.basejava.web;
 
-import ru.javawebinar.basejava.model.ContactType;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.Storage;
 import ru.javawebinar.basejava.web.webutils.WebUtils;
