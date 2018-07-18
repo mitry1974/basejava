@@ -1,16 +1,17 @@
 package ru.javawebinar.basejava.web;
 
 import ru.javawebinar.basejava.Config;
-import ru.javawebinar.basejava.model.ContactType;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.Storage;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 public class ResumeServlet extends HttpServlet {
     private Storage storage = Config.get().getStorage();
@@ -18,50 +19,22 @@ public class ResumeServlet extends HttpServlet {
     private Storage sqlStorage = Config.get().getStorage();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-
-        String uuid = request.getParameter("uuid");
-        String name = request.getParameter("fullName");
-
-        final Resume r = storage.get(uuid);
-        r.setFullName(name);
-
-        for(ContactType t : ContactType.values()){
-            String value = request.getParameter(t.name());
-            if(value != null && value.trim().length() != 0) {
-                r.addContact(t, value);
-            }
-            else{
-                r.getContacts().remove(t);
-            }
-        }
-
-        storage.update(r);
-        response.sendRedirect("resume");
-    }
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String uuid = request.getParameter("uuid");
-        String action = request.getParameter("action");
-        if (action == null) {
-            request.setAttribute("resumes", storage.getAllSorted());
-            request.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(request, response);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        String action = req.getParameter("action");
+        if(action == null){
+            req.setAttribute("resumes", storage.getAllSorted());
+            req.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(req, resp);
             return;
         }
-
-        Resume r = null;
         String actionString = "";
+        String uuid = req.getParameter("uuid");
+        Resume r = null;
+        ResumeAction ra = null;
         switch (action) {
             case "delete":
                 storage.delete(uuid);
-                response.sendRedirect("resume");
+                resp.sendRedirect("resume");
                 return;
             case "view":
                 actionString = "/WEB-INF/jsp/view.jsp";
@@ -70,12 +43,30 @@ public class ResumeServlet extends HttpServlet {
             case "edit":
                 actionString = "/WEB-INF/jsp/edit.jsp";
                 r = storage.get(uuid);
+                req.setAttribute("resumeAction", "updateResume");
                 break;
             default:
                 throw new IllegalArgumentException("Action " + action + " is illegal");
         }
-        request.setAttribute("resume", r);
-        request.getRequestDispatcher(actionString).forward(request, response);
+        req.setAttribute("resume", r);
+        req.getRequestDispatcher(actionString).forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        ResumeAction ra = ResumeActionFactory.getAction(req);
+        callAction(ra, req, resp);
+    }
+
+    private void callAction(ResumeAction ra, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        try {
+            if (ra != null) {
+                ra.execute(request, response, storage);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void writeResume(StringBuilder sb, Resume r) throws IOException {

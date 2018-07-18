@@ -7,13 +7,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="css/style.css">
+    <jsp:useBean id="resumeAction" type="java.lang.String" scope="request"/>
     <jsp:useBean id="resume" type="ru.javawebinar.basejava.model.Resume" scope="request"/>
     <title>Резюме ${resume.fullName}</title>
 </head>
 <body>
 <jsp:include page="fragments/header.jsp"/>
 <section>
-    <form method="post" action="resume" enctype="application/x-www-form-urlencoded">
+    <form method="post" action="${pageContext.request.contextPath}/resume/${resumeAction}" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <dl>
             <dt>Имя:</dt>
@@ -29,10 +30,6 @@
 
         </c:forEach>
         <h3>Секции:</h3>
-        <input type="text" name="section" size="30" value="1"><br/>
-        <input type="text" name="section" size="30" value="2"><br/>
-        <input type="text" name="section" size="30" value="3"><br/>
-        <input type="text" name="section" size="30" value="4"><br/>
         <hr>
         <button type="submit">Сохранить</button>
         <button onclick="windows.history.back()">Отменить</button>

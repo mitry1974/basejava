@@ -29,6 +29,9 @@
 
         </c:forEach>
     </table>
+    <form method="post" action="resume/addResume" enctype="application/x-www-form-urlencoded">
+        <button type="submit" name="list" value="resume/addResume"><img src="img/add.png" alt="добавить резюме" style="vertical-align: middle">Добавить резюме</button>
+    </form>
 </section>
 <jsp:include page="fragments/footer.jsp"/>
 </body>
