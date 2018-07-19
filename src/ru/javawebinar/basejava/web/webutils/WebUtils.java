@@ -16,7 +16,7 @@ public class WebUtils {
         }
     }
 
-    public static String toHtml(SectionType type, Section section){
+    public static String toHtml(SectionType type, Section section) {
         StringBuilder sb = new StringBuilder();
         sb.append("<tr>");
         sb.append("<h2>");
@@ -24,7 +24,7 @@ public class WebUtils {
         sb.append("</h2>");
         sb.append("<td>");
         sb.append("<tr>");
-        switch(type){
+        switch (type) {
             case PERSONAL:
             case OBJECTIVE:
                 sb.append("<h3>");
@@ -35,7 +35,7 @@ public class WebUtils {
             case ACHIEVEMENT:
             case QUALIFICATIONS:
                 ListSection ls = (ListSection) section;
-                for(String s:ls.getItems()){
+                for (String s : ls.getItems()) {
                     sb.append("<ul><li>");
                     sb.append(s);
                     sb.append("</li></ul>");
@@ -44,13 +44,13 @@ public class WebUtils {
             case EXPERIENCE:
             case EDUCATION:
                 OrganizationSection os = (OrganizationSection) section;
-                for(Organization o : os.getOrganizations()){
+                for (Organization o : os.getOrganizations()) {
                     sb.append("<h3><a href=\"");
                     sb.append(o.getHomePage().getUrl());
                     sb.append("\">");
                     sb.append(o.getHomePage().getName());
                     sb.append("</a></h3>");
-                    for(Organization.Position p : o.getPositions()){
+                    for (Organization.Position p : o.getPositions()) {
                         sb.append(p.getStartDate());
                         sb.append(" - ");
                         sb.append(p.getEndDate());

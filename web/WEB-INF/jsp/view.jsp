@@ -1,6 +1,6 @@
 <%@ page import="ru.javawebinar.basejava.model.ListSection" %>
-<%@ page import="ru.javawebinar.basejava.model.TextSection" %>
 <%@ page import="ru.javawebinar.basejava.model.OrganizationSection" %>
+<%@ page import="ru.javawebinar.basejava.model.TextSection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -33,14 +33,16 @@
                 <c:when test="${sectionEntry.key == 'OBJECTIVE'}">
                     <tr>
                         <td colspan="2">
-                            <h3><%=((TextSection)sectionEntry.getValue()).getContent()%></h3>
+                            <h3><%=((TextSection) sectionEntry.getValue()).getContent()%>
+                            </h3>
                         </td>
                     </tr>
                 </c:when>
                 <c:when test="${sectionEntry.key == 'PERSONAL'}">
                     <tr>
                         <td colspan="2">
-                            <h3><%=((TextSection)sectionEntry.getValue()).getContent()%></h3>
+                            <h3><%=((TextSection) sectionEntry.getValue()).getContent()%>
+                            </h3>
                         </td>
                     </tr>
                 </c:when>
