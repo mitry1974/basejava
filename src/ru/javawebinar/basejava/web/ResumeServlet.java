@@ -43,6 +43,9 @@ public class ResumeServlet extends HttpServlet {
                 r = storage.get(uuid);
                 req.setAttribute("resumeAction", "updateResume");
                 break;
+            case "addOrganization":
+                actionString = "/WEB-INF/jsp/addOrganizationSection.jsp";
+                break;
             default:
                 throw new IllegalArgumentException("Action " + action + " is illegal");
         }

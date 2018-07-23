@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="resources/css/style.css">
     <title>Список всех резюме</title>
 </head>
 <body>
@@ -24,14 +24,14 @@
                 <td><a href="resume?uuid=${resume.uuid}&action=view">${resume.fullName}</a></td>
                 <td><%=ContactType.EMAIL.toHtml(resume.getContact(ContactType.EMAIL))%>
                 </td>
-                <td><a href="resume?uuid=${resume.uuid}&action=delete"><img src="img/delete.png"></a></td>
-                <td><a href="resume?uuid=${resume.uuid}&action=edit"><img src="img/pencil.png"></a></td>
+                <td><a href="resume?uuid=${resume.uuid}&action=delete"><img src="resources/img/delete.png"></a></td>
+                <td><a href="resume?uuid=${resume.uuid}&action=edit"><img src="resources/img/pencil.png"></a></td>
             </tr>
 
         </c:forEach>
     </table>
     <form method="post" action="resume/addResume" enctype="application/x-www-form-urlencoded">
-        <button type="submit" name="list" value="resume/addResume"><img src="img/add.png" alt="добавить резюме"
+        <button type="submit" name="list" value="resume/addResume"><img src="resources/img/add.png" alt="добавить резюме"
                                                                         style="vertical-align: middle">Добавить резюме
         </button>
     </form>
