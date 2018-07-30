@@ -4,10 +4,16 @@ import ru.javawebinar.basejava.storage.Storage;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 
 public class AddOrganizationAction implements ResumeAction {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response, Storage storage) throws Exception {
+        Enumeration<String> names = request.getParameterNames();
+        String uuid = request.getParameter("uuid");
+        String title = request.getParameter("organization_title");
+        String url = request.getParameter("organization_url");
 
+        String type = request.getParameter("sectionType");
     }
 }

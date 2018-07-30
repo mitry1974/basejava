@@ -31,7 +31,8 @@
         </c:forEach>
     </table>
     <form method="post" action="resume/addResume" enctype="application/x-www-form-urlencoded">
-        <button type="submit" name="list" value="resume/addResume"><img src="resources/img/add.png" alt="добавить резюме"
+        <button type="submit" name="list" value="resume/addResume"><img src="resources/img/add.png"
+                                                                        alt="добавить резюме"
                                                                         style="vertical-align: middle">Добавить резюме
         </button>
     </form>

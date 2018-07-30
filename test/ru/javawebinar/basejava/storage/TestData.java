@@ -78,10 +78,10 @@ public class TestData {
         R1.addSection(SectionType.EXPERIENCE, expSection);
 
 
-        Organization.Position op5 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "\"Functional Programming Principles in Scala\" by Martin Odersky", "");
+        Organization.Position op5 = new Organization.Position(YearMonth.parse("03/2013", formatter), YearMonth.parse("05/2013", formatter), "Functional Programming Principles in Scala by Martin Odersky", "");
         Organization o5 = new Organization("Coursera", null, op5);
 
-        Organization.Position op6 = new Organization.Position(YearMonth.parse("03/2011", formatter), YearMonth.parse("04/2011", formatter), "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"", "");
+        Organization.Position op6 = new Organization.Position(YearMonth.parse("03/2011", formatter), YearMonth.parse("04/2011", formatter), "Курс Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.", "");
         Organization o6 = new Organization("Luxoft", "www.luxsoft.com", op6);
 
         Organization.Position op7 = new Organization.Position(YearMonth.parse("01/2005", formatter), YearMonth.parse("04/2005", formatter), "3 месяца обучения мобильным IN сетям (Берлин)", "");
