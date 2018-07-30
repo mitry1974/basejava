@@ -38,11 +38,13 @@
                     </tr>
                     <tr>
                         <td width="25%"><b>Название:</b></td>
-                        <td colspan="2"><input type="text" name = "${sectionType}_organizationName" size="100%" value="${organization.homePage.name}"/></td>
+                        <td colspan="2"><input type="text" name="${sectionType}_organizationName" size="100%"
+                                               value="${organization.homePage.name}"/></td>
                     </tr>
                     <tr>
                         <td width="25%"><b>Url:</b></td>
-                        <td colspan="2"><input type="text" name = "organizationUrl"size="100%" value="${organization.homePage.url}"/></td>
+                        <td colspan="2"><input type="text" name="organizationUrl" size="100%"
+                                               value="${organization.homePage.url}"/></td>
                     </tr>
                     <tr>
                         <td width="25%"><h3>Позиции:</h3></td>

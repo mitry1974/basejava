@@ -14,7 +14,8 @@
 
                     <hr color="#5f9ea0" size="2" width="900">
                     <p style="border: 1px solid #C1FF0A;  padding: 10px;">
-                        <a href="javascript:deleteOrganization('${sectionType}', '${orgCounter.index}')">Удалить организацию </a><br>
+                        <a href="javascript:deleteOrganization('${sectionType}', '${orgCounter.index}')">Удалить
+                            организацию </a><br>
                         <b>Название:</b><br>
                         <input type="text" size="100%" name="${sectionType}_name"
                                value="${organization.homePage.name}"/><br>

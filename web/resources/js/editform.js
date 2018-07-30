@@ -1,12 +1,12 @@
 function deleteOrganization(section, id) {
     var table = document.getElementById(section + '_organizations');
-    var row   = document.getElementById(section + '_' + id);
+    var row = document.getElementById(section + '_' + id);
     table.deleteRow(row.index);
 }
 
 function deletePosition(section, orgId, posId) {
     var table = document.getElementById(section + '_' + orgId + '_positions');
-    var row   = document.getElementById(section + '_' + orgId + '_' + posId);
+    var row = document.getElementById(section + '_' + orgId + '_' + posId);
     table.deleteRow(row.index);
 }
 
@@ -35,7 +35,7 @@ function addOrganization() {
     newRow.id = section + '_' + orgCount;
 
     var container = document.createElement('div');
-    container.innerHTML = '<div id=' + orgCount +'>\
+    container.innerHTML = '<div id=' + orgCount + '>\
                                     <hr color="#5f9ea0" size="2" width="900">\
                                     <p style="border: 1px solid #C1FF0A;  padding: 10px;">\
                                         <a href="javascript:deleteOrganization(\'' + section + '\',\'' + orgCount + '\')">Удалить организацию </a><br>\
@@ -45,11 +45,11 @@ function addOrganization() {
                                 <b>Url:</b><br>\
                                 <input type="text" size="100%" name=' + section + '_url\
                                        value=' + url + '><br>\
-                                <a href=\"javascript:addPositionDialog(\'' + section + '\',\'' + orgCount +'\')\">Добавить\
+                                <a href=\"javascript:addPositionDialog(\'' + section + '\',\'' + orgCount + '\')\">Добавить\
                                     позицию</a>\
                             </p>\
                             <table style="width: 900px; border: 0px #2E6E9E" rules="none"\
-                                   id=\"' + section +'_'+ orgCount + '_positions\">\
+                                   id=\"' + section + '_' + orgCount + '_positions\">\
                             </table>\
                         </div>';
     newRow.appendChild(container.firstChild);
@@ -100,7 +100,7 @@ function addPosition() {
                     <input type="text" size="100%"\
                     name=\"' + section + '_' + orgId + '_descr\"\
                     value=\"' + descr + '\"><br>\
-                    <a href=\"javascript:deletePosition(\''+ section + '\',\'' + orgId +'\',\'' + posId + '\')\">Удалить позицию:</a></p>';
+                    <a href=\"javascript:deletePosition(\'' + section + '\',\'' + orgId + '\',\'' + posId + '\')\">Удалить позицию:</a></p>';
     newRow.appendChild(container.firstChild);
 
     closePositionDialog();
@@ -116,7 +116,6 @@ function clearOrganizationDialog() {
     document.getElementById("organization_title").value = "";
     document.getElementById("organization_url").value = "";
 }
-
 
 
 function closePositionDialog() {

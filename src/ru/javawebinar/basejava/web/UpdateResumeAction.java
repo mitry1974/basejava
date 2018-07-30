@@ -35,11 +35,11 @@ public class UpdateResumeAction implements ResumeAction {
                 case EDUCATION:
                 case EXPERIENCE:
                     String[] names = request.getParameterValues(type.name() + "_organizationName");
-                    String[] urls  = request.getParameterValues(type.name() + "_organizationUrl");
+                    String[] urls = request.getParameterValues(type.name() + "_organizationUrl");
 
-                    for(int i = 0; i < names.length; i++){
+                    for (int i = 0; i < names.length; i++) {
                         String orgName = names[i];
-                        String orgUrl  = urls[i];
+                        String orgUrl = urls[i];
 
 
                     }
