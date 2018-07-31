@@ -10,9 +10,6 @@ public class ResumeActionFactory {
     static {
         actions.put("POST/updateResume", new UpdateResumeAction());
         actions.put("POST/saveResume", new SaveResumeAction());
-        actions.put("POST/editResume", new EditResumeAction());
-        actions.put("POST/addResume", new AddResumeAction());
-        actions.put("POST/addOrganization", new AddOrganizationAction());
     }
 
     public static ResumeAction getAction(HttpServletRequest request) {

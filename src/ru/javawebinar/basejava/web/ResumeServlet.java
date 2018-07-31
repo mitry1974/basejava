@@ -3,6 +3,7 @@ package ru.javawebinar.basejava.web;
 import ru.javawebinar.basejava.Config;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.Storage;
+import ru.javawebinar.basejava.web.webutils.WebUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -43,13 +44,17 @@ public class ResumeServlet extends HttpServlet {
                 r = storage.get(uuid);
                 req.setAttribute("resumeAction", "updateResume");
                 break;
-            case "addOrganization":
-                actionString = "/WEB-INF/jsp/addOrganizationSection.jsp";
+            case "add":
+                actionString = "/WEB-INF/jsp/edit.jsp";
+                r = WebUtils.makeEmptyResume();
+                req.setAttribute("resumeAction", "saveResume");
                 break;
             default:
                 throw new IllegalArgumentException("Action " + action + " is illegal");
         }
-        req.setAttribute("resume", r);
+        if (r != null) {
+            req.setAttribute("resume", r);
+        }
         req.getRequestDispatcher(actionString).forward(req, resp);
     }
 

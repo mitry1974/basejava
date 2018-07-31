@@ -30,12 +30,15 @@
 
         </c:forEach>
     </table>
-    <form method="post" action="resume/addResume" enctype="application/x-www-form-urlencoded">
-        <button type="submit" name="list" value="resume/addResume"><img src="resources/img/add.png"
-                                                                        alt="добавить резюме"
-                                                                        style="vertical-align: middle">Добавить резюме
-        </button>
-    </form>
+    <a href="resume?uuid=${resume.uuid}&action=add"><img src="resources/img/add.png"></a>
+    <%--
+        <form method="post" action="resume/addResume" enctype="application/x-www-form-urlencoded">
+            <button type="submit" name="list" value="resume/addResume"><img src="resources/img/add.png"
+                                                                            alt="добавить резюме"
+                                                                            style="vertical-align: middle">Добавить резюме
+            </button>
+        </form>
+    --%>
 </section>
 <jsp:include page="fragments/footer.jsp"/>
 </body>

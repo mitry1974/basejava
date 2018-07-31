@@ -6,7 +6,7 @@
 <head>
     <script type="text/javascript" src="resources/js/editform.js" defer></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/style.css">
     <jsp:useBean id="resumeAction" type="java.lang.String" scope="request"/>
     <jsp:useBean id="resume" type="ru.javawebinar.basejava.model.Resume" scope="request"/>
     <title>Резюме ${resume.fullName}</title>
@@ -14,7 +14,8 @@
 <body>
 <jsp:include page="fragments/header.jsp"/>
 <section>
-    <form method="post" action="${pageContext.request.contextPath}/resume/${resumeAction}"
+    <form method="post" onsubmit="OnSaveResume(this);return false;"
+          action="${pageContext.request.contextPath}/resume/${resumeAction}"
           enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <h3>Имя:</h3>
@@ -36,13 +37,11 @@
             <h2>${sectionType.title}</h2>
             <c:choose>
                 <c:when test="${sectionType eq 'OBJECTIVE' || sectionType eq 'PERSONAL'}">
-                    <input type="text" size="100%" id='${sectionType}' name='${sectionType}'
-                           value=<%=((TextSection) section).getContent()%>/>
+                    <textarea name='${sectionType}' cols=75 rows=2><%=((TextSection) section).getContent()%></textarea>
                 </c:when>
                 <c:when test="${sectionType eq 'ACHIEVEMENT' || sectionType eq 'QUALIFICATIONS'}">
-                    <h3>${sectionType.name()}</h3>
-                    <textarea name='${type}' cols=75
-                              rows=5><%=String.join("\n", ((ListSection) section).getItems())%></textarea>
+                      <textarea name='${sectionType}' cols=75
+                                rows=5><%=String.join("\n", ((ListSection) section).getItems())%></textarea>
                 </c:when>
                 <c:when test="${sectionType eq 'EXPERIENCE' || sectionType eq 'EDUCATION'}">
                     <%session.setAttribute("orgSection", section);%>

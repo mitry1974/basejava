@@ -36,21 +36,17 @@ function addOrganization() {
 
     var container = document.createElement('div');
     container.innerHTML = '<div id=' + orgCount + '>\
-                                    <hr color="#5f9ea0" size="2" width="900">\
-                                    <p style="border: 1px solid #C1FF0A;  padding: 10px;">\
-                                        <a href="javascript:deleteOrganization(\'' + section + '\',\'' + orgCount + '\')">Удалить организацию </a><br>\
-                                        <b>Название:</b><br>\
-                                        <input type="text" size="100%" name=' + section + '_name\
-                                       value=' + title + '><br>\
-                                <b>Url:</b><br>\
-                                <input type="text" size="100%" name=' + section + '_url\
-                                       value=' + url + '><br>\
-                                <a href=\"javascript:addPositionDialog(\'' + section + '\',\'' + orgCount + '\')\">Добавить\
-                                    позицию</a>\
-                            </p>\
-                            <table style="width: 900px; border: 0px #2E6E9E" rules="none"\
-                                   id=\"' + section + '_' + orgCount + '_positions\">\
-                            </table>\
+                                <hr color="#5f9ea0" size="2" width="900">\
+                                <p style="border: 1px solid #C1FF0A;  padding: 10px;">\
+                                    <a href="javascript:deleteOrganization(\'' + section + '\',\'' + orgCount + '\')">Удалить организацию </a><br>\
+                                    <b>Название:</b><br>\
+                                    <input type="text" size="100%" id=\"' + section + '_' + orgCount + '_name\" name=\"' + section + '\" value=\"' + title + '\"><br>\
+                                    <b>Url:</b><br>\
+                                    <input type="text" size="100%" name=\"' + section + '_' + orgCount + '_url\" value=' + url + '><br>\
+                                    <a href=\"javascript:addPositionDialog(\'' + section + '\',\'' + orgCount + '\')\">Добавить позицию</a>\
+                                </p>\
+                                <table style="width: 900px; border: 0px #2E6E9E" rules="none" id=\"' + section + '_' + orgCount + '_positions\">\
+                                </table>\
                         </div>';
     newRow.appendChild(container.firstChild);
     closeOrganizationDialog();
@@ -87,13 +83,13 @@ function addPosition() {
     var container = document.createElement('div');
     container.innerHTML = '<p style="border: 1px solid #C1FF0A;  padding: 10px;">\
                         <b>Дата начала:</b><br>\
-                    <input type="month" name=\"' + section + '_' + orgId + '_sdate\"\
+                    <input type="month" id=\"' + section + '_' + orgId + '_' + posId + '_sdate\" name=\"' + section + '_' + orgId + '_sdate\"\
                     value=\'' + sdate + '\'><br>\
                         <b>Дата окончания:</b><br>\
-                    <input type="month" name=\"' + section + '_' + orgId + '_fdate\"\
+                    <input type="month" id=\"' + section + '_' + orgId + '_' + posId + '_fdate\" name=\"' + section + '_' + orgId + '_fdate\"\
                     value=\'' + fdate + '\'><br>\
                         <b>Позиция:</b><br>\
-                    <input type="text" size="100%"\
+                    <input type="text" id=\"' + section + '_' + orgId + '_' + posId + '_title\" size="100%"\
                     name=\"' + section + '_' + orgId + '_title\"\
                     value=\"' + title + '\"><br>\
                         <b>Описание:</b><br>\
@@ -130,3 +126,61 @@ function clearPositionDialog() {
     document.getElementById("position_description").value = "";
 }
 
+function OnSaveResume(form) {
+    var fname = document.getElementById("fullname").valueOf();
+    if (fname.value == "") {
+        alert("Пожалуйста введите имя!");
+        return false;
+    }
+
+    if (!validateOrganization("EXPERIENCE") || !validateOrganization("EDUCATION"))
+        return false;
+
+    form.submit();
+}
+
+function validateOrganization(type) {
+    var table = document.getElementById(type + "_organizations");
+    for (var i = 0; i < table.rows.length; i++) {
+        var row = table.rows[i];
+
+        var org = document.getElementById(row.id + '_' + 'name');
+        if (org.value == "") {
+            alert("Обнаружена организация с пустым именем!");
+            org.focus();
+            return false;
+        }
+
+        var positions_id = row.id + "_positions";
+        var positions = document.getElementById(positions_id);
+        if (positions.rows.length == 0) {
+            alert("Ошибка! Организация " + org.value + " не имеет секций!");
+            org.focus();
+            return false;
+        }
+
+        for (var j = 0; j < positions.rows.length; j++) {
+            var position = positions.rows[j];
+            var sdate = document.getElementById(position.id + "_sdate");
+            if (sdate.value == "") {
+                alert("Введите дату начала работы");
+                sdate.focus();
+                return false;
+            }
+
+            var fdate = document.getElementById(position.id + "_fdate");
+            if (fdate.value == "") {
+                alert("Введите дату конца работы");
+                fdate.focus();
+                return false;
+            }
+            var title = document.getElementById(position.id + "_title");
+            if (title.value == "") {
+                alert("Введите название позиции");
+                title.focus();
+                return false;
+            }
+        }
+    }
+    return true;
+}

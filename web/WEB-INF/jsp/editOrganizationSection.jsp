@@ -17,10 +17,11 @@
                         <a href="javascript:deleteOrganization('${sectionType}', '${orgCounter.index}')">Удалить
                             организацию </a><br>
                         <b>Название:</b><br>
-                        <input type="text" size="100%" name="${sectionType}_name"
+                        <input type="text" size="100%" id="${sectionType}_${orgCounter.index}_name"
+                               name="${sectionType}"
                                value="${organization.homePage.name}"/><br>
                         <b>Url:</b><br>
-                        <input type="text" size="100%" name="${sectionType}_url"
+                        <input type="text" size="100%" name="${sectionType}_${orgCounter.index}_url"
                                value="${organization.homePage.url}"/><br>
                         <a href="javascript:addPositionDialog('${sectionType}', '${orgCounter.index}')">Добавить
                             позицию</a>
@@ -33,18 +34,23 @@
                                 <td>
                                     <p style="border: 1px solid #C1FF0A;  padding: 10px;">
                                         <b>Дата начала:</b><br>
-                                        <input type="month" name="${sectionType}_${orgCounter.index}_sdate"
+                                        <input type="month"
+                                               id="${sectionType}_${orgCounter.index}_${posCounter.index}_sdate"
+                                               name="${sectionType}_${orgCounter.index}_sdate"
                                                value="${position.startDate}"><br>
                                         <b>Дата окончания:</b><br>
-                                        <input type="month" name="${sectionType}_${orgCounter.index}_fdate"
+                                        <input type="month"
+                                               id="${sectionType}_${orgCounter.index}_${posCounter.index}_fdate"
+                                               name="${sectionType}_${orgCounter.index}_fdate"
                                                value="${position.endDate}"><br>
                                         <b>Позиция:</b><br>
                                         <input type="text" size="100%"
+                                               id="${sectionType}_${orgCounter.index}_${posCounter.index}_title"
                                                name="${sectionType}_${orgCounter.index}_title"
                                                value="${position.title}"><br>
                                         <b>Описание:</b><br>
                                         <input type="text" size="100%"
-                                               name="${sectionType}_${orgCounter.index}_decsr"
+                                               name="${sectionType}_${orgCounter.index}_descr"
                                                value="${position.description}"><br>
                                         <a href="javascript:deletePosition('${sectionType}', '${orgCounter.index}', '${posCounter.index}')">Удалить
                                             позицию</a>
