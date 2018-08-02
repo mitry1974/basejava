@@ -29,7 +29,7 @@ public class ResumeServlet extends HttpServlet {
         String actionString = "";
         String uuid = req.getParameter("uuid");
         Resume r = null;
-        ResumeAction ra = null;
+
         switch (action) {
             case "delete":
                 storage.delete(uuid);
@@ -82,25 +82,5 @@ public class ResumeServlet extends HttpServlet {
             storage.save(r);
         }
         resp.sendRedirect(req.getContextPath() + "/resume");
-/*
-        ResumeAction ra = ResumeActionFactory.getAction(req);
-        callAction(ra, req, resp);
-*/
-    }
-
-    private void callAction(ResumeAction ra, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-        try {
-            if (ra != null) {
-                ra.execute(request, response, storage);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void writeResume(StringBuilder sb, Resume r) throws IOException {
-        sb.append("<tr><td>");
-        sb.append(r.getFullName());
-        sb.append("</tr></td>");
     }
 }
