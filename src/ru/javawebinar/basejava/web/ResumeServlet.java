@@ -61,8 +61,31 @@ public class ResumeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        final Resume r;
+        boolean bUpdate = req.getMethod().equals("updateResume");
+
+        if(bUpdate){
+            String uuid = req.getParameter("uuid");
+            r = storage.get(uuid);
+        }
+        else{
+            String name = req.getParameter("fullName");
+            r = new Resume(name);
+        }
+
+        WebUtils.fillResume(req, r);
+
+        if(bUpdate){
+            storage.update(r);
+
+        }else{
+            storage.save(r);
+        }
+        resp.sendRedirect(req.getContextPath() + "/resume");
+/*
         ResumeAction ra = ResumeActionFactory.getAction(req);
         callAction(ra, req, resp);
+*/
     }
 
     private void callAction(ResumeAction ra, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
